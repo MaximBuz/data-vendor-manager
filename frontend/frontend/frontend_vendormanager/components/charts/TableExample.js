@@ -17,7 +17,7 @@ export default function TableExample() {
     }
   >
     <Button type="primary">Create Now</Button>
-  </Empty>,
+  </Empty>
     </>
   )
 }
