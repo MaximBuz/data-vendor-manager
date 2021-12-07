@@ -23,7 +23,7 @@ export default function SiderMenuLayout(props) {
   };
 
   // Handle active menu highlighting
-  const activeRoute = props.activeRoute;
+  const activeRoute = props.activeRoute.split("/")[1];
 
   // Ant Design Components
   const { Header, Content, Footer, Sider } = Layout;
@@ -34,19 +34,19 @@ export default function SiderMenuLayout(props) {
       <Sider collapsible collapsed={menuCollapsed} onCollapse={onCollapse}>
         <div className={classes.logo}>3B</div>
         <Menu theme="dark" defaultSelectedKeys={[activeRoute]} mode="inline">
-          <Menu.Item key="/dashboard" icon={<AppstoreOutlined />}>
+          <Menu.Item key="dashboard" icon={<AppstoreOutlined />}>
             <Link href="/dashboard">Dashboard</Link>
           </Menu.Item>
-          <Menu.Item key="/cost-manager" icon={<BarChartOutlined />}>
+          <Menu.Item key="cost-manager" icon={<BarChartOutlined />}>
             <Link href="/cost-manager">Cost Manager</Link>
           </Menu.Item>
-          <Menu.Item key="/license-manager" disabled icon={<FileDoneOutlined />}>
+          <Menu.Item key="license-manager" disabled icon={<FileDoneOutlined />}>
             <Link href="/license-manager">License Manager</Link>
           </Menu.Item>
-          <Menu.Item key="/onboarder" disabled icon={<IdcardOutlined />}>
+          <Menu.Item key="onboarder" disabled icon={<IdcardOutlined />}>
             <Link href="/onboarder">Onboarder</Link>
           </Menu.Item>
-          <Menu.Item key="/vendor-manager" disabled icon={<BankOutlined />}>
+          <Menu.Item key="vendor-manager" disabled icon={<BankOutlined />}>
             <Link href="/vendor-manager">Vendor Manager</Link>
           </Menu.Item>
         </Menu>
