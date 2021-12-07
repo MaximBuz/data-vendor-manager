@@ -1,0 +1,9 @@
+.logo {
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 2.4rem;
+  font-weight: bold;
+}

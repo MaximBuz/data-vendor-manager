@@ -1,8 +1,11 @@
+// Routing
+import Link from "next/link";
+
 // state management
 import { useState } from "react";
 
 // Styling
-import styled from "styled-components";
+import classes from "../styles/SiderMenuLayout.module.css";
 import { Layout, Menu, Breadcrumb } from "antd";
 import {
   BarChartOutlined,
@@ -19,6 +22,9 @@ export default function SiderMenuLayout(props) {
     setMenuCollapsed(!menuCollapsed);
   };
 
+  // Handle active menu highlighting
+  const activeRoute = props.activeRoute;
+
   // Ant Design Components
   const { Header, Content, Footer, Sider } = Layout;
   const { SubMenu } = Menu;
@@ -26,23 +32,22 @@ export default function SiderMenuLayout(props) {
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider collapsible collapsed={menuCollapsed} onCollapse={onCollapse}>
-        {/* Put the logo here: <div className="logo" /> */}
-        <MenuLogo>3B</MenuLogo>
-        <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
-          <Menu.Item key="1" icon={<AppstoreOutlined />}>
-            Dashboard
+        <div className={classes.logo}>3B</div>
+        <Menu theme="dark" defaultSelectedKeys={[activeRoute]} mode="inline">
+          <Menu.Item key="/dashboard" icon={<AppstoreOutlined />}>
+            <Link href="/dashboard">Dashboard</Link>
           </Menu.Item>
-          <Menu.Item key="2" icon={<BarChartOutlined />}>
-            Cost Manager
+          <Menu.Item key="/cost-manager" icon={<BarChartOutlined />}>
+            <Link href="/cost-manager">Cost Manager</Link>
           </Menu.Item>
-          <Menu.Item key="3" disabled icon={<FileDoneOutlined />}>
-            License Manager
+          <Menu.Item key="/license-manager" disabled icon={<FileDoneOutlined />}>
+            <Link href="/license-manager">License Manager</Link>
           </Menu.Item>
-          <Menu.Item key="4" disabled icon={<IdcardOutlined />}>
-            Onboarder
+          <Menu.Item key="/onboarder" disabled icon={<IdcardOutlined />}>
+            <Link href="/onboarder">Onboarder</Link>
           </Menu.Item>
-          <Menu.Item key="5" disabled icon={<BankOutlined />}>
-            Vendor Manager
+          <Menu.Item key="/vendor-manager" disabled icon={<BankOutlined />}>
+            <Link href="/vendor-manager">Vendor Manager</Link>
           </Menu.Item>
         </Menu>
       </Sider>
@@ -71,15 +76,3 @@ export default function SiderMenuLayout(props) {
 Styled components
 --------------------------------
 */
-
-
-// Logo
-const MenuLogo = styled.div`
-  height: fit-content;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-size: 2.4rem;
-  font-weight: bold;
-`
