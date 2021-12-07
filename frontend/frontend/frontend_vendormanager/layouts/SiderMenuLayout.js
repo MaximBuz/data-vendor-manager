@@ -34,7 +34,8 @@ export default function SiderMenuLayout(props) {
     <Layout style={{ minHeight: "100vh" }}>
       <Sider collapsible collapsed={menuCollapsed} onCollapse={onCollapse}>
         <div className={classes.logo}>
-          <Logo className={classes.logo} fill="white" size={60}/>
+        3B
+          {/* <Logo className={classes.logo} fill="white" size={60}/> */}
         </div>
         <Menu theme="dark" defaultSelectedKeys={[activeRoute]} mode="inline">
           <Menu.Item key="dashboard" icon={<AppstoreOutlined />}>
