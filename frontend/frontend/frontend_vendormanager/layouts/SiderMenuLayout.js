@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 
 // Styling
+import Logo from "./Logo"
 import classes from "../styles/SiderMenuLayout.module.css";
 import { Layout, Menu, Breadcrumb } from "antd";
 import {
@@ -32,7 +33,9 @@ export default function SiderMenuLayout(props) {
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider collapsible collapsed={menuCollapsed} onCollapse={onCollapse}>
-        <div className={classes.logo}>3B</div>
+        <div className={classes.logo}>
+          <Logo className={classes.logo} fill="white" size={60}/>
+        </div>
         <Menu theme="dark" defaultSelectedKeys={[activeRoute]} mode="inline">
           <Menu.Item key="dashboard" icon={<AppstoreOutlined />}>
             <Link href="/dashboard">Dashboard</Link>
