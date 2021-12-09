@@ -2,7 +2,6 @@ from __future__ import print_function
 import time
 from os import system
 from activity import *
-import json
 import datetime
 import sys
 if sys.platform in ['Windows', 'win32', 'cygwin']:
@@ -14,17 +13,20 @@ elif sys.platform in ['Mac', 'darwin', 'os2', 'os2emx']:
 elif sys.platform in ['linux', 'linux2']:
         import linux as l
 
+from crud import engine
+from models import UsageEntry
+from sqlalchemy.orm import sessionmaker
+Session = sessionmaker(bind=engine)
+s = Session()
+
+from aggregated_view import fetch_aggregated_data
+
 active_window_name = ""
 activity_name = ""
 start_time = datetime.datetime.now()
-activeList = AcitivyList([])
 first_time = True
 
-
-def url_to_name(url):
-    string_list = url.split('/')
-    return string_list[2]
-
+user = input("Please type in your email adress: ")
 
 def get_active_window():
     _active_window_name = None
@@ -41,14 +43,14 @@ def get_active_window():
     return _active_window_name
 
 
-def get_chrome_url():
+""" def get_chrome_url():
     if sys.platform in ['Windows', 'win32', 'cygwin']:
         window = win32gui.GetForegroundWindow()
         chromeControl = auto.ControlFromHandle(window)
         edit = chromeControl.EditControl()
         return 'https://' + edit.GetValuePattern().Value
     elif sys.platform in ['Mac', 'darwin', 'os2', 'os2emx']:
-        textOfMyScript = """tell app "google chrome" to get the url of the active tab of window 1"""
+        textOfMyScript = "tell app "google chrome" to get the url of the active tab of window 1"
         s = NSAppleScript.initWithSource_(
             NSAppleScript.alloc(), textOfMyScript)
         results, err = s.executeAndReturnError_(None)
@@ -57,12 +59,7 @@ def get_chrome_url():
         print("sys.platform={platform} is not supported."
               .format(platform=sys.platform))
         print(sys.version)
-    return _active_window_name
-
-try:
-    activeList.initialize_me()
-except Exception:
-    print('No json')
+    return _active_window_name """
 
 
 try:
@@ -70,41 +67,35 @@ try:
         previous_site = ""
         if sys.platform not in ['linux', 'linux2']:
             new_window_name = get_active_window()
-            if 'Google Chrome' in new_window_name:
-                new_window_name = url_to_name(get_chrome_url())
         if sys.platform in ['linux', 'linux2']:
             new_window_name = l.get_active_window_x()
-            if 'Google Chrome' in new_window_name:
-                new_window_name = l.get_chrome_url_x()
-
         
-        if active_window_name != new_window_name:
+        if active_window_name != new_window_name: 
             print(active_window_name)
             activity_name = active_window_name
 
-            if not first_time:
+            if not first_time: 
                 end_time = datetime.datetime.now()
-                time_entry = TimeEntry(start_time, end_time, 0, 0, 0, 0)
-                time_entry._get_specific_times()
-
-                exists = False
-                for activity in activeList.activities:
-                    if activity.name == activity_name:
-                        exists = True
-                        activity.time_entries.append(time_entry)
-
-                if not exists:
-                    activity = Activity(activity_name, [time_entry])
-                    activeList.activities.append(activity)
-                with open('activities.json', 'w') as json_file:
-                    json.dump(activeList.serialize(), json_file,
-                              indent=4, sort_keys=True)
-                    start_time = datetime.datetime.now()
+                time_entry = TimeEntry(start_time, end_time)
+                print(time_entry.serialize())
+                # Hier in Datenbank schreiben!
+                if activity_name == "Google Chrome": # Hier nach BBG prüfen
+                    usage_entry = UsageEntry(
+                        user=user,
+                        app=activity_name,
+                        start_time=start_time,
+                        end_time=end_time
+                    )
+                    s.add(usage_entry)
+                start_time = datetime.datetime.now()
             first_time = False
             active_window_name = new_window_name
 
         time.sleep(1)
     
 except KeyboardInterrupt:
-    with open('activities.json', 'w') as json_file:
-        json.dump(activeList.serialize(), json_file, indent=4, sort_keys=True)
+    s.commit()
+    s.close()
+    print(" done")
+    print("Here is your data: ")
+    fetch_aggregated_data(user)

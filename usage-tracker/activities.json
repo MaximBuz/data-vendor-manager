@@ -1,0 +1,38 @@
+{
+    "activities": [
+        {
+            "name": "Code",
+            "time_entries": [
+                {
+                    "days": 0,
+                    "end_time": "2021-11-16 10:19:26",
+                    "hours": 0,
+                    "minutes": 0,
+                    "seconds": 5,
+                    "start_time": "2021-11-16 10:19:20"
+                },
+                {
+                    "days": 0,
+                    "end_time": "2021-11-16 10:19:48",
+                    "hours": 0,
+                    "minutes": 0,
+                    "seconds": 16,
+                    "start_time": "2021-11-16 10:19:32"
+                }
+            ]
+        },
+        {
+            "name": "www.datasciencelearner.com",
+            "time_entries": [
+                {
+                    "days": 0,
+                    "end_time": "2021-11-16 10:19:32",
+                    "hours": 0,
+                    "minutes": 0,
+                    "seconds": 6,
+                    "start_time": "2021-11-16 10:19:26"
+                }
+            ]
+        }
+    ]
+}
