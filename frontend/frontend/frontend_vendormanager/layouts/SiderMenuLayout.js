@@ -4,8 +4,11 @@ import Link from "next/link";
 // state management
 import { useState } from "react";
 
+// Components
+import TopMenuItems from "./TopMenuItems";
+
 // Styling
-import Logo from "./Logo"
+import Logo from "./Logo";
 import classes from "../styles/SiderMenuLayout.module.css";
 import { Layout, Menu, Breadcrumb } from "antd";
 import {
@@ -14,6 +17,7 @@ import {
   FileDoneOutlined,
   IdcardOutlined,
   BankOutlined,
+  ProfileOutlined
 } from "@ant-design/icons";
 
 export default function SiderMenuLayout(props) {
@@ -34,7 +38,7 @@ export default function SiderMenuLayout(props) {
     <Layout style={{ minHeight: "100vh" }}>
       <Sider collapsible collapsed={menuCollapsed} onCollapse={onCollapse}>
         <div className={classes.logo}>
-        3B
+          3B
           {/* <Logo className={classes.logo} fill="white" size={60}/> */}
         </div>
         <Menu theme="dark" defaultSelectedKeys={[activeRoute]} mode="inline">
@@ -53,13 +57,20 @@ export default function SiderMenuLayout(props) {
           <Menu.Item key="vendor-manager" disabled icon={<BankOutlined />}>
             <Link href="/vendor-manager">Vendor Manager</Link>
           </Menu.Item>
+          <Menu.Item key="master-data-manager" icon={<ProfileOutlined />} style={{ marginBottom: "40px" }}>
+            <Link href="/master-data-manager">Master Data Manager</Link>
+          </Menu.Item>
         </Menu>
       </Sider>
       <Layout className="site-layout">
-        <Header className="site-layout-background" style={{ padding: 0 }} />
+        <Header className="site-layout-background" style={{ padding: 0 }}>
+          {/* This Component Manages module specific tabs */}
+          <TopMenuItems activeModule={activeRoute} activeRoute={props.activeRoute}></TopMenuItems>
+        </Header>
         <Content style={{ margin: "0 16px" }}>
           <Breadcrumb style={{ margin: "16px 0" }}>
-            {/* Put in Breadcrumbs in here <Breadcrumb.Item>User</Breadcrumb.Item>
+            {/* Put in Breadcrumbs in here:
+            <Breadcrumb.Item>User</Breadcrumb.Item>
             <Breadcrumb.Item>Bill</Breadcrumb.Item> */}
           </Breadcrumb>
           <div
