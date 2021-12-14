@@ -1,14 +1,14 @@
 // Components
-import TreeDataTable from "../../components/tables/TreeDataTable";
+import TreeDataTable from "../../../components/tables/TreeDataTable";
 
 // Routing
 import Link from "next/link";
 
 // Data Fetching
 import { dehydrate, QueryClient, useQuery } from "react-query";
-import getOrganizationalEntityRootChildren from "../../api_fetchers/getOrganizationalEntityRootChildren";
+import getOrganizationalEntityRootChildren from "../../../api_fetchers/getOrganizationalEntityRootChildren";
 
-const fakeColumns = [
+const columns = [
   {
     title: "Name",
     dataIndex: "name",
@@ -68,7 +68,7 @@ export default function Organizations() {
         parent relationships.
       </p>
       <TreeDataTable
-        columns={fakeColumns}
+        columns={columns}
         data={translatedData}
         rowSelection={false}
         isLoading={isLoading}

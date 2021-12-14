@@ -1,4 +1,5 @@
 import { Table } from 'antd';
+import { Empty } from 'antd';
 
 /* Actions when selecting rows in the table */
 /* const rowSelection = {
@@ -14,7 +15,8 @@ import { Table } from 'antd';
 }; */
 
 export default function TreeDataTable({columns, data, isLoading, scrollView, rowSelection}) {
-  if (!isLoading) {
+  
+if (!isLoading) {
     return (
       <>
         <Table
@@ -25,12 +27,16 @@ export default function TreeDataTable({columns, data, isLoading, scrollView, row
         />
       </>
     );
-  } else {
+  } else if (isLoading) {
     return (
       <>
       {/* Here we can put an animated loading thingy */}
         Loading...
       </>
     );
+  } else if (data.length === 0) {
+    return (
+      <Empty/>
+    )
   }
 }
