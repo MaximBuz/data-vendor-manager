@@ -41,8 +41,8 @@ export default function TopMenuItems({activeModule, activeRoute}) {
   if(activeModule === "master-data-manager") {return (
     <>
       <Menu theme="dark" defaultSelectedKeys={[activeRoute]} mode="horizontal">
-        <Menu.Item key="/master-data-manager" icon={<ApartmentOutlined />}>
-          <Link href="/master-data-manager/">Organizations</Link>
+        <Menu.Item key="/master-data-manager/organizations" icon={<ApartmentOutlined />}>
+          <Link href="/master-data-manager/organizations">Organizations</Link>
         </Menu.Item>
         <Menu.Item key="/master-data-manager/geography" icon={<GlobalOutlined />}>
           <Link href="/master-data-manager/geographies">Geographies</Link>
@@ -56,4 +56,9 @@ export default function TopMenuItems({activeModule, activeRoute}) {
       </Menu>
     </>
   );}
+
+  return(
+    <>
+    </>
+  )
 }

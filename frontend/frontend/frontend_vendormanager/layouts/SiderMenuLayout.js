@@ -58,7 +58,7 @@ export default function SiderMenuLayout(props) {
             <Link href="/vendor-manager">Vendor Manager</Link>
           </Menu.Item>
           <Menu.Item key="master-data-manager" icon={<ProfileOutlined />} style={{ marginBottom: "40px" }}>
-            <Link href="/master-data-manager">Master Data Manager</Link>
+            <Link href="/master-data-manager/organizations">Master Data Manager</Link>
           </Menu.Item>
         </Menu>
       </Sider>
