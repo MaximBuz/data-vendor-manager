@@ -13,14 +13,23 @@ const rowSelection = {
   },
 };
 
-export default function TreeDataTable({columns, data}) {
-  return (
-    <>
-      <Table
-        columns={columns}
-        rowSelection={{ ...rowSelection }}
-        dataSource={data}
-      />
-    </>
-  );
+export default function TreeDataTable({columns, data, isLoading }) {
+  if (!isLoading) {
+    return (
+      <>
+        <Table
+          columns={columns}
+          rowSelection={{ ...rowSelection }}
+          dataSource={data}
+        />
+      </>
+    );
+  } else {
+    return (
+      <>
+      {/* Here we can put an animated loading thingy */}
+        Loading...
+      </>
+    );
+  }
 }

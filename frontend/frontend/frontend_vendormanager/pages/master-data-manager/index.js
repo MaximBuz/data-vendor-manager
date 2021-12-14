@@ -1,6 +1,10 @@
 // Components
 import TreeDataTable from "../../components/tables/TreeDataTable";
 
+// Data Fetching
+import { dehydrate, QueryClient, useQuery } from 'react-query';
+import getOrganizationalEntities from "../../api_fetchers/getOrganizationalEntities";
+
 const fakeColumns = [
   {
     title: 'Name',
@@ -8,16 +12,16 @@ const fakeColumns = [
     key: 'name',
   },
   {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
-    width: '12%',
+    title: 'Internal Id',
+    dataIndex: 'internal_id',
+    key: 'internal_id',
+    width: '20%',
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
+    title: 'Entity Type',
+    dataIndex: 'type',
     width: '30%',
-    key: 'address',
+    key: 'type',
   },
 ];
 
@@ -87,10 +91,36 @@ const fakeData = [
 ];
 
 export default function Organizations() {
+  // Data fetching
+  // the second parameter I'm giving inside the array is the depth I need
+  const { isLoading, error, data } = useQuery(["organizational_entities", 10], getOrganizationalEntities)
+  
+  const transformedData = data.map(item => {
+    return ({
+      key: item.id,
+      name: item.name,
+      internal_id: item.internal_id,
+      type: item.type.name
+    })
+  })
+
   return (
     <>
       <h1>Create and edit your organizational structure</h1>
-      <TreeDataTable columns={fakeColumns} data={fakeData}/>
+      <TreeDataTable columns={fakeColumns} data={transformedData} isLoading={isLoading}/>
     </>
   );
+}
+
+export async function getServerSideProps() {
+  const queryClient = new QueryClient()
+
+  // the second parameter I'm giving inside the array is the depth I need
+  await queryClient.prefetchQuery(["organizational_entities", 10], getOrganizationalEntities)
+
+  return {
+    props: {
+      dehydratedState: dehydrate(queryClient),
+    },
+  }
 }
