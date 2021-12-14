@@ -69,9 +69,8 @@ export default function SiderMenuLayout(props) {
         </Header>
         <Content style={{ margin: "0 16px" }}>
           <Breadcrumb style={{ margin: "16px 0" }}>
-            {/* Put in Breadcrumbs in here:
-            <Breadcrumb.Item>User</Breadcrumb.Item>
-            <Breadcrumb.Item>Bill</Breadcrumb.Item> */}
+            <Breadcrumb.Item>{activeRoute}</Breadcrumb.Item>
+            <Breadcrumb.Item>test</Breadcrumb.Item>
           </Breadcrumb>
           <div
             className="site-layout-background"
