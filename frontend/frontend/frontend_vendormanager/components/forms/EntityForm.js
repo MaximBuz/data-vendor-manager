@@ -7,7 +7,7 @@ import { Form, Input, Button, Select, Tooltip, Space, Modal } from "antd";
 import { InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
 // Data mutation
-import { useMutation } from "react-query";
+import { useQueryClient, useMutation, useQueries } from "react-query";
 import postEntityType from "../../api_utils/api_mutators/postEntityType";
 import patchEntity from "../../api_utils/api_mutators/patchEntity";
 
@@ -19,8 +19,9 @@ export default function EntityForm({
 }) {
 
   //setting up mutations with react query
+  const queryClient = useQueryClient()
   const typeMutation = useMutation(postEntityType)
-  const mutation = useMutation(patchEntity)
+  const mutation = useMutation(patchEntity, {onSuccess: () => queryClient.invalidateQueries("organizationalEntityRootChildren")})
 
   /* 
   --------------------------------------
@@ -171,6 +172,7 @@ export default function EntityForm({
           <Select style={{ minWidth: "300px" }}>
             {parentEntities &&
               parentEntities.map((entity) => {
+                if (entity.id === initialValues.id) return <Option disabled value={entity.id}>{entity.name}</Option>;
                 return <Option value={entity.id}>{entity.name}</Option>;
               })}
           </Select>

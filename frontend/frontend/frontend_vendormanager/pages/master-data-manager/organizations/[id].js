@@ -6,11 +6,12 @@ import { dehydrate, QueryClient, useQuery } from "react-query";
 import getOrganizationalEntity from "../../../api_utils/api_fetchers/getOrganizationalEntity";
 import getEntityTypes from "../../../api_utils/api_fetchers/getEntityTypes";
 import getOrganizationalEntities from "../../../api_utils/api_fetchers/getOrganizationalEntities";
+import getOrganizationalEntityRootChildren from "../../../api_utils/api_fetchers/getOrganizationalEntityRootChildren";
 import getLocations from "../../../api_utils/api_fetchers/getLocations";
 
 // Components
 import EntityForm from "../../../components/forms/EntityForm";
-import { Row, Col } from "antd";
+import { Row, Col, Tree, Divider } from "antd";
 
 export default function Organization() {
 
@@ -46,6 +47,14 @@ export default function Organization() {
   );
   const locations = locationsQuery?.data;
 
+  // Data fetching tree structure
+  const treeQuery = useQuery(
+    ["organizationalEntityRootChildren", 10],
+    getOrganizationalEntityRootChildren
+  );
+
+  const treeData = treeQuery.data && JSON.parse(JSON.stringify(treeQuery.data).split('"id":').join('"key":').split('"name":').join('"title":'));
+
   if (entityQuery.isLoading) {
     return <>Loading...</>;
   }
@@ -56,22 +65,27 @@ export default function Organization() {
 
   return (
     <>
+      <Row gutter={[16, 16]}>
+        <Col flex={2}>
       <h2>
         {entity.name} ({entity.type.name})
       </h2>
-      <Row>
-        <Col flex={2}>
           <EntityForm initialValues={entity} entityTypes={entityTypes} parentEntities={parentEntities} locations={locations}/>
         </Col>
+        <Divider type="vertical" style={{heigth: "auto"}}/>
         <Col
           flex={1}
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
         >
-          Hier kommen Später Eltern und Kinder hin
+          <h2>Position in Organizational Tree</h2>
+          <Tree
+            showLine = {{showLeafIcon: false}}
+            defaultExpandAll
+            defaultSelectedKeys={[entity.id]}
+            /* selectable= {false} */
+            /* onSelect={"onSelect"} */
+            treeData={treeData}
+            style={{ padding: "10px 0 0 10px", minHeigth: "90vh", border: "1px solid #d9d9d9"}}
+          />
         </Col>
       </Row>
     </>
@@ -123,7 +137,7 @@ export async function getServerSideProps(context) {
 
   /* 
   --------------------------------------
-  Get options for "Locations" dropdown in the form
+  Get options for "Locations" dropdown in the formÌ
   --------------------------------------
   */
 
