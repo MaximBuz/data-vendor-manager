@@ -1,4 +1,4 @@
-import apiClient from "./http-common";
+import apiClient from "../http-common";
 
 export default async function getOrganizationalEntityRootChildren({ queryKey }) {
     const [_, id, depth] = queryKey;

@@ -3,8 +3,9 @@ import { useRouter } from "next/router";
 
 // Data Fetching
 import { dehydrate, QueryClient, useQuery } from "react-query";
-import getOrganizationalEntity from "../../../api_fetchers/getOrganizationalEntity";
-import getEntityTypes from "../../../api_fetchers/getEntityTypes";
+import getOrganizationalEntity from "../../../api_utils/api_fetchers/getOrganizationalEntity";
+import getEntityTypes from "../../../api_utils/api_fetchers/getEntityTypes";
+import getOrganizationalEntities from "../../../api_utils/api_fetchers/getOrganizationalEntities";
 
 // Components
 import EntityForm from "../../../components/forms/EntityForm";
@@ -17,11 +18,11 @@ export default function Organization() {
   const { id: entityId } = router.query;
 
   // Data fetching for entity
-  const { isLoading, error, data } = useQuery(
+  const entityQuery = useQuery(
     ["organizationalEntity", entityId, 10 /* depth param */],
     getOrganizationalEntity
   );
-  const entity = data[0];
+  const entity = entityQuery.data[0];
 
   // Data fetching or entity types dropdown
   const entityTypesQuery = useQuery(
@@ -30,11 +31,18 @@ export default function Organization() {
   );
   const entityTypes = entityTypesQuery?.data;
 
-  if (isLoading) {
+  // Data fetching or parents dropdown
+  const parentEntitiesQuery = useQuery(
+    ["organizationalEntities", 1 /* depth param */],
+    getOrganizationalEntities
+  );
+  const parentEntities = parentEntitiesQuery?.data;
+
+  if (entityQuery.isLoading) {
     return <>Loading...</>;
   }
 
-  if (error) {
+  if (entityQuery.error) {
     return <>Error...</>;
   }
 
@@ -45,7 +53,7 @@ export default function Organization() {
       </h2>
       <Row>
         <Col flex={2}>
-          <EntityForm initialValues={entity} entityTypes={entityTypes} parentEntities={""} locations={""}/>
+          <EntityForm initialValues={entity} entityTypes={entityTypes} parentEntities={parentEntities} locations={""}/>
         </Col>
         <Col
           flex={1}
@@ -90,6 +98,18 @@ export async function getServerSideProps(context) {
   await queryClient.prefetchQuery(
     ["entityTypes", 2 /* depth param */],
     getEntityTypes
+  );
+
+
+  /* 
+  --------------------------------------
+  Get options for "Parent" dropdown in the form
+  --------------------------------------
+  */
+
+  await queryClient.prefetchQuery(
+    ["organizationalEntities", 1 /* depth param */],
+    getOrganizationalEntities
   );
 
 

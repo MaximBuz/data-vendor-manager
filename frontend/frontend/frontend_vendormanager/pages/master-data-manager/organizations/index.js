@@ -6,7 +6,7 @@ import Link from "next/link";
 
 // Data Fetching
 import { dehydrate, QueryClient, useQuery } from "react-query";
-import getOrganizationalEntityRootChildren from "../../../api_fetchers/getOrganizationalEntityRootChildren";
+import getOrganizationalEntityRootChildren from "../../../api_utils/api_fetchers/getOrganizationalEntityRootChildren";
 
 const columns = [
   {
