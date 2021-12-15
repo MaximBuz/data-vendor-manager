@@ -29,6 +29,7 @@ export default function SiderMenuLayout(props) {
 
   // Handle active menu highlighting
   const activeRoute = props.activeRoute.split("/")[1];
+  console.log(activeRoute)
 
   // Ant Design Components
   const { Header, Content, Footer, Sider } = Layout;
@@ -69,7 +70,7 @@ export default function SiderMenuLayout(props) {
         </Header>
         <Content style={{ margin: "0 16px" }}>
           <Breadcrumb style={{ margin: "16px 0" }}>
-            <Breadcrumb.Item>{activeRoute}</Breadcrumb.Item>
+            <Breadcrumb.Item><Link href="">{activeRoute}</Link></Breadcrumb.Item>
             <Breadcrumb.Item>test</Breadcrumb.Item>
           </Breadcrumb>
           <div
