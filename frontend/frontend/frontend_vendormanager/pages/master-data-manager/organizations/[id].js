@@ -6,6 +6,7 @@ import { dehydrate, QueryClient, useQuery } from "react-query";
 import getOrganizationalEntity from "../../../api_utils/api_fetchers/getOrganizationalEntity";
 import getEntityTypes from "../../../api_utils/api_fetchers/getEntityTypes";
 import getOrganizationalEntities from "../../../api_utils/api_fetchers/getOrganizationalEntities";
+import getLocations from "../../../api_utils/api_fetchers/getLocations";
 
 // Components
 import EntityForm from "../../../components/forms/EntityForm";
@@ -38,6 +39,13 @@ export default function Organization() {
   );
   const parentEntities = parentEntitiesQuery?.data;
 
+  // Data fetching or locations dropdown
+  const locationsQuery = useQuery(
+    ["locations"],
+    getLocations
+  );
+  const locations = locationsQuery?.data;
+
   if (entityQuery.isLoading) {
     return <>Loading...</>;
   }
@@ -53,7 +61,7 @@ export default function Organization() {
       </h2>
       <Row>
         <Col flex={2}>
-          <EntityForm initialValues={entity} entityTypes={entityTypes} parentEntities={parentEntities} locations={""}/>
+          <EntityForm initialValues={entity} entityTypes={entityTypes} parentEntities={parentEntities} locations={locations}/>
         </Col>
         <Col
           flex={1}
@@ -110,6 +118,18 @@ export async function getServerSideProps(context) {
   await queryClient.prefetchQuery(
     ["organizationalEntities", 1 /* depth param */],
     getOrganizationalEntities
+  );
+
+
+  /* 
+  --------------------------------------
+  Get options for "Locations" dropdown in the form
+  --------------------------------------
+  */
+
+  await queryClient.prefetchQuery(
+    ["locations"],
+    getLocations
   );
 
 

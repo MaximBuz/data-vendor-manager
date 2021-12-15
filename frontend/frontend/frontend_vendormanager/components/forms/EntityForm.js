@@ -14,6 +14,7 @@ export default function EntityForm({
   initialValues,
   entityTypes,
   parentEntities,
+  locations
 }) {
 
   //setting up mutation with react query
@@ -92,7 +93,7 @@ export default function EntityForm({
           description: initialValues.description,
           internal_id: initialValues.internal_id,
           parent: initialValues.parent?.id,
-          location: transformedLocation,
+          location: initialValues.location?.id,
         }}
       >
         <Form.Item
@@ -167,8 +168,8 @@ export default function EntityForm({
         >
           <Select style={{ minWidth: "300px" }}>
             {parentEntities &&
-              parentEntities.map((type) => {
-                return <Option value={type.id}>{type.name}</Option>;
+              parentEntities.map((entity) => {
+                return <Option value={entity.id}>{entity.name}</Option>;
               })}
           </Select>
         </Form.Item>
@@ -195,10 +196,10 @@ export default function EntityForm({
           }}
         >
           <Select style={{ minWidth: "300px" }}>
-            {/* Dynamically fetch options and create new ones */}
-            <Option value="jack">Jack</Option>
-            <Option value="lucy">Lucy</Option>
-            <Option value="Yiminghe">yiminghe</Option>
+            {locations &&
+              locations.map((location) => {
+                return <Option value={location.id}>{location.street + " " + location.street_nr + ", " + location.city + ", " + location.country}</Option>;
+              })}
           </Select>
         </Form.Item>
         <Link href="/master-data-manager/geographies/create">
