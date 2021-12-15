@@ -72,11 +72,13 @@ export default function Organization() {
       </h2>
           <EntityForm initialValues={entity} entityTypes={entityTypes} parentEntities={parentEntities} locations={locations}/>
         </Col>
-        <Divider type="vertical" style={{heigth: "auto"}}/>
+        <Divider type="vertical" style={{minHeight: "70vh"}}/>
         <Col
           flex={1}
         >
           <h2>Position in Organizational Tree</h2>
+          <div style={{height: "fitcontent", backgroundColor: "white", border: "1px solid #d9d9d9"}}>
+
           <Tree
             showLine = {{showLeafIcon: false}}
             defaultExpandAll
@@ -84,8 +86,9 @@ export default function Organization() {
             /* selectable= {false} */
             /* onSelect={"onSelect"} */
             treeData={treeData}
-            style={{ padding: "10px 0 0 10px", minHeigth: "90vh", border: "1px solid #d9d9d9"}}
+            style={{ padding: "10px 0 0 10px", minHeigth: "100%"}}
           />
+          </div>
         </Col>
       </Row>
     </>
