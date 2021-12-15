@@ -34,10 +34,11 @@ export default function SiderMenuLayout(props) {
   // Handle breadcrumbs
   const routeComponents = props.activeRoute.split("/")
   routeComponents.shift() //getting rid of empty value in array
+  let id;
   try /* getting dynamic id */ { 
     const router = useRouter();
     const query = router.query;
-    const id = Object.entries(query)[0][1]
+    id = Object.entries(query)[0][1]
   } catch {}
 
   // Ant Design Components
