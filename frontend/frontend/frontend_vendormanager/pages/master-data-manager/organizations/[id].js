@@ -26,21 +26,21 @@ export default function Organization() {
   );
   const entity = entityQuery.data[0];
 
-  // Data fetching or entity types dropdown
+  // Data fetching for entity types dropdown
   const entityTypesQuery = useQuery(
     ["entityTypes", 2 /* depth param */],
     getEntityTypes
   );
   const entityTypes = entityTypesQuery?.data;
 
-  // Data fetching or parents dropdown
+  // Data fetching for parents dropdown
   const parentEntitiesQuery = useQuery(
     ["organizationalEntities", 1 /* depth param */],
     getOrganizationalEntities
   );
   const parentEntities = parentEntitiesQuery?.data;
 
-  // Data fetching or locations dropdown
+  // Data fetching for locations dropdown
   const locationsQuery = useQuery(
     ["locations"],
     getLocations
