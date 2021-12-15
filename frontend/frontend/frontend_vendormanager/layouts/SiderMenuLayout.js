@@ -1,5 +1,6 @@
 // Routing
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 // state management
 import { useState } from "react";
@@ -33,6 +34,11 @@ export default function SiderMenuLayout(props) {
   // Handle breadcrumbs
   const routeComponents = props.activeRoute.split("/")
   routeComponents.shift() //getting rid of empty value in array
+  try /* getting dynamic id */ { 
+    const router = useRouter();
+    const query = router.query;
+    const id = Object.entries(query)[0][1]
+  } catch {}
 
   // Ant Design Components
   const { Header, Content, Footer, Sider } = Layout;
@@ -75,13 +81,17 @@ export default function SiderMenuLayout(props) {
           <Breadcrumb style={{ margin: "16px 0" }}>
             {/* Dynamically render breadcrumbs */}
             {routeComponents.map((path, index) => {
+              /* later we have to change this to the actual name of the item instead of id */
+              if ( /^\[.*\]$/.test(path) ) {
+                path = id ? id : path;
+              }
               if (index === routeComponents.length - 1){
                 return (
                   <Breadcrumb.Item>{path}</Breadcrumb.Item>
                 )
               } else /* ,if its the last item */{
                 return (
-                  <Breadcrumb.Item><Link href={`/${path}/`}>{path}</Link></Breadcrumb.Item>
+                  <Breadcrumb.Item><Link href={`/${routeComponents[index-1]?.concat("/") || ""}${path}/`}>{path}</Link></Breadcrumb.Item>
                 )
               }
             })}
