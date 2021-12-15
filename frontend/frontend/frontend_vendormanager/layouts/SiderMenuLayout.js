@@ -78,7 +78,7 @@ export default function SiderMenuLayout(props) {
           {/* This Component Manages module specific tabs */}
           <TopMenuItems activeModule={activeModule} activeRoute={props.activeRoute}></TopMenuItems>
         </Header>
-        <Content style={{ margin: "0 16px" }}>
+        <Content style={{ margin: "0 16px", }}>
           <Breadcrumb style={{ margin: "16px 0" }}>
             {/* Dynamically render breadcrumbs */}
             {routeComponents.map((path, index) => {
@@ -99,7 +99,7 @@ export default function SiderMenuLayout(props) {
           </Breadcrumb>
           <div
             className="site-layout-background"
-            style={{ padding: 24, minHeight: 360 }}
+            style={{ padding: "20px", minHeight: "100%"}}Ì
           >
             {props.children}
           </div>
