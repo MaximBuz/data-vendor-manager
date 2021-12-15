@@ -1,5 +1,9 @@
-import { Table } from "antd";
-import { Empty } from "antd";
+// Components
+import { Table, Empty, Tooltip } from "antd";
+import { EditOutlined } from "@ant-design/icons";
+
+// Routing
+import Link from "next/link";
 
 export default function LocationDataTable({
   data,
@@ -7,11 +11,18 @@ export default function LocationDataTable({
   scrollView,
   rowSelection,
 }) {
-
   // Getting unique values for filtering
-  const uniqueCountries = [...new Set(data.map(item => ({text: item.country, value: item.country})))];
-  const uniqueStates = [...new Set(data.map(item => ({text: item.state, value: item.state})))];
-  const uniqueCities = [...new Set(data.map(item => ({text: item.city, value: item.city})))];
+  const uniqueCountries = [
+    ...new Set(
+      data.map((item) => ({ text: item.country, value: item.country }))
+    ),
+  ];
+  const uniqueStates = [
+    ...new Set(data.map((item) => ({ text: item.state, value: item.state }))),
+  ];
+  const uniqueCities = [
+    ...new Set(data.map((item) => ({ text: item.city, value: item.city }))),
+  ];
 
   // defining the columns
   const columns = [
@@ -40,7 +51,7 @@ export default function LocationDataTable({
     {
       title: "Zip Code",
       dataIndex: "zip_code",
-      width: "10%"
+      width: "10%",
     },
     {
       title: "Street",
@@ -49,7 +60,23 @@ export default function LocationDataTable({
     {
       title: "Street Number",
       dataIndex: "street_nr",
-      width: "12%"
+      width: "12%",
+    },
+    {
+      title: "",
+      width: "3%",
+      render: (text, record) => {
+        return (
+          <Link href={`geographies/${record.key}`}>
+            <Tooltip
+              title="Edit this location or add buildings"
+              placement="left"
+            >
+              <EditOutlined />
+            </Tooltip>
+          </Link>
+        );
+      },
     },
   ];
 
