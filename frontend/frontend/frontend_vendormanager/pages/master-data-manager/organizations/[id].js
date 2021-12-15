@@ -77,7 +77,7 @@ export default function Organization() {
           flex={1}
         >
           <h2>Position in Organizational Tree</h2>
-          <div style={{height: "40em", backgroundColor: "white", border: "1px solid #d9d9d9"}}>
+          <div style={{height: "40em", overflow:"scroll", backgroundColor: "white", border: "1px solid #d9d9d9"}}>
 
           <Tree
             showLine = {{showLeafIcon: false}}
