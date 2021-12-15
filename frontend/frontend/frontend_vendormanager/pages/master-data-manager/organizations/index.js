@@ -7,6 +7,7 @@ import Link from "next/link";
 // Data Fetching
 import { dehydrate, QueryClient, useQuery } from "react-query";
 import getOrganizationalEntityRootChildren from "../../../api_utils/api_fetchers/getOrganizationalEntityRootChildren";
+import {Row, Col, Button} from "antd";
 
 const columns = [
   {
@@ -67,12 +68,16 @@ export default function Organizations() {
         creating entities (i.e. Legal Entitites, Divisions, etc.) with child and
         parent relationships.
       </p>
+      <Link href="organizations/create/">
+        <Button type="primary" style={{marginBottom: "10px"}}>Add new Entity</Button>
+      </Link>
       <TreeDataTable
         columns={columns}
         data={translatedData}
         rowSelection={false}
         isLoading={isLoading}
         scrollView={{ x: 1500, y: 500 }}
+        pagination={{defaultPageSize: 10, hideOnSinglePage: true}}
       />
     </>
   );
