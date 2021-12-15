@@ -8,7 +8,8 @@ import { InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
 // Data mutation
 import { useMutation } from "react-query";
-import postEntityType from "../../api_utils/api_mutators/postEntityType"
+import postEntityType from "../../api_utils/api_mutators/postEntityType";
+import patchEntity from "../../api_utils/api_mutators/patchEntity";
 
 export default function EntityForm({
   initialValues,
@@ -17,8 +18,9 @@ export default function EntityForm({
   locations
 }) {
 
-  //setting up mutation with react query
+  //setting up mutations with react query
   const typeMutation = useMutation(postEntityType)
+  const mutation = useMutation(patchEntity)
 
   /* 
   --------------------------------------
@@ -72,7 +74,7 @@ export default function EntityForm({
 
   // Submiting logic
   const onFinish = (values) => {
-    console.log("Success:", values);
+    mutation.mutate({values: values, id: initialValues.id})
   };
 
   const onFinishFailed = (errorInfo) => {
