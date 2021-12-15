@@ -28,8 +28,11 @@ export default function SiderMenuLayout(props) {
   };
 
   // Handle active menu highlighting
-  const activeRoute = props.activeRoute.split("/")[1];
-  console.log(activeRoute)
+  const activeModule = props.activeRoute.split("/")[1];
+
+  // Handle breadcrumbs
+  const routeComponents = props.activeRoute.split("/")
+  routeComponents.shift() //getting rid of empty value in array
 
   // Ant Design Components
   const { Header, Content, Footer, Sider } = Layout;
@@ -42,7 +45,7 @@ export default function SiderMenuLayout(props) {
           3B
           {/* <Logo className={classes.logo} fill="white" size={60}/> */}
         </div>
-        <Menu theme="dark" defaultSelectedKeys={[activeRoute]} mode="inline">
+        <Menu theme="dark" defaultSelectedKeys={[activeModule]} mode="inline">
           <Menu.Item key="dashboard" icon={<AppstoreOutlined />}>
             <Link href="/dashboard">Dashboard</Link>
           </Menu.Item>
@@ -66,12 +69,22 @@ export default function SiderMenuLayout(props) {
       <Layout className="site-layout">
         <Header className="site-layout-background" style={{ padding: 0 }}>
           {/* This Component Manages module specific tabs */}
-          <TopMenuItems activeModule={activeRoute} activeRoute={props.activeRoute}></TopMenuItems>
+          <TopMenuItems activeModule={activeModule} activeRoute={props.activeRoute}></TopMenuItems>
         </Header>
         <Content style={{ margin: "0 16px" }}>
           <Breadcrumb style={{ margin: "16px 0" }}>
-            <Breadcrumb.Item><Link href="">{activeRoute}</Link></Breadcrumb.Item>
-            <Breadcrumb.Item>test</Breadcrumb.Item>
+            {/* Dynamically render breadcrumbs */}
+            {routeComponents.map((path, index) => {
+              if (index === routeComponents.length - 1){
+                return (
+                  <Breadcrumb.Item>{path}</Breadcrumb.Item>
+                )
+              } else /* ,if its the last item */{
+                return (
+                  <Breadcrumb.Item><Link href={`/${path}/`}>{path}</Link></Breadcrumb.Item>
+                )
+              }
+            })}
           </Breadcrumb>
           <div
             className="site-layout-background"
