@@ -1,6 +1,6 @@
 // Components
 import { Table, Empty, Tooltip } from "antd";
-import { EditOutlined } from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 // Routing
 import Link from "next/link";
@@ -24,6 +24,11 @@ export default function LocationDataTable({
     ...new Set(data.map((item) => ({ text: item.city, value: item.city }))),
   ];
 
+  // Handle Deleting locations
+  const deleteLocation = (id) => {
+    console.log("about to delete" + id )
+  }
+
   // defining the columns
   const columns = [
     {
@@ -36,7 +41,6 @@ export default function LocationDataTable({
     {
       title: "State",
       dataIndex: "state",
-      defaultSortOrder: "descend",
       filters: uniqueStates,
       onFilter: (value, record) => record.state.indexOf(value) === 0,
       sorter: (a, b) => a.state.localeCompare(b.state),
@@ -67,14 +71,19 @@ export default function LocationDataTable({
       width: "3%",
       render: (text, record) => {
         return (
-          <Link href={`geographies/${record.key}`}>
-            <Tooltip
-              title="Edit this location or add buildings"
-              placement="left"
-            >
-              <EditOutlined />
+          <>
+            <Link href={`geographies/${record.key}`}>
+              <Tooltip
+                title="Edit this location or add buildings"
+                placement="left"
+              >
+                <EditOutlined />
+              </Tooltip>
+            </Link>
+            <Tooltip title="Delete this location" placement="left">
+              <DeleteOutlined onClick={() => deleteLocation(record.key)} />
             </Tooltip>
-          </Link>
+          </>
         );
       },
     },
