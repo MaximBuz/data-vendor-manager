@@ -47,6 +47,12 @@ export default function Organization() {
         </Col>
         <Divider type="vertical" style={{ minHeight: "70vh" }} />
         <Col flex={1}>
+          <div style={{
+            height: "70vh",
+            /* overflowY: "scroll",
+            scrollbarWidth: "none", */
+          }}>
+
           <h2>Buildings associated with this location</h2>
           {buildings.map((building) => {
             return <BuildingCard building={building} />;
@@ -70,6 +76,7 @@ export default function Organization() {
           >
             <UilMapMarkerPlus />
             Add new Building
+          </div>
           </div>
         </Col>
         <Divider type="vertical" style={{ minHeight: "70vh" }} />
