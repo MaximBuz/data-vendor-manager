@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 
 // Data Fetching
 import { dehydrate, QueryClient, useQuery } from "react-query";
-import getLocations from "../../../api_utils/api_fetchers/getLocations";
+import getLocationWithBuildings from "../../../api_utils/api_fetchers/getLocationWithBuildings";
 
 // Components
 import EntityForm from "../../../components/forms/EntityForm";
@@ -13,24 +13,24 @@ export default function Organization() {
 
   // get id of the organizational entity
   const router = useRouter();
-  const { id: entityId } = router.query;
+  const { id: locationId } = router.query;
 
 
   // Change this to getting locations with buildings
   // Data fetching for locations dropdown
-  const locationsQuery = useQuery(
-    ["locationWithBuildings"],
-    getLocations
+  const locationQuery = useQuery(
+    ["locationWithBuildings", locationId],
+    getLocationWithBuildings
   );
-  const locations = locationsQuery?.data;
+  const location = locationQuery?.data;
 
 /*   const treeData = treeQuery.data && JSON.parse(JSON.stringify(treeQuery.data).split('"id":').join('"key":')); */
 
-  if (locationsQuery.isLoading) {
+  if (locationQuery.isLoading) {
     return <>Loading...</>;
   }
 
-  if (locationsQuery.error) {
+  if (locationQuery.error) {
     return <>Error...</>;
   }
 
@@ -39,27 +39,15 @@ export default function Organization() {
       <Row gutter={[16, 16]}>
         <Col flex={2}>
       <h2>
-        {entity.name} ({entity.type.name})
+        {location.street} {location.street_nr}, {location.zip_code} {location.city}, {location.country} 
       </h2>
-          <EntityForm initialValues={entity} entityTypes={entityTypes} parentEntities={parentEntities} locations={locations}/>
+          {/* <EntityForm initialValues={entity} entityTypes={entityTypes} parentEntities={parentEntities} locations={locations}/> */}
         </Col>
         <Divider type="vertical" style={{minHeight: "70vh"}}/>
         <Col
           flex={1}
         >
           <h2>Position in Organizational Tree</h2>
-          <div style={{height: "40em", overflow:"scroll", backgroundColor: "white", border: "1px solid #d9d9d9"}}>
-
-          <Tree
-            showLine = {{showLeafIcon: false}}
-            defaultExpandAll
-            defaultSelectedKeys={[entity.id]}
-            /* selectable= {false} */
-            /* onSelect={"onSelect"} */
-            treeData={treeData}
-            style={{ padding: "10px 0 0 10px", minHeigth: "100%"}}
-          />
-          </div>
         </Col>
       </Row>
     </>
@@ -69,11 +57,13 @@ export default function Organization() {
 export async function getServerSideProps(context) {
   // Initializing cache from React Query
   const queryClient = new QueryClient();
+  
+  const locationId = context.params.id;
  
   // PRefetching the locations
   await queryClient.prefetchQuery(
-    ["locations"],
-    getLocations
+    ["locationWithBuildings", locationId],
+    getLocationWithBuildings
   );
 
 
