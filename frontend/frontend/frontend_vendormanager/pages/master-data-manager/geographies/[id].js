@@ -19,7 +19,7 @@ export default function Organization() {
   // Change this to getting locations with buildings
   // Data fetching for locations dropdown
   const locationsQuery = useQuery(
-    ["locations"],
+    ["locationWithBuildings"],
     getLocations
   );
   const locations = locationsQuery?.data;
