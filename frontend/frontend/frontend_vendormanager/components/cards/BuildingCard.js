@@ -39,13 +39,13 @@ export default function BuildingCard({ building }) {
         <EditOutlined
           style={{
             color: "grey",
-            fontSize: "20px",
+            fontSize: "17px",
           }}
         />
         <DeleteOutlined
           style={{
             color: "grey",
-            fontSize: "20px",
+            fontSize: "17px",
           }}
         />
       </div>
