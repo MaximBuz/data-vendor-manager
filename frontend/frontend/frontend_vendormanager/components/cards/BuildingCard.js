@@ -1,8 +1,43 @@
+// React
+import { useState } from "react";
+
+// Routing
+import { useRouter } from "next/router";
+
+// Data Mutation
+import {
+  dehydrate,
+  QueryClient,
+  useQuery,
+  useMutation,
+  useQueryClient,
+} from "react-query";
+import deleteBuilding from "../../api_utils/api_mutators/deleteBuilding";
+import DeleteModal from "../modals/DeleteModal";
+
 // Styling
 import { UilBuilding } from "@iconscout/react-unicons";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 export default function BuildingCard({ building }) {
+  //setting up mutations with react query
+  const queryClient = useQueryClient();
+
+  /* 
+  --------------------------------------
+  Handle Deletion Confirmation Modal
+  --------------------------------------
+  */
+
+  const [deleteConfirmationVisible, setDeleteConfirmationVisible] =
+    useState(false);
+  const showDeleteModal = () => setDeleteConfirmationVisible(true);
+
+  // creating mutator
+  const buildingDeletionMutation = useMutation(deleteBuilding, {
+    onSuccess: () => queryClient.invalidateQueries("locationWithBuildings"),
+  });
+
   return (
     <div
       style={{
@@ -47,8 +82,16 @@ export default function BuildingCard({ building }) {
             color: "grey",
             fontSize: "17px",
           }}
+          onClick={showDeleteModal}
         />
       </div>
+      <DeleteModal
+        modalVisibility={deleteConfirmationVisible}
+        setModalVisible={setDeleteConfirmationVisible}
+        mutator={buildingDeletionMutation}
+        idToDelete={building.id}
+        text="Are you sure you want to delete this building?"
+      ></DeleteModal>
     </div>
   );
 }
