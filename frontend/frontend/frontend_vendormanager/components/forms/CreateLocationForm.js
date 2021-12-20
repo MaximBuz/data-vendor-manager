@@ -1,5 +1,6 @@
-// React
+// Routing
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 // Components
 import { Form, Input, Button, Space } from "antd";
@@ -9,6 +10,9 @@ import { useQueryClient, useMutation } from "react-query";
 import postLocation from "../../api_utils/api_mutators/postLocation";
 
 export default function CreateEntityForm({ initialValues }) {
+  // initialize routing
+  const router = useRouter();
+
   //setting up mutations with react query
   const queryClient = useQueryClient();
   const mutation = useMutation(postLocation, {
@@ -21,6 +25,7 @@ export default function CreateEntityForm({ initialValues }) {
   // Submiting logic
   const onFinish = (values) => {
     mutation.mutate(values);
+    router.push("/master-data-manager/geographies/")
   };
 
   const onFinishFailed = (errorInfo) => {

@@ -129,7 +129,6 @@ export default function LocationDataTable({
           mutator={locationDeletionMutation}
           idToDelete={idToDelete}
           text="Are you sure you want to delete this location?"
-          nextLink="/master-data-manager/geographies"
         ></DeleteModal>
       </>
     );

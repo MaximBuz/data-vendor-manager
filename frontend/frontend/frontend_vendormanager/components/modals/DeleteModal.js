@@ -25,7 +25,7 @@ export default function DeleteModal({
     mutator.mutate(idToDelete);
     setModalVisible(false);
     // redirection
-    router.push(nextLink);
+    nextLink && router.push(nextLink);
   };
 
   // Handle cancel
