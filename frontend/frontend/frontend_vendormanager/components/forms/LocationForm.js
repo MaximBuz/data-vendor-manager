@@ -8,21 +8,19 @@ import { InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
 // Data mutation
 import { useQueryClient, useMutation, useQueries } from "react-query";
-//import patchLocation from "../../api_utils/api_mutators/patchLocation";
+import patchLocation from "../../api_utils/api_mutators/patchLocation";
 
 export default function EntityForm({ initialValues }) {
   //setting up mutations with react query
   const queryClient = useQueryClient();
-  /* const mutation = useMutation(patchLocation, {
-    onSuccess: () => queryClient.invalidateQueries("locationWithBuildings"),
-  }); */
+  const mutation = useMutation(patchLocation, {onSuccess: () => queryClient.invalidateQueries("locationWithBuildings")})
 
   // Initialize Form
   const [form] = Form.useForm();
 
   // Submiting logic
   const onFinish = (values) => {
-    /* mutation.mutate({values: values, id: initialValues.id}) */
+    mutation.mutate({values: values, id: initialValues.id})
   };
 
   const onFinishFailed = (errorInfo) => {
