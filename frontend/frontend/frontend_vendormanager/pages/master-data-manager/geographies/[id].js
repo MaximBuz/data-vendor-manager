@@ -1,22 +1,67 @@
+// React
+import { useState } from "react";
+
 // Routing
 import { useRouter } from "next/router";
 
 // Data Fetching
-import { dehydrate, QueryClient, useQuery } from "react-query";
+import { dehydrate, QueryClient, useQuery, useMutation, useQueryClient } from "react-query";
 import getLocationWithBuildings from "../../../api_utils/api_fetchers/getLocationWithBuildings";
+
+// Data Mutation
+import postBuilding from "../../../api_utils/api_mutators/postBuilding";
 
 // Components
 import LocationForm from "../../../components/forms/LocationForm";
 import BuildingCard from "../../../components/cards/BuildingCard";
-import { Row, Col, Tree, Divider } from "antd";
+import { Row, Col, Tree, Divider, Modal, Form, Input } from "antd";
 
 // Styling
-import { UilMapMarkerPlus } from '@iconscout/react-unicons'
+import { UilMapMarkerPlus } from "@iconscout/react-unicons";
 
 export default function Organization() {
   // get id of the location
   const router = useRouter();
   const { id: locationId } = router.query;
+
+  //setting up mutations with react query
+  const queryClient = useQueryClient();
+  const buildingMutation = useMutation(postBuilding, {onSuccess: () => queryClient.invalidateQueries("locationWithBuildings")});
+
+  /* 
+  --------------------------------------
+  Handle Modal for adding new Buildings to location
+  --------------------------------------
+  */
+
+  // modal functionality
+  const [visible, setVisible] = useState(false);
+  const [confirmLoading, setConfirmLoading] = useState(false);
+  const [modalText, setModalText] = useState(
+    "Add new Building to this location"
+  );
+  const showModal = () => setVisible(true);
+
+  // handling form inside modal
+  const [modalForm] = Form.useForm();
+
+  // handle submit
+  const handleOk = () => {
+    modalForm
+      .validateFields()
+      .then((values) => {
+        modalForm.resetFields();
+        buildingMutation.mutate({
+          values: values,
+          building_location: locationId,
+        });
+        setVisible(false);
+      })
+      .catch((info) => console.log(info));
+  };
+  const handleCancel = () => {
+    setVisible(false);
+  };
 
   // Data fetching for locations dropdown
   const locationQuery = useQuery(
@@ -47,36 +92,41 @@ export default function Organization() {
         </Col>
         <Divider type="vertical" style={{ minHeight: "70vh" }} />
         <Col flex={1}>
-          <div style={{
-            height: "70vh",
-            /* overflowY: "scroll",
-            scrollbarWidth: "none", */
-          }}>
-
-          <h2>Buildings associated with this location</h2>
-          {buildings.map((building) => {
-            return <BuildingCard building={building} />;
-          })}
           <div
             style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: "0px",
-              padding: "10px",
-              borderRadius: "2px",
-              borderStyle: "dashed",
-              borderWidth: "1px",
-              borderColor: "#d9d9d9",
-              margin: "20px",
-              color: "grey",
-              cursor: "pointer"
+              height: "70vh",
+              /* overflowY: "scroll",
+            scrollbarWidth: "none", */
             }}
           >
-            <UilMapMarkerPlus />
-            Add new Building
-          </div>
+            <h2>Buildings associated with this location</h2>
+            {buildings.map((building) => {
+              return <BuildingCard building={building} />;
+            })}
+            {/* Create new Building button */}
+            {/* ------------------------------------------ */}
+            <div
+              onClick={showModal}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "0px",
+                padding: "10px",
+                borderRadius: "2px",
+                borderStyle: "dashed",
+                borderWidth: "1px",
+                borderColor: "#d9d9d9",
+                margin: "20px",
+                color: "grey",
+                cursor: "pointer",
+              }}
+            >
+              <UilMapMarkerPlus />
+              Add new Building
+            </div>
+            {/* ------------------------------------------ */}
           </div>
         </Col>
         <Divider type="vertical" style={{ minHeight: "70vh" }} />
@@ -84,6 +134,21 @@ export default function Organization() {
           <h2>Entities associated with this location</h2>
         </Col>
       </Row>
+
+      <Modal
+        title="Add new Building to this location"
+        visible={visible}
+        okText="Add"
+        onOk={handleOk}
+        confirmLoading={confirmLoading}
+        onCancel={handleCancel}
+      >
+        <Form form={modalForm} preserve={false} layout="vertical">
+          <Form.Item name="building_name">
+            <Input placeholder="Add new Building to this location" />
+          </Form.Item>
+        </Form>
+      </Modal>
     </>
   );
 }
