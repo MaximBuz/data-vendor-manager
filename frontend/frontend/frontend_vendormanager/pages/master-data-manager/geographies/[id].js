@@ -79,7 +79,7 @@ export default function Organization() {
     getLocationWithBuildings
   );
   const location = locationQuery?.data;
-  const buildings = location.buildings;
+  const buildings = location?.buildings;
 
 
   // Data fetching for preselecting organizational entities related to this location
@@ -160,16 +160,18 @@ export default function Organization() {
           <h2>Entities associated with this location</h2>
           {/* Displaying Entities at that location */}
           {/* ------------------------------------------ */}
-          <Tree
-            showLine = {{showLeafIcon: false}}
-            defaultExpandAll
-            multiple={true}
-            defaultSelectedKeys={relatedEntities.map(entity => entity.id)}
-            /* selectable= {false} */
-            /* onSelect={"onSelect"} */
-            treeData={treeData}
-            style={{ padding: "10px 0 0 10px", minHeigth: "100%"}}
-          />
+          <div style={{height: "40em", overflow:"scroll", backgroundColor: "white", border: "1px solid #d9d9d9"}}>
+            <Tree
+              showLine = {{showLeafIcon: false}}
+              defaultExpandAll
+              multiple={true}
+              defaultSelectedKeys={relatedEntities.map(entity => entity.id)}
+              /* selectable= {false} */
+              /* onSelect={"onSelect"} */
+              treeData={treeData}
+              style={{ padding: "10px 0 0 10px", minHeigth: "100%"}}
+            />
+          </div>
           {/* ------------------------------------------ */}
         </Col>
       </Row>
