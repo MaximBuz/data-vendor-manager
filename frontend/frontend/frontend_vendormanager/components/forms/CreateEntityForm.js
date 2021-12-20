@@ -1,6 +1,9 @@
 // React
 import { useState } from "react";
+
+// Routing
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 // Components
 import {
@@ -27,6 +30,9 @@ export default function CreateEntityForm({
   parentEntities,
   locations,
 }) {
+  // Initializing router
+  const router = useRouter();
+
   //setting up mutations with react query
   const queryClient = useQueryClient();
   const typeMutation = useMutation(postEntityType);
@@ -87,6 +93,9 @@ export default function CreateEntityForm({
       .then((values) => {
         form.resetFields();
         mutation.mutate({ values: values });
+      })
+      .then(() => {
+        router.push("/master-data-manager/organizations/");
       })
       .catch((info) => console.log(info));
   };
