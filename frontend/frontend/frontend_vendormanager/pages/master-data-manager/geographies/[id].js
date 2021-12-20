@@ -5,8 +5,16 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 
 // Data Fetching
-import { dehydrate, QueryClient, useQuery, useMutation, useQueryClient } from "react-query";
+import {
+  dehydrate,
+  QueryClient,
+  useQuery,
+  useMutation,
+  useQueryClient,
+} from "react-query";
 import getLocationWithBuildings from "../../../api_utils/api_fetchers/getLocationWithBuildings";
+import getOrganizationalEntities from "../../../api_utils/api_fetchers/getOrganizationalEntities";
+import getOrganizationalEntityRootChildren from "../../../api_utils/api_fetchers/getOrganizationalEntityRootChildren";
 
 // Data Mutation
 import postBuilding from "../../../api_utils/api_mutators/postBuilding";
@@ -26,7 +34,9 @@ export default function Organization() {
 
   //setting up mutations with react query
   const queryClient = useQueryClient();
-  const buildingMutation = useMutation(postBuilding, {onSuccess: () => queryClient.invalidateQueries("locationWithBuildings")});
+  const buildingMutation = useMutation(postBuilding, {
+    onSuccess: () => queryClient.invalidateQueries("locationWithBuildings"),
+  });
 
   /* 
   --------------------------------------
@@ -70,6 +80,22 @@ export default function Organization() {
   );
   const location = locationQuery?.data;
   const buildings = location.buildings;
+
+
+  // Data fetching for preselecting organizational entities related to this location
+  const entitiesQuery = useQuery(
+    ["organizationalEntities", 1 /* Depth parameter */],
+    getOrganizationalEntities
+  );
+  const relatedEntities = entitiesQuery?.data.filter((entity) => entity.location?.id == locationId);
+  // Data fetching tree structure
+    const treeQuery = useQuery(
+      ["organizationalEntityRootChildren", 10],
+      getOrganizationalEntityRootChildren
+    );
+  
+    const treeData = treeQuery.data && JSON.parse(JSON.stringify(treeQuery.data).split('"id":').join('"key":').split('"name":').join('"title":'));
+  
 
   /*   const treeData = treeQuery.data && JSON.parse(JSON.stringify(treeQuery.data).split('"id":').join('"key":')); */
 
@@ -132,6 +158,19 @@ export default function Organization() {
         <Divider type="vertical" style={{ minHeight: "70vh" }} />
         <Col flex={1}>
           <h2>Entities associated with this location</h2>
+          {/* Displaying Entities at that location */}
+          {/* ------------------------------------------ */}
+          <Tree
+            showLine = {{showLeafIcon: false}}
+            defaultExpandAll
+            multiple={true}
+            defaultSelectedKeys={relatedEntities.map(entity => entity.id)}
+            /* selectable= {false} */
+            /* onSelect={"onSelect"} */
+            treeData={treeData}
+            style={{ padding: "10px 0 0 10px", minHeigth: "100%"}}
+          />
+          {/* ------------------------------------------ */}
         </Col>
       </Row>
 
@@ -159,10 +198,16 @@ export async function getServerSideProps(context) {
 
   const locationId = context.params.id;
 
-  // PRefetching the locations
+  // Prefetching the locations
   await queryClient.prefetchQuery(
     ["locationWithBuildings", locationId],
     getLocationWithBuildings
+  );
+
+  // Prefetching organizational entities
+  await queryClient.prefetchQuery(
+    ["organizationalEntities", 1 /* Depth parameter */],
+    getOrganizationalEntities
   );
 
   return {
