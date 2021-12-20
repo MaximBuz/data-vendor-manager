@@ -29,8 +29,12 @@ export default function CreateLocation() {
 
   return (
     <>
-      <h2>Add new Location</h2>
-      <CreateLocationForm />
+    <Row>
+      <Col flex={0.3}>
+        <h2>Add new Location</h2>
+        <CreateLocationForm />
+      </Col>
+    </Row>
     </>
   );
 }

@@ -1,6 +1,13 @@
+import { useState } from "react";
+
 // Components
 import { Table, Empty, Tooltip } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import DeleteModal from "../modals/DeleteModal";
+
+// Data mutation
+import { useMutation, useQueryClient } from "react-query";
+import deleteLocation from "../../api_utils/api_mutators/deleteLocation";
 
 // Routing
 import Link from "next/link";
@@ -24,10 +31,25 @@ export default function LocationDataTable({
     ...new Set(data.map((item) => ({ text: item.city, value: item.city }))),
   ];
 
-  // Handle Deleting locations
-  const deleteLocation = (id) => {
-    console.log("about to delete" + id )
-  }
+    //setting up mutations with react query
+    const queryClient = useQueryClient();
+
+  /* 
+  --------------------------------------
+  Handle Deletion Confirmation Modal
+  --------------------------------------
+  */
+
+  const [deleteConfirmationVisible, setDeleteConfirmationVisible] =
+    useState(false);
+  const showDeleteModal = () => setDeleteConfirmationVisible(true);
+
+  const [idToDelete, setIdToDelete ] = useState("")
+
+  // creating mutator
+  const locationDeletionMutation = useMutation(deleteLocation, {
+    onSuccess: () => queryClient.invalidateQueries("locations"),
+  });
 
   // defining the columns
   const columns = [
@@ -81,7 +103,10 @@ export default function LocationDataTable({
               </Tooltip>
             </Link>
             <Tooltip title="Delete this location" placement="left">
-              <DeleteOutlined onClick={() => deleteLocation(record.key)} />
+              <DeleteOutlined onClick={() => {
+                setIdToDelete(record.key);
+                showDeleteModal();
+                }} />
             </Tooltip>
           </>
         );
@@ -98,6 +123,14 @@ export default function LocationDataTable({
           dataSource={data}
           scroll={scrollView}
         />
+        <DeleteModal
+          modalVisibility={deleteConfirmationVisible}
+          setModalVisible={setDeleteConfirmationVisible}
+          mutator={locationDeletionMutation}
+          idToDelete={idToDelete}
+          text="Are you sure you want to delete this location?"
+          nextLink="/master-data-manager/geographies"
+        ></DeleteModal>
       </>
     );
   } else if (isLoading) {

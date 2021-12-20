@@ -44,7 +44,7 @@ export default function EntityForm({ initialValues }) {
           street_nr: initialValues.street_nr,
         }}
       >
-        <Space>
+        
           <Form.Item label="Country" name="country">
             <Input placeholder="Add Country" />
           </Form.Item>
@@ -52,9 +52,9 @@ export default function EntityForm({ initialValues }) {
           <Form.Item label="State" name="state">
             <Input placeholder="Add State" />
           </Form.Item>
-        </Space>{" "}
-        <br />
-        <Space>
+        
+        
+        
           <Form.Item label="City" name="city">
             <Input placeholder="Add City" />
           </Form.Item>
@@ -62,9 +62,9 @@ export default function EntityForm({ initialValues }) {
           <Form.Item label="ZIP Code" name="zip_code">
             <Input placeholder="Add zip_code" />
           </Form.Item>
-        </Space>
-        <br />
-        <Space>
+        
+        
+        
           <Form.Item label="Street" name="street">
             <Input placeholder="Add Street" />
           </Form.Item>
@@ -72,7 +72,7 @@ export default function EntityForm({ initialValues }) {
           <Form.Item label="Street Number" name="street_nr">
             <Input placeholder="Add Street Number" />
           </Form.Item>
-        </Space>
+        
         <Form.Item>
           <Button type="primary" htmlType="submit">
             Save changes
