@@ -131,7 +131,7 @@ export default function Organization() {
         setModalVisible={setDeleteConfirmationVisible}
         mutator={entityDeletionMutation}
         idToDelete={entityId}
-        text="Are you sure you want to delete this entity?"
+        text="Are you sure you want to delete this entity (and all its children)?"
         nextLink="/master-data-manager/organizations"
       ></DeleteModal>
     </>
