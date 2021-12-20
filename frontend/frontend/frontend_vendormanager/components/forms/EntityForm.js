@@ -177,7 +177,7 @@ export default function EntityForm({
               })}
           </Select>
         </Form.Item>
-          <Link href="/master-data-manager/organizations/create">
+          <a href="/master-data-manager/organizations/create" target="_blank">
           <Tooltip title="Add new Entity" placement="right">
               <Button
                 style={{ position: "relative", top: "3px" }}
@@ -185,7 +185,7 @@ export default function EntityForm({
                 icon={<PlusOutlined />}
               />
             </Tooltip>
-          </Link>
+          </a>
         </Space>
         <br/>
         <Space size="small" align="center">
@@ -206,7 +206,7 @@ export default function EntityForm({
               })}
           </Select>
         </Form.Item>
-        <Link href="/master-data-manager/geographies/create">
+        <a href="/master-data-manager/geographies/create" target="_blank">
           <Tooltip title="Add new Location" placement="right">
               <Button
                 style={{ position: "relative", top: "3px" }}
@@ -214,7 +214,7 @@ export default function EntityForm({
                 icon={<PlusOutlined />}
               />
             </Tooltip>
-          </Link>
+          </a>
         </Space>
 
         <Form.Item>
