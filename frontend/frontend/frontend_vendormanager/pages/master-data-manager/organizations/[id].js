@@ -1,17 +1,27 @@
+// React
+import { useState } from "react";
+
 // Routing
 import { useRouter } from "next/router";
 
 // Data Fetching
-import { dehydrate, QueryClient, useQuery } from "react-query";
+import { dehydrate, QueryClient, useQuery, useMutation } from "react-query";
 import getOrganizationalEntity from "../../../api_utils/api_fetchers/getOrganizationalEntity";
 import getEntityTypes from "../../../api_utils/api_fetchers/getEntityTypes";
 import getOrganizationalEntities from "../../../api_utils/api_fetchers/getOrganizationalEntities";
 import getOrganizationalEntityRootChildren from "../../../api_utils/api_fetchers/getOrganizationalEntityRootChildren";
 import getLocations from "../../../api_utils/api_fetchers/getLocations";
 
+// Data mutation 
+import deleteEntity from "../../../api_utils/api_mutators/deleteEntity";
+
 // Components
 import EntityForm from "../../../components/forms/EntityForm";
-import { Row, Col, Tree, Divider } from "antd";
+import { Row, Col, Tree, Divider, Button } from "antd";
+import DeleteModal from "../../../components/modals/DeleteModal";
+
+// Notifications
+import { toast } from "react-toastify";
 
 export default function Organization() {
 
@@ -55,6 +65,24 @@ export default function Organization() {
 
   const treeData = treeQuery.data && JSON.parse(JSON.stringify(treeQuery.data).split('"id":').join('"key":').split('"name":').join('"title":'));
 
+  /* 
+  --------------------------------------
+  Handle Deletion Confirmation Modal
+  --------------------------------------
+  */
+
+  const [deleteConfirmationVisible, setDeleteConfirmationVisible] =
+    useState(false);
+  const showDeleteModal = () => setDeleteConfirmationVisible(true);
+
+  // creating mutator
+  const entityDeletionMutation = useMutation(deleteEntity, {
+    onSuccess: () => {
+      toast.success("Deleted entity successfully");
+      queryClient.invalidateQueries("locations");
+    },
+  });
+
   if (entityQuery.isLoading) {
     return <>Loading...</>;
   }
@@ -91,6 +119,21 @@ export default function Organization() {
           </div>
         </Col>
       </Row>
+      <Divider></Divider>
+      <Row justify="center">
+        <Button onClick={showDeleteModal} type="primary" danger>
+          Delete Location
+        </Button>
+      </Row>
+
+      <DeleteModal
+        modalVisibility={deleteConfirmationVisible}
+        setModalVisible={setDeleteConfirmationVisible}
+        mutator={entityDeletionMutation}
+        idToDelete={entityId}
+        text="Are you sure you want to delete this entity?"
+        nextLink="/master-data-manager/organizations"
+      ></DeleteModal>
     </>
   );
 }

@@ -67,7 +67,7 @@ export default function Organization() {
   // creating mutator
   const buildingMutation = useMutation(postBuilding, {
     onSuccess: () => {
-      toast.success("Added location successfully");
+      toast.success("Added building successfully");
       queryClient.invalidateQueries("locationWithBuildings");
     },
   });
