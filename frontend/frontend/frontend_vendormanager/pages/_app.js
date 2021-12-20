@@ -18,6 +18,10 @@ import {
 } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 
+// Notifications
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function MyApp({ Component, pageProps }) {
 
   // Instantiate a query client for React Query
@@ -31,6 +35,7 @@ function MyApp({ Component, pageProps }) {
       <Hydrate state={pageProps.dehydratedState}>
         <SiderMenuLayout activeRoute={router.route}>
           <Component {...pageProps} />
+          <ToastContainer/>
         </SiderMenuLayout>
       </Hydrate>
       <ReactQueryDevtools initialIsOpen={false} position={"bottom-right"}/>

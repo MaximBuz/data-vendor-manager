@@ -12,6 +12,9 @@ import deleteLocation from "../../api_utils/api_mutators/deleteLocation";
 // Routing
 import Link from "next/link";
 
+// Notifications
+import { toast } from "react-toastify";
+
 export default function LocationDataTable({
   data,
   isLoading,
@@ -31,8 +34,8 @@ export default function LocationDataTable({
     ...new Set(data.map((item) => ({ text: item.city, value: item.city }))),
   ];
 
-    //setting up mutations with react query
-    const queryClient = useQueryClient();
+  //setting up mutations with react query
+  const queryClient = useQueryClient();
 
   /* 
   --------------------------------------
@@ -44,11 +47,14 @@ export default function LocationDataTable({
     useState(false);
   const showDeleteModal = () => setDeleteConfirmationVisible(true);
 
-  const [idToDelete, setIdToDelete ] = useState("")
+  const [idToDelete, setIdToDelete] = useState("");
 
   // creating mutator
   const locationDeletionMutation = useMutation(deleteLocation, {
-    onSuccess: () => queryClient.invalidateQueries("locations"),
+    onSuccess: () => {
+      toast.success("Deleted Location successfully");
+      queryClient.invalidateQueries("locations");
+    },
   });
 
   // defining the columns
@@ -103,10 +109,12 @@ export default function LocationDataTable({
               </Tooltip>
             </Link>
             <Tooltip title="Delete this location" placement="left">
-              <DeleteOutlined onClick={() => {
-                setIdToDelete(record.key);
-                showDeleteModal();
-                }} />
+              <DeleteOutlined
+                onClick={() => {
+                  setIdToDelete(record.key);
+                  showDeleteModal();
+                }}
+              />
             </Tooltip>
           </>
         );

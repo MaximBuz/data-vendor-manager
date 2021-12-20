@@ -25,6 +25,9 @@ import { useQueryClient, useMutation, useQueries } from "react-query";
 import postEntityType from "../../api_utils/api_mutators/postEntityType";
 import postEntity from "../../api_utils/api_mutators/postEntity";
 
+// Notifications
+import { toast } from "react-toastify";
+
 export default function CreateEntityForm({
   entityTypes,
   parentEntities,
@@ -37,8 +40,10 @@ export default function CreateEntityForm({
   const queryClient = useQueryClient();
   const typeMutation = useMutation(postEntityType);
   const mutation = useMutation(postEntity, {
-    onSuccess: () =>
-      queryClient.invalidateQueries("organizationalEntityRootChildren"),
+    onSuccess: () => {
+      toast.success("Added entity successfully");
+      queryClient.invalidateQueries("organizationalEntityRootChildren");
+    },
   });
 
   /* 
@@ -203,7 +208,10 @@ export default function CreateEntityForm({
                     })}
                 </Select>
               </Form.Item>
-              <a href="/master-data-manager/organizations/create" target="_blank">
+              <a
+                href="/master-data-manager/organizations/create"
+                target="_blank"
+              >
                 <Tooltip title="Add new Entity" placement="right">
                   <Button
                     style={{ position: "relative", top: "3px" }}

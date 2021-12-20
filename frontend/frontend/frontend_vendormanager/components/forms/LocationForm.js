@@ -10,10 +10,15 @@ import { InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
 import { useQueryClient, useMutation, useQueries } from "react-query";
 import patchLocation from "../../api_utils/api_mutators/patchLocation";
 
+// Notifications
+import { toast } from "react-toastify";
+
 export default function EntityForm({ initialValues }) {
   //setting up mutations with react query
   const queryClient = useQueryClient();
-  const mutation = useMutation(patchLocation, {onSuccess: () => queryClient.invalidateQueries("locationWithBuildings")})
+  const mutation = useMutation(patchLocation, {onSuccess: () => {
+    toast.success("Updated location successfully")
+    queryClient.invalidateQueries("locationWithBuildings")}})
 
   // Initialize Form
   const [form] = Form.useForm();

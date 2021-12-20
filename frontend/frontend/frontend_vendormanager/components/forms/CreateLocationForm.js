@@ -8,6 +8,8 @@ import { Form, Input, Button, Space } from "antd";
 // Data mutation
 import { useQueryClient, useMutation } from "react-query";
 import postLocation from "../../api_utils/api_mutators/postLocation";
+// Notifications
+import { toast } from "react-toastify";
 
 export default function CreateEntityForm({ initialValues }) {
   // initialize routing
@@ -16,7 +18,10 @@ export default function CreateEntityForm({ initialValues }) {
   //setting up mutations with react query
   const queryClient = useQueryClient();
   const mutation = useMutation(postLocation, {
-    onSuccess: () => queryClient.invalidateQueries("locations"),
+    onSuccess: () => {
+      toast.success("Added location successfully");
+      queryClient.invalidateQueries("locations");
+    },
   });
 
   // Initialize Formyx<<<
@@ -25,7 +30,7 @@ export default function CreateEntityForm({ initialValues }) {
   // Submiting logic
   const onFinish = (values) => {
     mutation.mutate(values);
-    router.push("/master-data-manager/geographies/")
+    router.push("/master-data-manager/geographies/");
   };
 
   const onFinishFailed = (errorInfo) => {

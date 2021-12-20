@@ -11,6 +11,9 @@ import { useQueryClient, useMutation, useQueries } from "react-query";
 import postEntityType from "../../api_utils/api_mutators/postEntityType";
 import patchEntity from "../../api_utils/api_mutators/patchEntity";
 
+// Notifications
+import { toast } from "react-toastify";
+
 export default function EntityForm({
   initialValues,
   entityTypes,
@@ -21,7 +24,9 @@ export default function EntityForm({
   //setting up mutations with react query
   const queryClient = useQueryClient()
   const typeMutation = useMutation(postEntityType)
-  const mutation = useMutation(patchEntity, {onSuccess: () => queryClient.invalidateQueries("organizationalEntityRootChildren")})
+  const mutation = useMutation(patchEntity, {onSuccess: () => {
+    toast.success("Updated entity successfully")
+    queryClient.invalidateQueries("organizationalEntityRootChildren")}})
 
   /* 
   --------------------------------------

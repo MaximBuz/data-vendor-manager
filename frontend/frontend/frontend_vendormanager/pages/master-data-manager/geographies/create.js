@@ -20,11 +20,16 @@ import postLocation from "../../../api_utils/api_mutators/postLocation";
 import CreateLocationForm from "../../../components/forms/CreateLocationForm";
 import { Row, Col, Divider, Form, Input } from "antd";
 
+// Notifications
+import { toast } from "react-toastify";
+
 export default function CreateLocation() {
   //setting up mutations with react query
   const queryClient = useQueryClient();
   const mutation = useMutation(postLocation, {
-    onSuccess: () => queryClient.invalidateQueries("locations"),
+    onSuccess: () => {
+      toast.success("Added location successfully")
+      queryClient.invalidateQueries("locations")},
   });
 
   return (

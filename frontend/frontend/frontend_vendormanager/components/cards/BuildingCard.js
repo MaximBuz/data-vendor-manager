@@ -6,9 +6,6 @@ import { useRouter } from "next/router";
 
 // Data Mutation
 import {
-  dehydrate,
-  QueryClient,
-  useQuery,
   useMutation,
   useQueryClient,
 } from "react-query";
@@ -19,7 +16,11 @@ import DeleteModal from "../modals/DeleteModal";
 import { UilBuilding } from "@iconscout/react-unicons";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
+// Notifications
+import { toast } from 'react-toastify';
+
 export default function BuildingCard({ building }) {
+
   //setting up mutations with react query
   const queryClient = useQueryClient();
 
@@ -35,7 +36,10 @@ export default function BuildingCard({ building }) {
 
   // creating mutator
   const buildingDeletionMutation = useMutation(deleteBuilding, {
-    onSuccess: () => queryClient.invalidateQueries("locationWithBuildings"),
+    onSuccess: () => {
+      toast.success("Deleted building successfully")
+      queryClient.invalidateQueries("locationWithBuildings");
+    },
   });
 
   return (

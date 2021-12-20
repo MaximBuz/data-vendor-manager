@@ -29,6 +29,9 @@ import { Row, Col, Tree, Divider, Modal, Form, Input, Button } from "antd";
 // Styling
 import { UilMapMarkerPlus } from "@iconscout/react-unicons";
 
+// Notifications
+import { toast } from "react-toastify";
+
 export default function Organization() {
   // get id of the location
   const router = useRouter();
@@ -49,7 +52,10 @@ export default function Organization() {
 
   // creating mutator
   const locationDeletionMutation = useMutation(deleteLocation, {
-    onSuccess: () => queryClient.invalidateQueries("locations"),
+    onSuccess: () => {
+      toast.success("Deleted location successfully");
+      queryClient.invalidateQueries("locations");
+    },
   });
 
   /* 
@@ -60,7 +66,10 @@ export default function Organization() {
 
   // creating mutator
   const buildingMutation = useMutation(postBuilding, {
-    onSuccess: () => queryClient.invalidateQueries("locationWithBuildings"),
+    onSuccess: () => {
+      toast.success("Added location successfully");
+      queryClient.invalidateQueries("locationWithBuildings");
+    },
   });
 
   // modal functionality
