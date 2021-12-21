@@ -1,46 +1,23 @@
-// React
-import { useState } from "react";
-
-// Routing
-import { useRouter } from "next/router";
-
 // Data Mutation
-import {
-  useMutation,
-  useQueryClient,
-} from "react-query";
 import deleteBuilding from "../../api_utils/api_mutators/deleteBuilding";
-import DeleteModal from "../modals/DeleteModal";
 
 // Styling
 import { UilBuilding } from "@iconscout/react-unicons";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
-// Notifications
-import { toast } from 'react-toastify';
+// Custom Hooks
+import useDeleteConfirmation from "../../custom_hooks/useDeleteConfirmation";
 
 export default function BuildingCard({ building }) {
 
-  //setting up mutations with react query
-  const queryClient = useQueryClient();
-
-  /* 
-  --------------------------------------
-  Handle Deletion Confirmation Modal
-  --------------------------------------
-  */
-
-  const [deleteConfirmationVisible, setDeleteConfirmationVisible] =
-    useState(false);
-  const showDeleteModal = () => setDeleteConfirmationVisible(true);
-
-  // creating mutator
-  const buildingDeletionMutation = useMutation(deleteBuilding, {
-    onSuccess: () => {
-      toast.success("Deleted building successfully")
-      queryClient.invalidateQueries("locationWithBuildings");
-    },
-  });
+  // Handle deletion
+  const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
+    deleteBuilding /* Api Call */,
+    "Deleted building successfully" /* Success Notification Text */,
+    "locationWithBuildings" /* Query to invalidate on success */,
+    building.id /* Id to delete */,
+    "Are you sure you want to delete this building?" /* Confirmation Text */
+  );
 
   return (
     <div
@@ -89,13 +66,7 @@ export default function BuildingCard({ building }) {
           onClick={showDeleteModal}
         />
       </div>
-      <DeleteModal
-        modalVisibility={deleteConfirmationVisible}
-        setModalVisible={setDeleteConfirmationVisible}
-        mutator={buildingDeletionMutation}
-        idToDelete={building.id}
-        text="Are you sure you want to delete this building?"
-      ></DeleteModal>
+      {DeleteModal}
     </div>
   );
 }

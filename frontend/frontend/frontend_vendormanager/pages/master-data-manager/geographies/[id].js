@@ -23,7 +23,6 @@ import deleteLocation from "../../../api_utils/api_mutators/deleteLocation";
 // Components
 import LocationForm from "../../../components/forms/LocationForm";
 import BuildingCard from "../../../components/cards/BuildingCard";
-import DeleteModal from "../../../components/modals/DeleteModal";
 import { Row, Col, Tree, Divider, Modal, Form, Input, Button } from "antd";
 
 // Styling
@@ -31,6 +30,10 @@ import { UilMapMarkerPlus } from "@iconscout/react-unicons";
 
 // Notifications
 import { toast } from "react-toastify";
+
+// Custom Hooks
+import useDeleteConfirmation from "../../../custom_hooks/useDeleteConfirmation";
+
 
 export default function Organization() {
   // get id of the location
@@ -40,23 +43,15 @@ export default function Organization() {
   //setting up mutations with react query
   const queryClient = useQueryClient();
 
-  /* 
-  --------------------------------------
-  Handle Deletion Confirmation Modal
-  --------------------------------------
-  */
-
-  const [deleteConfirmationVisible, setDeleteConfirmationVisible] =
-    useState(false);
-  const showDeleteModal = () => setDeleteConfirmationVisible(true);
-
-  // creating mutator
-  const locationDeletionMutation = useMutation(deleteLocation, {
-    onSuccess: () => {
-      toast.success("Deleted location successfully");
-      queryClient.invalidateQueries("locations");
-    },
-  });
+  // Handle deletion
+  const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
+    deleteLocation, // Api call
+    "Deleted location successfully", // Success Notification Text
+    "locations", // Query to invalidate on success
+    locationId, // Id to delete
+    "Are you sure you want to delete this location?", // Confirmation Text 
+    "/master-data-manager/geographies" // Next Link
+  );
 
   /* 
   --------------------------------------
@@ -238,15 +233,8 @@ export default function Organization() {
           </Form.Item>
         </Form>
       </Modal>
+      {DeleteModal}
 
-      <DeleteModal
-        modalVisibility={deleteConfirmationVisible}
-        setModalVisible={setDeleteConfirmationVisible}
-        mutator={locationDeletionMutation}
-        idToDelete={locationId}
-        text="Are you sure you want to delete this location?"
-        nextLink="/master-data-manager/geographies"
-      ></DeleteModal>
     </>
   );
 }

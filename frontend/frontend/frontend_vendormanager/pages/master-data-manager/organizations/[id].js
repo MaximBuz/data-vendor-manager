@@ -1,11 +1,8 @@
-// React
-import { useState } from "react";
-
 // Routing
 import { useRouter } from "next/router";
 
 // Data Fetching
-import { dehydrate, QueryClient, useQuery, useMutation } from "react-query";
+import { dehydrate, QueryClient, useQuery } from "react-query";
 import getOrganizationalEntity from "../../../api_utils/api_fetchers/getOrganizationalEntity";
 import getEntityTypes from "../../../api_utils/api_fetchers/getEntityTypes";
 import getOrganizationalEntities from "../../../api_utils/api_fetchers/getOrganizationalEntities";
@@ -18,10 +15,9 @@ import deleteEntity from "../../../api_utils/api_mutators/deleteEntity";
 // Components
 import EntityForm from "../../../components/forms/EntityForm";
 import { Row, Col, Tree, Divider, Button } from "antd";
-import DeleteModal from "../../../components/modals/DeleteModal";
 
-// Notifications
-import { toast } from "react-toastify";
+// Custom Hooks
+import useDeleteConfirmation from "../../../custom_hooks/useDeleteConfirmation";
 
 export default function Organization() {
 
@@ -65,23 +61,15 @@ export default function Organization() {
 
   const treeData = treeQuery.data && JSON.parse(JSON.stringify(treeQuery.data).split('"id":').join('"key":').split('"name":').join('"title":'));
 
-  /* 
-  --------------------------------------
-  Handle Deletion Confirmation Modal
-  --------------------------------------
-  */
-
-  const [deleteConfirmationVisible, setDeleteConfirmationVisible] =
-    useState(false);
-  const showDeleteModal = () => setDeleteConfirmationVisible(true);
-
-  // creating mutator
-  const entityDeletionMutation = useMutation(deleteEntity, {
-    onSuccess: () => {
-      toast.success("Deleted entity successfully");
-      queryClient.invalidateQueries("locations");
-    },
-  });
+  // Handle deletion
+  const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
+    deleteEntity, // Api call
+    "Deleted entity successfully", // Success Notification Text
+    "organizationalEntityRootChildren", // Query to invalidate on success
+    entityId, // Id to delete
+    "Are you sure you want to delete this entity (and all its children)?", // Confirmation Text 
+    "/master-data-manager/organizations" // Next Link
+  );
 
   if (entityQuery.isLoading) {
     return <>Loading...</>;
@@ -125,15 +113,7 @@ export default function Organization() {
           Delete Location
         </Button>
       </Row>
-
-      <DeleteModal
-        modalVisibility={deleteConfirmationVisible}
-        setModalVisible={setDeleteConfirmationVisible}
-        mutator={entityDeletionMutation}
-        idToDelete={entityId}
-        text="Are you sure you want to delete this entity (and all its children)?"
-        nextLink="/master-data-manager/organizations"
-      ></DeleteModal>
+      {DeleteModal}
     </>
   );
 }

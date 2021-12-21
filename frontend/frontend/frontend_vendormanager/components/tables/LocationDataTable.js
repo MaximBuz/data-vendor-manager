@@ -3,17 +3,15 @@ import { useState } from "react";
 // Components
 import { Table, Empty, Tooltip } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import DeleteModal from "../modals/DeleteModal";
 
 // Data mutation
-import { useMutation, useQueryClient } from "react-query";
 import deleteLocation from "../../api_utils/api_mutators/deleteLocation";
 
 // Routing
 import Link from "next/link";
 
-// Notifications
-import { toast } from "react-toastify";
+// Custom Hooks
+import useDeleteConfirmation from "../../custom_hooks/useDeleteConfirmation";
 
 export default function LocationDataTable({
   data,
@@ -34,28 +32,16 @@ export default function LocationDataTable({
     ...new Set(data.map((item) => ({ text: item.city, value: item.city }))),
   ];
 
-  //setting up mutations with react query
-  const queryClient = useQueryClient();
-
-  /* 
-  --------------------------------------
-  Handle Deletion Confirmation Modal
-  --------------------------------------
-  */
-
-  const [deleteConfirmationVisible, setDeleteConfirmationVisible] =
-    useState(false);
-  const showDeleteModal = () => setDeleteConfirmationVisible(true);
-
   const [idToDelete, setIdToDelete] = useState("");
 
-  // creating mutator
-  const locationDeletionMutation = useMutation(deleteLocation, {
-    onSuccess: () => {
-      toast.success("Deleted Location successfully");
-      queryClient.invalidateQueries("locations");
-    },
-  });
+  // Handle deletion
+  const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
+    deleteLocation, // Api call
+    "Deleted location successfully", // Success Notification Text
+    "locations", // Query to invalidate on success
+    idToDelete, // Id to delete
+    "Are you sure you want to delete this location?" // Confirmation Text
+  );
 
   // defining the columns
   const columns = [
@@ -131,13 +117,7 @@ export default function LocationDataTable({
           dataSource={data}
           scroll={scrollView}
         />
-        <DeleteModal
-          modalVisibility={deleteConfirmationVisible}
-          setModalVisible={setDeleteConfirmationVisible}
-          mutator={locationDeletionMutation}
-          idToDelete={idToDelete}
-          text="Are you sure you want to delete this location?"
-        ></DeleteModal>
+        {DeleteModal}
       </>
     );
   } else if (isLoading) {
