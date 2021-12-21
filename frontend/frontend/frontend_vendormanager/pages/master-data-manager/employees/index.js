@@ -12,7 +12,6 @@ import Link from "next/link";
 export default function Geographies() {
   // Data fetching
   const dataConsumersQuery = useQuery(["dataConsumers", 2 /* JSON depth */], getDataConsumers);
-  const translatedData = dataConsumersQuery.data && JSON.parse(JSON.stringify(dataConsumersQuery.data).split('"id":').join('"key":'));
   return (
     <>
       <h2>Managing Employees (Market Data Consumers)</h2>
@@ -26,7 +25,7 @@ export default function Geographies() {
         </Button>
       </Link>
       <DataConsumersDataTable
-        data={translatedData}
+        data={dataConsumersQuery.data}
         isLoading={dataConsumersQuery.isLoading}
         scrollView={{ x: 1500 }}
       >

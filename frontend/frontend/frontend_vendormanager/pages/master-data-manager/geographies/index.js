@@ -12,8 +12,6 @@ import Link from "next/link";
 export default function Geographies() {
   // Data fetching
   const locationsQuery = useQuery(["locations"], getLocations);
-  const translatedData =
-  locationsQuery.data && JSON.parse(JSON.stringify(locationsQuery.data).split('"id":').join('"key":'));
   return (
     <>
       <h2>Business Location Modelling</h2>
@@ -28,7 +26,7 @@ export default function Geographies() {
         </Button>
       </Link>
       <LocationDataTable
-        data={translatedData}
+        data={locationsQuery.data}
         isLoading={locationsQuery.isLoading}
         /* scrollView={{ x: 1100, y: 500 }} */
       >

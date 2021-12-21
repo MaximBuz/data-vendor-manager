@@ -57,9 +57,7 @@ export default function Organizations() {
     ["organizationalEntityRootChildren", 10],
     getOrganizationalEntityRootChildren
   );
-  // change "id" field to "key" for table to work properly
-  const translatedData =
-    data && JSON.parse(JSON.stringify(data).split('"id":').join('"key":'));
+
   return (
     <>
       <h2>Organizational structure modelling</h2>
@@ -73,7 +71,7 @@ export default function Organizations() {
       </Link>
       <TreeDataTable
         columns={columns}
-        data={translatedData}
+        data={data}
         rowSelection={false}
         isLoading={isLoading}
         scrollView={{ x: 1500, y: 500 }}

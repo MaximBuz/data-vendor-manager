@@ -59,16 +59,6 @@ export default function Employee() {
     getOrganizationalEntityRootChildren
   );
 
-  const treeData =
-    treeQuery.data &&
-    JSON.parse(
-      JSON.stringify(treeQuery.data)
-        .split('"id":')
-        .join('"key":')
-        .split('"name":')
-        .join('"title":')
-    );
-
   if (dataConsumerQuery.isLoading) {
     return <>Loading...</>;
   }
@@ -84,7 +74,7 @@ export default function Employee() {
           <h2>
             Employee XXX
           </h2>
-          <EmployeeForm initialValues={dataConsumer} activityTags={activityTags}/>
+          <EmployeeForm initialValues={dataConsumer} activityTags={activityTags} organizationalTree={treeQuery?.data}/>
         </Col>
         <Divider type="vertical" style={{ minHeight: "70vh" }} />
         <Col flex={1}>
@@ -105,7 +95,7 @@ export default function Employee() {
               defaultSelectedKeys={[]}
               /* selectable= {false} */
               /* onSelect={"onSelect"} */
-              treeData={treeData}
+              treeData={treeQuery?.data}
               style={{ padding: "10px 0 0 10px", minHeigth: "100%" }}
             />
           </div>

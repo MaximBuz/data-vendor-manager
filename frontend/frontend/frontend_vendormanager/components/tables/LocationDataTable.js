@@ -22,14 +22,14 @@ export default function LocationDataTable({
   // Getting unique values for filtering
   const uniqueCountries = [
     ...new Set(
-      data.map((item) => ({ text: item.country, value: item.country }))
+      data?.map((item) => ({ text: item.country, value: item.country }))
     ),
   ];
   const uniqueStates = [
-    ...new Set(data.map((item) => ({ text: item.state, value: item.state }))),
+    ...new Set(data?.map((item) => ({ text: item.state, value: item.state }))),
   ];
   const uniqueCities = [
-    ...new Set(data.map((item) => ({ text: item.city, value: item.city }))),
+    ...new Set(data?.map((item) => ({ text: item.city, value: item.city }))),
   ];
 
   const [idToDelete, setIdToDelete] = useState("");

@@ -9,7 +9,7 @@ import patchLocation from "../../api_utils/api_mutators/patch/patchLocation";
 // Notifications
 import { toast } from "react-toastify";
 
-export default function EntityForm({ initialValues, activityTags }) {
+export default function EntityForm({ initialValues, activityTags, organizationalTree }) {
   //setting up mutations with react query
   const queryClient = useQueryClient();
   const mutation = useMutation(patchLocation, {
@@ -52,7 +52,7 @@ export default function EntityForm({ initialValues, activityTags }) {
           floor: initialValues.floor,
           seat: initialValues.seat,
           job_title: initialValues.job_title.title,
-          organizational_entity: initialValues.organizational_entity.name,
+          /* organizational_entity: initialValues.organizational_entity.name, */
           building: initialValues.building.building_name,
         }}
       >
@@ -99,11 +99,10 @@ export default function EntityForm({ initialValues, activityTags }) {
           }}
         >
           <Form.Item label="Organizational Entity" name="organizational_entity">
-            {/* <Cascader
-              options={[]}
+            <Cascader
+              options={organizationalTree}
               expandTrigger="hover"
-              displayRender={displayRender}
-            /> */}
+            />
           </Form.Item>
           <Form.Item label="Location" name="location">
             <Input placeholder="Location" disabled />

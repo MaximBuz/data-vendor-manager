@@ -58,9 +58,6 @@ export default function Organization() {
     ["organizationalEntityRootChildren", 10],
     getOrganizationalEntityRootChildren
   );
-
-  const treeData = treeQuery.data && JSON.parse(JSON.stringify(treeQuery.data).split('"id":').join('"key":').split('"name":').join('"title":'));
-
   // Handle deletion
   const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
     deleteEntity, // Api call
@@ -101,7 +98,7 @@ export default function Organization() {
             defaultSelectedKeys={[entity.id]}
             /* selectable= {false} */
             /* onSelect={"onSelect"} */
-            treeData={treeData}
+            treeData={treeQuery?.data}
             style={{ padding: "10px 0 0 10px", minHeigth: "100%"}}
           />
           </div>
