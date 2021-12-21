@@ -88,18 +88,18 @@ export default function SiderMenuLayout(props) {
               }
               if (index === routeComponents.length - 1){
                 return (
-                  <Breadcrumb.Item>{path}</Breadcrumb.Item>
+                  <Breadcrumb.Item key={index}>{path}</Breadcrumb.Item>
                 )
               } else /* ,if its the last item */{
                 return (
-                  <Breadcrumb.Item><Link href={`/${routeComponents[index-1]?.concat("/") || ""}${path}/`}>{path}</Link></Breadcrumb.Item>
+                  <Breadcrumb.Item key={index}><Link href={`/${routeComponents[index-1]?.concat("/") || ""}${path}/`}>{path}</Link></Breadcrumb.Item>
                 )
               }
             })}
           </Breadcrumb>
           <div
             className="site-layout-background"
-            style={{ padding: "20px", minHeight: "100%"}}Ì
+            style={{ padding: "20px", minHeight: "100%"}}
           >
             {props.children}
           </div>

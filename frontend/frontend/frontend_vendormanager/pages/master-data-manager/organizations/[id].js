@@ -163,7 +163,7 @@ export async function getServerSideProps(context) {
 
   /* 
   --------------------------------------
-  Get options for "Locations" dropdown in the formÌ
+  Get options for "Locations" dropdown in the form
   --------------------------------------
   */
 

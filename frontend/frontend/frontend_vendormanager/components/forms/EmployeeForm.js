@@ -1,5 +1,5 @@
 // Components
-import { Form, Input, Button, Tooltip, Divider, Cascader } from "antd";
+import { Form, Input, Button, Tooltip, Divider, Cascader, Select } from "antd";
 import { InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
 // Data mutation
@@ -9,7 +9,7 @@ import patchLocation from "../../api_utils/api_mutators/patch/patchLocation";
 // Notifications
 import { toast } from "react-toastify";
 
-export default function EntityForm({ initialValues }) {
+export default function EntityForm({ initialValues, activityTags }) {
   //setting up mutations with react query
   const queryClient = useQueryClient();
   const mutation = useMutation(patchLocation, {
@@ -24,7 +24,8 @@ export default function EntityForm({ initialValues }) {
 
   // Submiting logic
   const onFinish = (values) => {
-    mutation.mutate({ values: values, id: initialValues.id });
+    console.log(values);
+    //mutation.mutate({ values: values, id: initialValues.id });
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -53,7 +54,6 @@ export default function EntityForm({ initialValues }) {
           job_title: initialValues.job_title.title,
           organizational_entity: initialValues.organizational_entity.name,
           building: initialValues.building.building_name,
-          activity: "initialValues.activity", // handle arrays
         }}
       >
         <Form.Item label="Email" name="email" required>
@@ -132,10 +132,45 @@ export default function EntityForm({ initialValues }) {
         <Form.Item label="Job Title" name="job_title">
           <Input placeholder="Add job title" />
         </Form.Item>
-
-        <Form.Item label="Activity Tags" name="activity">
-          {/* Tag Selection */}
-        </Form.Item>
+        <div
+          style={{
+            display: "flex",
+            gap: "10px",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Form.Item
+            style={{ flexGrow: "1" }}
+            label="Activity Tags"
+            name="activity"
+            initialValue={initialValues.activity?.map((tag) => tag.id)}
+          >
+            <Select
+              mode="multiple"
+              style={{ width: "100%" }}
+              placeholder="Please select activity tags"
+              filterOption={(input, option) =>
+                option.key.toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
+                option.key.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              }
+            >
+              {activityTags?.map((tag) => (
+                <Select.Option key={tag.name} value={tag.id}>
+                  {tag.name}
+                </Select.Option>
+              ))}
+            </Select>
+          </Form.Item>
+          <Tooltip title="Add new activity tag" placement="right">
+            <Button
+              onClick={"showModal"}
+              style={{ position: "relative", top: "3px" }}
+              shape="circle"
+              icon={<PlusOutlined />}
+            />
+          </Tooltip>
+        </div>
 
         <Form.Item>
           <Button type="primary" htmlType="submit">

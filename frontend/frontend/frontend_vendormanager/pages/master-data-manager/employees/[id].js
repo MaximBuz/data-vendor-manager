@@ -15,18 +15,14 @@ import {
 import getDataConsumer from "../../../api_utils/api_fetchers/getDataConsumer";
 import getOrganizationalEntities from "../../../api_utils/api_fetchers/getOrganizationalEntities";
 import getOrganizationalEntityRootChildren from "../../../api_utils/api_fetchers/getOrganizationalEntityRootChildren";
+import getActivityTags from "../../../api_utils/api_fetchers/getActivityTags";
 
 // Data Mutation
-import postBuilding from "../../../api_utils/api_mutators/post/postBuilding";
 import deleteLocation from "../../../api_utils/api_mutators/delete/deleteLocation";
 
 // Components
 import EmployeeForm from "../../../components/forms/EmployeeForm";
-import BuildingCard from "../../../components/cards/BuildingCard";
-import { Row, Col, Tree, Divider, Modal, Form, Input, Button } from "antd";
-
-// Styling
-import { UilMapMarkerPlus } from "@iconscout/react-unicons";
+import { Row, Col, Tree, Divider, Button } from "antd";
 
 // Notifications
 import { toast } from "react-toastify";
@@ -49,6 +45,13 @@ export default function Employee() {
     getDataConsumer
   )
   const dataConsumer = dataConsumerQuery?.data;
+
+  // Data fetching for activity tags dropdown
+  const activityTagsQuery = useQuery(
+    ["activityTags", 0 /* Depth */],
+    getActivityTags
+  )
+  const activityTags = activityTagsQuery?.data;
 
   // Data fetching organizations tree structure
   const treeQuery = useQuery(
@@ -81,7 +84,7 @@ export default function Employee() {
           <h2>
             Employee XXX
           </h2>
-          <EmployeeForm initialValues={dataConsumer} />
+          <EmployeeForm initialValues={dataConsumer} activityTags={activityTags}/>
         </Col>
         <Divider type="vertical" style={{ minHeight: "70vh" }} />
         <Col flex={1}>
