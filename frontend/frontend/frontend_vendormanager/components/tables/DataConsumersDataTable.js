@@ -27,7 +27,7 @@ export default function LocationDataTable({
       title: "Email",
       dataIndex: "email",
       width: "15%",
-      fixed: 'left',
+      fixed: "left",
       sorter: (a, b) => a.country.localeCompare(b.country),
     },
     {
@@ -46,23 +46,56 @@ export default function LocationDataTable({
     },
     {
       title: "Activity Tags",
-      ellipsis: true,
-      render: (text, record) => record.activity?.map(tag => tag.name).join(", "),
+      ellipsis: { showTitle: false },
+      render: (text, record) => (
+        <Tooltip
+          placement="topLeft"
+          title={record.activity?.map((tag) => tag.name).join(", ")}
+        >
+          {record.activity?.map((tag) => tag.name).join(", ")}
+        </Tooltip>
+      ),
     },
     {
-      title: "Business Entity",
-      render: (text, record) => record.organizational_entity.name,
+      title: "Business Affiliation",
+      render: (text, record) => (
+        <Tooltip
+          placement="topLeft"
+          title={
+            record.organizational_entity.name + ", " +
+            record.organizational_entity.parent?.name
+          }
+        >
+          {record.organizational_entity.name}
+        </Tooltip>
+      ),
     },
     {
       title: "Location",
       ellipsis: true,
       render: (text, record) => {
         return (
-          record.organizational_entity.location?.street + " " +
-          record.organizational_entity.location?.street_nr + ", " +
-          record.organizational_entity.location?.city + ", " +
-          record.organizational_entity.location?.country
-        )
+          <Tooltip
+            placement="topLeft"
+            title={
+              record.organizational_entity.location?.street +
+              " " +
+              record.organizational_entity.location?.street_nr +
+              ", " +
+              record.organizational_entity.location?.zip_code +
+              " " +
+              record.organizational_entity.location?.city +
+              ", " +
+              record.organizational_entity.location?.state +
+              ", " +
+              record.organizational_entity.location?.country
+            }
+          >
+            {record.organizational_entity.location?.city +
+              ", " +
+              record.organizational_entity.location?.country}
+          </Tooltip>
+        );
       },
     },
     {
@@ -72,7 +105,7 @@ export default function LocationDataTable({
     {
       title: "",
       width: "3%",
-      fixed: 'right',
+      fixed: "right",
       render: (text, record) => {
         return (
           <>
