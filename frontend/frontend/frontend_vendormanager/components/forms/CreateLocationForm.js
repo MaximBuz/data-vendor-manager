@@ -45,13 +45,31 @@ export default function CreateEntityForm({ initialValues }) {
         onFinishFailed={onFinishFailed}
         layout="vertical"
       >
-        <Form.Item label="Country" name="country">
+        <Form.Item
+          label="Country"
+          name="country"
+          rules={[
+            {
+              required: true,
+              message: "Please input a country!",
+            },
+          ]}
+        >
           <Input placeholder="Add Country" />
         </Form.Item>
         <Form.Item label="State" name="state">
           <Input placeholder="Add State" />
         </Form.Item>{" "}
-        <Form.Item label="City" name="city">
+        <Form.Item
+          label="City"
+          name="city"
+          rules={[
+            {
+              required: true,
+              message: "Please input a city name!",
+            },
+          ]}
+        >
           <Input placeholder="Add City" />
         </Form.Item>
         <Form.Item label="ZIP Code" name="zip_code">
