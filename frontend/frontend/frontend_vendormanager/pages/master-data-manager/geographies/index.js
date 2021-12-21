@@ -1,6 +1,5 @@
 // Components
 import { Button } from "antd";
-import { Table } from 'antd';
 import LocationDataTable from "../../../components/tables/LocationDataTable";
 
 // Data Fetching
