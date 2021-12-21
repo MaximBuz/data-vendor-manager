@@ -136,7 +136,9 @@ export default function EntityForm({
           }}
         >
           <Form.Item label="Building" name="building">
-            {/* Select with all buildings at location options*/}
+            <Select>
+              
+            </Select>
           </Form.Item>
 
           <Form.Item style={{ flexGrow: "1" }} label="Floor" name="floor">
