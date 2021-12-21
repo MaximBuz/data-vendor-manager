@@ -1,5 +1,5 @@
 // Data Mutation
-import deleteBuilding from "../../api_utils/api_mutators/deleteBuilding";
+import deleteBuilding from "../../api_utils/api_mutators/delete/deleteBuilding";
 
 // Styling
 import { UilBuilding } from "@iconscout/react-unicons";

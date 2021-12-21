@@ -22,8 +22,8 @@ import { InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
 // Data mutation
 import { useQueryClient, useMutation, useQueries } from "react-query";
-import postEntityType from "../../api_utils/api_mutators/postEntityType";
-import postEntity from "../../api_utils/api_mutators/postEntity";
+import postEntityType from "../../api_utils/api_mutators/post/postEntityType";
+import postEntity from "../../api_utils/api_mutators/post/postEntity";
 
 // Notifications
 import { toast } from "react-toastify";

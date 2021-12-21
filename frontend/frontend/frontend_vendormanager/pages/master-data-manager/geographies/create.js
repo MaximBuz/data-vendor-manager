@@ -14,7 +14,7 @@ import {
 } from "react-query";
 
 // Data Mutation
-import postLocation from "../../../api_utils/api_mutators/postLocation";
+import postLocation from "../../../api_utils/api_mutators/post/postLocation";
 
 // Components
 import CreateLocationForm from "../../../components/forms/CreateLocationForm";

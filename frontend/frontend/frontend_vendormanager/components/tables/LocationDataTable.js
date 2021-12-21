@@ -5,7 +5,7 @@ import { Table, Empty, Tooltip } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 // Data mutation
-import deleteLocation from "../../api_utils/api_mutators/deleteLocation";
+import deleteLocation from "../../api_utils/api_mutators/delete/deleteLocation";
 
 // Routing
 import Link from "next/link";

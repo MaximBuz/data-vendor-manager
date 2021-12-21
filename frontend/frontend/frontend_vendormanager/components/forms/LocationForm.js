@@ -1,14 +1,10 @@
-// React
-import { useState } from "react";
-import Link from "next/link";
-
 // Components
 import { Form, Input, Button, Tooltip, Space } from "antd";
 import { InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
 // Data mutation
 import { useQueryClient, useMutation, useQueries } from "react-query";
-import patchLocation from "../../api_utils/api_mutators/patchLocation";
+import patchLocation from "../../api_utils/api_mutators/patch/patchLocation";
 
 // Notifications
 import { toast } from "react-toastify";

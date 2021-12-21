@@ -1,4 +1,4 @@
-import apiClient from "../http-common";
+import apiClient from "../../http-common";
 
 export default async function postBuilding(formData) {
     formData.values["building_location"] = formData.building_location

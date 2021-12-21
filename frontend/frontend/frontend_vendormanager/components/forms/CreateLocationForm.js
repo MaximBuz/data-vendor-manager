@@ -7,7 +7,7 @@ import { Form, Input, Button, Space } from "antd";
 
 // Data mutation
 import { useQueryClient, useMutation } from "react-query";
-import postLocation from "../../api_utils/api_mutators/postLocation";
+import postLocation from "../../api_utils/api_mutators/post/postLocation";
 // Notifications
 import { toast } from "react-toastify";
 

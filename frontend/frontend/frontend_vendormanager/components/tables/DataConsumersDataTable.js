@@ -5,7 +5,7 @@ import { Table, Empty, Tooltip } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 // Data mutation
-import deleteLocation from "../../api_utils/api_mutators/deleteLocation";
+import deleteLocation from "../../api_utils/api_mutators/delete/deleteLocation";
 
 // Routing
 import Link from "next/link";
@@ -109,15 +109,15 @@ export default function LocationDataTable({
       render: (text, record) => {
         return (
           <>
-            <Link href={`geographies/${record.key}`}>
+            <Link href={`employees/${record.key}`}>
               <Tooltip
-                title="Edit this location or add buildings"
+                title="Edit this employee"
                 placement="left"
               >
                 <EditOutlined />
               </Tooltip>
             </Link>
-            <Tooltip title="Delete this location" placement="left">
+            <Tooltip title="Delete this employee" placement="left">
               <DeleteOutlined
                 onClick={() => {
                   setIdToDelete(record.key);

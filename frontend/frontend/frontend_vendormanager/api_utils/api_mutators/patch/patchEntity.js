@@ -1,4 +1,4 @@
-import apiClient from "../http-common";
+import apiClient from "../../http-common";
 
 export default async function patchEntity(props) {
     const id = props.id;

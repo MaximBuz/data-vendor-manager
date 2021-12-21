@@ -17,8 +17,8 @@ import getOrganizationalEntities from "../../../api_utils/api_fetchers/getOrgani
 import getOrganizationalEntityRootChildren from "../../../api_utils/api_fetchers/getOrganizationalEntityRootChildren";
 
 // Data Mutation
-import postBuilding from "../../../api_utils/api_mutators/postBuilding";
-import deleteLocation from "../../../api_utils/api_mutators/deleteLocation";
+import postBuilding from "../../../api_utils/api_mutators/post/postBuilding";
+import deleteLocation from "../../../api_utils/api_mutators/delete/deleteLocation";
 
 // Components
 import LocationForm from "../../../components/forms/LocationForm";

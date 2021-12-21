@@ -8,8 +8,8 @@ import { InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
 // Data mutation
 import { useQueryClient, useMutation, useQueries } from "react-query";
-import postEntityType from "../../api_utils/api_mutators/postEntityType";
-import patchEntity from "../../api_utils/api_mutators/patchEntity";
+import postEntityType from "../../api_utils/api_mutators/post/postEntityType";
+import patchEntity from "../../api_utils/api_mutators/patch/patchEntity";
 
 // Notifications
 import { toast } from "react-toastify";

@@ -1,4 +1,4 @@
-import apiClient from "../http-common";
+import apiClient from "../../http-common";
 
 export default async function postEntity(formData) {
     console.log(formData.values)

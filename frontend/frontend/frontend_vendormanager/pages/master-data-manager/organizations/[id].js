@@ -10,7 +10,7 @@ import getOrganizationalEntityRootChildren from "../../../api_utils/api_fetchers
 import getLocations from "../../../api_utils/api_fetchers/getLocations";
 
 // Data mutation 
-import deleteEntity from "../../../api_utils/api_mutators/deleteEntity";
+import deleteEntity from "../../../api_utils/api_mutators/delete/deleteEntity";
 
 // Components
 import EntityForm from "../../../components/forms/EntityForm";
