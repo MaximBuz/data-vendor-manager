@@ -1,5 +1,13 @@
 // Components
-import { Form, Input, Button, Tooltip, Divider, Cascader, Select } from "antd";
+import {
+  Form,
+  Input,
+  Button,
+  Tooltip,
+  Divider,
+  TreeSelect,
+  Select,
+} from "antd";
 import { InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
 // Data mutation
@@ -9,7 +17,11 @@ import patchLocation from "../../api_utils/api_mutators/patch/patchLocation";
 // Notifications
 import { toast } from "react-toastify";
 
-export default function EntityForm({ initialValues, activityTags, organizationalTree }) {
+export default function EntityForm({
+  initialValues,
+  activityTags,
+  organizationalTree,
+}) {
   //setting up mutations with react query
   const queryClient = useQueryClient();
   const mutation = useMutation(patchLocation, {
@@ -19,6 +31,7 @@ export default function EntityForm({ initialValues, activityTags, organizational
     },
   });
 
+  console.log(organizationalTree);
   // Initialize Form
   const [form] = Form.useForm();
 
@@ -52,7 +65,7 @@ export default function EntityForm({ initialValues, activityTags, organizational
           floor: initialValues.floor,
           seat: initialValues.seat,
           job_title: initialValues.job_title.title,
-          /* organizational_entity: initialValues.organizational_entity.name, */
+          /* organizational_entity: [initialValues.organizational_entity.name], */
           building: initialValues.building.building_name,
         }}
       >
@@ -98,13 +111,20 @@ export default function EntityForm({ initialValues, activityTags, organizational
             justifyContent: "space-between",
           }}
         >
-          <Form.Item label="Organizational Entity" name="organizational_entity">
-            <Cascader
-              options={organizationalTree}
-              expandTrigger="hover"
+          <Form.Item
+            style={{ flexGrow: "1" }}
+            initialValue={initialValues.organizational_entity.id}
+            label="Organizational Entity"
+            name="organizational_entity"
+          >
+            <TreeSelect
+              treeLine={true}
+              treeData={organizationalTree}
+              treeDefaultExpandAll
+              placeholder="Please select entity"
             />
           </Form.Item>
-          <Form.Item label="Location" name="location">
+          <Form.Item style={{ flexGrow: "1" }} label="Location" name="location">
             <Input placeholder="Location" disabled />
           </Form.Item>
         </div>
