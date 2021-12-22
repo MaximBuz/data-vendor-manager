@@ -17,7 +17,7 @@ import {
 import postLocation from "../../../api_utils/api_mutators/post/postLocation";
 
 // Components
-import CreateLocationForm from "../../../components/forms/CreateLocationForm";
+import LocationForm from "../../../components/forms/LocationForm";
 import { Row, Col, Divider, Form, Input } from "antd";
 
 // Notifications
@@ -37,7 +37,7 @@ export default function CreateLocation() {
     <Row>
       <Col flex={0.3}>
         <h2>Add new Location</h2>
-        <CreateLocationForm />
+        <LocationForm />
       </Col>
     </Row>
     </>

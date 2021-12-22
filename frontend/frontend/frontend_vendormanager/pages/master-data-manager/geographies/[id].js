@@ -133,7 +133,7 @@ export default function Organization() {
           <h2>
             Location in {location.city}, {location.country}
           </h2>
-          <LocationForm initialValues={location} />
+          <LocationForm initialValues={location} locationId={locationId}/>
         </Col>
         <Divider type="vertical" style={{ minHeight: "45em" }} />
         <Col flex={1}>

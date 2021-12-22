@@ -298,7 +298,7 @@ export default function EntityForm({
 
         <Form.Item>
           <Button type="primary" htmlType="submit">
-            Save changes
+            {employeeId ? "Save changes" : "Add employee"}
           </Button>
         </Form.Item>
       </Form>
