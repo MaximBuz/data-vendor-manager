@@ -1,3 +1,6 @@
+// React
+import { useState } from "react";
+
 // Components
 import {
   Form,
@@ -37,6 +40,22 @@ export default function EntityForm({
     "Add new job title"
   );
 
+  // keeping track of locations to filter buildings dropdown
+  const [activeLocation, setActiveLocation] = useState(
+    initialValues.location?.id
+  );
+
+  const [activeBuilding, setActiveBuilding] = useState(
+    initialValues.building?.id
+  )
+
+  function handleLocationChange(value) {
+    setActiveLocation(value)
+    form.setFieldsValue({
+      building: undefined
+    })
+  }
+
   //setting up mutations with react query
   const queryClient = useQueryClient();
   const mutation = useMutation(patchLocation, {
@@ -46,7 +65,6 @@ export default function EntityForm({
     },
   });
 
-  console.log(organizationalTree);
   // Initialize Form
   const [form] = Form.useForm();
 
@@ -81,7 +99,7 @@ export default function EntityForm({
           seat: initialValues.seat,
           job_title: initialValues.job_title?.id,
           /* organizational_entity: [initialValues.organizational_entity.name], */
-          building: initialValues.building?.building_name,
+          building: activeBuilding,
           location: initialValues.location?.id,
         }}
       >
@@ -142,7 +160,7 @@ export default function EntityForm({
           </Form.Item>
 
           <Form.Item style={{ flexGrow: "1" }} name="location" label="Location">
-            <Select style={{ minWidth: "300px" }}>
+            <Select style={{ minWidth: "300px" }} onChange={handleLocationChange}>
               {locations &&
                 locations.map((location) => {
                   return (
@@ -178,7 +196,17 @@ export default function EntityForm({
           }}
         >
           <Form.Item style={{ flexGrow: "1" }} label="Building" name="building">
-            <Select></Select>
+            <Select placeholder="Select option">
+              {locations
+                .filter((location) => location.id === activeLocation)[0]
+                .buildings.map((building) => {
+                  return (
+                    <Select.Option value={building.id}>
+                      {building.building_name}
+                    </Select.Option>
+                  );
+                })}
+            </Select>
           </Form.Item>
 
           <Form.Item style={{ flexGrow: "1" }} label="Floor" name="floor">
