@@ -15,7 +15,7 @@ import { InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
 // Data mutation
 import { useQueryClient, useMutation, useQueries } from "react-query";
-import patchLocation from "../../api_utils/api_mutators/patch/patchLocation";
+import patchDataConsumer from "../../api_utils/api_mutators/patch/patchDataConsumer";
 import postJob from "../../api_utils/api_mutators/post/postJob";
 
 // Notifications
@@ -58,9 +58,9 @@ export default function EntityForm({
 
   //setting up mutations with react query
   const queryClient = useQueryClient();
-  const mutation = useMutation(patchLocation, {
+  const mutation = useMutation(patchDataConsumer, {
     onSuccess: () => {
-      toast.success("Updated location successfully");
+      toast.success("Updated employee successfully");
       queryClient.invalidateQueries(["dataConsumers", "dataConsumer"]);
     },
   });
@@ -71,7 +71,7 @@ export default function EntityForm({
   // Submiting logic
   const onFinish = (values) => {
     console.log(values);
-    //mutation.mutate({ values: values, id: initialValues.id });
+    mutation.mutate({ values: values, id: initialValues.id });
   };
 
   const onFinishFailed = (errorInfo) => {
