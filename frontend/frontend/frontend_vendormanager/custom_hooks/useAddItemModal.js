@@ -37,6 +37,9 @@ export default function useAddItemModal(
       toast.success(toastText);
       queryClient.invalidateQueries(queryToInvalidate);
     },
+    onError: error => {
+      toast.error(String(error))
+    },
   });
 
   /* -----~~~~~>>>OPEN/CLOSE<<<~~~~~----- */

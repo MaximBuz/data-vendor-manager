@@ -39,6 +39,9 @@ export default function useDeleteConfirmation(
       toastText && toast.success(toastText);
       queryToInvalidate && queryClient.invalidateQueries(queryToInvalidate);
     },
+    onError: error => {
+      toast.error(String(error))
+    },
   });
 
   /* --------------------------------------------------------------------------- */

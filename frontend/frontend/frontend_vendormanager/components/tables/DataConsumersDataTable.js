@@ -236,12 +236,12 @@ export default function LocationDataTable({
         <Tooltip
           placement="topLeft"
           title={
-            record.organizational_entity.name +
+            record.organizational_entity?.name +
             ", " +
-            record.organizational_entity.parent?.name
+            record.organizational_entity?.parent?.name
           }
         >
-          {record.organizational_entity.name}
+          {record.organizational_entity?.name}
         </Tooltip>
       ),
     },

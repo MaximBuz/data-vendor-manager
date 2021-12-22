@@ -2,6 +2,9 @@
 /* ~~~~~~IMPORTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /* ------------------------------------------------------------------------- */
 
+/* ROUTING */
+import { useRouter } from "next/router";
+
 /* COMPONENTS */
 import {
   Form,
@@ -40,6 +43,7 @@ export default function EntityForm({
 }) {
   /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
   const queryClient = useQueryClient();
+  const router = useRouter();
   const [form] = Form.useForm();
 
   /* -----~~~~~>>>ADDING JOBS<<<~~~~~----- */
@@ -69,11 +73,18 @@ export default function EntityForm({
       toast.success("Updated employee successfully");
       queryClient.invalidateQueries(["dataConsumers", "dataConsumer"]);
     },
+    onError: error => {
+      toast.error(String(error))
+    },
   });
   const postMutation = useMutation(postDataConsumer, {
     onSuccess: () => {
       toast.success("Added employee successfully");
       queryClient.invalidateQueries(["dataConsumers"]);
+      router.push("/master-data-manager/employees/");
+    },
+    onError: error => {
+      toast.error(String(error))
     },
   });
 
@@ -116,7 +127,7 @@ export default function EntityForm({
         }
       >
         <Divider orientation="middle" plain style={{color: "grey",  fontWeight: "lighter"}}>General Information</Divider>
-        <Form.Item label="Email" name="email" required>
+        <Form.Item label="Email" name="email" rules={[{ required: true, type:"email", message: 'Please input an email!' }]}>
           <Input placeholder="Add email" />
         </Form.Item>
         <div
@@ -165,6 +176,7 @@ export default function EntityForm({
             initialValue={employeeId && initialValues.organizational_entity.id}
             label="Organizational Entity"
             name="organizational_entity"
+            rules={[{ required: true, message: 'Every employee must be assigned to one organizational entity!' }]}
           >
             <TreeSelect
               treeLine={{ showLeafIcon: false }}
@@ -215,7 +227,7 @@ export default function EntityForm({
         >
           <Form.Item style={{ flexGrow: "1" }} label="Building" name="building">
             <Select placeholder="Select option">
-              {employeeId &&
+              {locations &&
                 locations
                   .filter((location) => location.id === activeLocation)[0]
                   .buildings.map((building) => {

@@ -52,12 +52,18 @@ export default function EntityForm({
       toast.success("Updated entity successfully");
       queryClient.invalidateQueries("organizationalEntityRootChildren");
     },
+    onError: error => {
+      toast.error(String(error))
+    },
   });
   const postMutation = useMutation(postEntity, {
     onSuccess: () => {
       toast.success("Added entity successfully");
       queryClient.invalidateQueries("organizationalEntityRootChildren");
       router.push("/master-data-manager/organizations/");
+    },
+    onError: error => {
+      toast.error(String(error))
     },
   });
 

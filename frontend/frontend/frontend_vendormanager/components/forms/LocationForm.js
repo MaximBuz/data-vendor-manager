@@ -27,12 +27,18 @@ export default function EntityForm({ initialValues, locationId }) {
       toast.success("Updated location successfully");
       queryClient.invalidateQueries(["locations", "locationWithBuildings"]);
     },
+    onError: error => {
+      toast.error(String(error))
+    },
   });
 
   const postMutation = useMutation(postLocation, {
     onSuccess: () => {
       toast.success("Added location successfully");
       queryClient.invalidateQueries("locations");
+    },
+    onError: error => {
+      toast.error(String(error))
     },
   });
 

@@ -17,9 +17,6 @@ import getJobs from "../../../api_utils/api_fetchers/getJobs";
 import EmployeeForm from "../../../components/forms/EmployeeForm";
 import { Row, Col } from "antd";
 
-/* HOOKS */
-import { useState } from "react";
-
 /* --------------------------------------------------------------------------- */
 /* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /* --------------------------------------------------------------------------- */
