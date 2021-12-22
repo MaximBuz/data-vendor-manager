@@ -1,36 +1,41 @@
-import { useState } from "react";
+/* ------------------------------------------------------------------------- */
+/* ~~~~~~IMPORTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ------------------------------------------------------------------------- */
 
-// Components
+/* ROUTING */
+import Link from "next/link";
+
+/* API MUTATION */
+import deleteEmployee from "../../api_utils/api_mutators/delete/deleteEmployee";
+
+/* COMPONENTS */
 import { Table, Empty, Tooltip } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
-// Data mutation
-import deleteEmployee from "../../api_utils/api_mutators/delete/deleteEmployee";
-
-// Routing
-import Link from "next/link";
-
-// Custom Hooks
+/* HOOKS */
 import useDeleteConfirmation from "../../custom_hooks/useDeleteConfirmation";
+import { useState } from "react";
 
+/* --------------------------------------------------------------------------- */
+/* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* --------------------------------------------------------------------------- */
 export default function LocationDataTable({
   data,
   isLoading,
   scrollView,
   rowSelection,
 }) {
+  /* -----~~~~~>>>DELETION<<<~~~~~----- */
   const [idToDelete, setIdToDelete] = useState("");
-
-   // Handle deletion
-   const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
+  const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
     deleteEmployee, // Api call
     "Deleted employee successfully", // Success Notification Text
-    ["dataConsumers",2], // Query to invalidate on success
+    ["dataConsumers", 2], // Query to invalidate on success
     idToDelete, // Id to delete
     "Are you sure you want to delete this employee?" // Confirmation Text
   );
 
-  // defining the columns
+  /* -----~~~~~>>>COLUMN DEFINITION<<<~~~~~----- */
   const columns = [
     {
       title: "Email",
@@ -71,7 +76,8 @@ export default function LocationDataTable({
         <Tooltip
           placement="topLeft"
           title={
-            record.organizational_entity.name + ", " +
+            record.organizational_entity.name +
+            ", " +
             record.organizational_entity.parent?.name
           }
         >
@@ -100,9 +106,7 @@ export default function LocationDataTable({
               record.location?.country
             }
           >
-            {record.location?.city +
-              ", " +
-              record.location?.country}
+            {record.location?.city + ", " + record.location?.country}
           </Tooltip>
         );
       },
@@ -119,10 +123,7 @@ export default function LocationDataTable({
         return (
           <>
             <Link href={`employees/${record.key}`}>
-              <Tooltip
-                title="Edit this employee"
-                placement="left"
-              >
+              <Tooltip title="Edit this employee" placement="left">
                 <EditOutlined />
               </Tooltip>
             </Link>
@@ -141,6 +142,9 @@ export default function LocationDataTable({
     },
   ];
 
+  /* --------------------------------------------------------------------------- */
+  /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+  /* --------------------------------------------------------------------------- */
   if (!isLoading) {
     return (
       <>

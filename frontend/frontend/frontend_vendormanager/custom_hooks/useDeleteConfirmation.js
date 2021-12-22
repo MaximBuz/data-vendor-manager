@@ -1,8 +1,22 @@
-import { useState } from "react";
+/* ------------------------------------------------------------------------- */
+/* ~~~~~~IMPORTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ------------------------------------------------------------------------- */
+
+/* API MUTATION */
 import { useMutation, useQueryClient } from "react-query";
-import { toast } from "react-toastify";
+
+/* COMPONENTS */
 import DeleteModal from "../components/modals/DeleteModal";
 
+/* NOTIFICATIONS */
+import { toast } from "react-toastify";
+
+/* HOOKS */
+import { useState } from "react";
+
+/* --------------------------------------------------------------------------- */
+/* ~~~~~~HOOK~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* --------------------------------------------------------------------------- */
 export default function useDeleteConfirmation(
   apiCall,
   toastText,
@@ -11,10 +25,15 @@ export default function useDeleteConfirmation(
   confirmationText,
   nextLink
 ) {
+  /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
   const queryClient = useQueryClient();
+
+  /* -----~~~~~>>>OPEN/CLOSE<<<~~~~~----- */
   const [deleteConfirmationVisible, setDeleteConfirmationVisible] =
     useState(false);
   const showDeleteModal = () => setDeleteConfirmationVisible(true);
+
+  /* -----~~~~~>>>DATA MUTATION<<<~~~~~----- */
   const deletionMutation = useMutation(apiCall, {
     onSuccess: () => {
       toastText && toast.success(toastText);
@@ -22,6 +41,9 @@ export default function useDeleteConfirmation(
     },
   });
 
+  /* --------------------------------------------------------------------------- */
+  /* ~~~~~~RETURN ITEMS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+  /* --------------------------------------------------------------------------- */
   return [
     <DeleteModal
       modalVisibility={deleteConfirmationVisible}

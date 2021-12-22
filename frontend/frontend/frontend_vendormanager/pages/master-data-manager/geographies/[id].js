@@ -29,13 +29,9 @@ import { Row, Col, Tree, Divider, Modal, Form, Input, Button } from "antd";
 /* STYLING */
 import { UilMapMarkerPlus } from "@iconscout/react-unicons";
 
-/* NOTIFICATIONS */
-import { toast } from "react-toastify";
-
 /* HOOKS */
 import useDeleteConfirmation from "../../../custom_hooks/useDeleteConfirmation";
 import useAddItemModal from "../../../custom_hooks/useAddItemModal";
-import { useState } from "react";
 
 /* --------------------------------------------------------------------------- */
 /* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -75,7 +71,6 @@ export default function Organization() {
   const location = locationQuery?.data;
   const buildings = location?.buildings;
 
-  /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const entitiesQuery = useQuery(
     ["organizationalEntities", 1 /* Depth parameter */],
     getOrganizationalEntities

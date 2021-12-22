@@ -1,25 +1,31 @@
-import { useState } from "react";
+/* ------------------------------------------------------------------------- */
+/* ~~~~~~IMPORTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ------------------------------------------------------------------------- */
 
-// Components
+/* ROUTING */
+import Link from "next/link";
+
+/* API MUTATION */
+import deleteLocation from "../../api_utils/api_mutators/delete/deleteLocation";
+
+/* COMPONENTS */
 import { Table, Empty, Tooltip } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
-// Data mutation
-import deleteLocation from "../../api_utils/api_mutators/delete/deleteLocation";
-
-// Routing
-import Link from "next/link";
-
-// Custom Hooks
+/* HOOKS */
 import useDeleteConfirmation from "../../custom_hooks/useDeleteConfirmation";
+import { useState } from "react";
 
+/* --------------------------------------------------------------------------- */
+/* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* --------------------------------------------------------------------------- */
 export default function LocationDataTable({
   data,
   isLoading,
   scrollView,
   rowSelection,
 }) {
-  // Getting unique values for filtering
+  /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
   const uniqueCountries = [
     ...new Set(
       data?.map((item) => ({ text: item.country, value: item.country }))
@@ -32,9 +38,8 @@ export default function LocationDataTable({
     ...new Set(data?.map((item) => ({ text: item.city, value: item.city }))),
   ];
 
+  /* -----~~~~~>>>DELETION<<<~~~~~----- */
   const [idToDelete, setIdToDelete] = useState("");
-
-  // Handle deletion
   const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
     deleteLocation, // Api call
     "Deleted location successfully", // Success Notification Text
@@ -43,7 +48,7 @@ export default function LocationDataTable({
     "Are you sure you want to delete this location?" // Confirmation Text
   );
 
-  // defining the columns
+  /* -----~~~~~>>>COLUMN DEFINITION<<<~~~~~----- */
   const columns = [
     {
       title: "Country",
@@ -108,6 +113,9 @@ export default function LocationDataTable({
     },
   ];
 
+  /* --------------------------------------------------------------------------- */
+  /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+  /* --------------------------------------------------------------------------- */
   if (!isLoading) {
     return (
       <>

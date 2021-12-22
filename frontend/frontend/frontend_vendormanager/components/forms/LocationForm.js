@@ -1,19 +1,27 @@
-// Components
-import { Form, Input, Button, Tooltip, Space } from "antd";
-import { InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
+/* ------------------------------------------------------------------------- */
+/* ~~~~~~IMPORTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ------------------------------------------------------------------------- */
 
-// Data mutation
-import { useQueryClient, useMutation, useQueries } from "react-query";
+/* COMPONENTS */
+import { Form, Input, Button } from "antd";
+
+/* API MUTATION */
+import { useQueryClient, useMutation } from "react-query";
 import patchLocation from "../../api_utils/api_mutators/patch/patchLocation";
 import postLocation from "../../api_utils/api_mutators/post/postLocation";
 
-// Notifications
+/* NOTIFICATIONS */
 import { toast } from "react-toastify";
 
+/* --------------------------------------------------------------------------- */
+/* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* --------------------------------------------------------------------------- */
 export default function EntityForm({ initialValues, locationId }) {
-  //setting up mutations with react query
+  /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
   const queryClient = useQueryClient();
+  const [form] = Form.useForm();
 
+  /* -----~~~~~>>>DATA MUTATION<<<~~~~~----- */
   const patchMutation = useMutation(patchLocation, {
     onSuccess: () => {
       toast.success("Updated location successfully");
@@ -28,10 +36,7 @@ export default function EntityForm({ initialValues, locationId }) {
     },
   });
 
-  // Initialize Form
-  const [form] = Form.useForm();
-
-  // Submiting logic
+  /* -----~~~~~>>>SUBMITTING<<<~~~~~----- */
   const onFinish = (values) => {
     locationId
       ? patchMutation.mutate({ values: values, id: initialValues.id })
@@ -42,6 +47,9 @@ export default function EntityForm({ initialValues, locationId }) {
     console.log("Failed:", errorInfo);
   };
 
+  /* --------------------------------------------------------------------------- */
+  /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+  /* --------------------------------------------------------------------------- */
   return (
     <>
       <Form

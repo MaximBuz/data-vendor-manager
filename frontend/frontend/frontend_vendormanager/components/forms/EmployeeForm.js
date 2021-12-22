@@ -1,7 +1,8 @@
-// React
-import { useState } from "react";
+/* ------------------------------------------------------------------------- */
+/* ~~~~~~IMPORTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ------------------------------------------------------------------------- */
 
-// Components
+/* COMPONENTS */
 import {
   Form,
   Input,
@@ -11,20 +12,24 @@ import {
   TreeSelect,
   Select,
 } from "antd";
-import { InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 
-// Data mutation
-import { useQueryClient, useMutation, useQueries } from "react-query";
+/* API MUTATION */
+import { useQueryClient, useMutation } from "react-query";
 import postDataConsumer from "../../api_utils/api_mutators/post/postDataConsumer";
 import patchDataConsumer from "../../api_utils/api_mutators/patch/patchDataConsumer";
 import postJob from "../../api_utils/api_mutators/post/postJob";
 
-// Notifications
+/* NOTIFICATIONS */
 import { toast } from "react-toastify";
 
-// Custom Hooks
+/* HOOKS */
 import useAddItemModal from "../../custom_hooks/useAddItemModal";
+import { useState } from "react";
 
+/* --------------------------------------------------------------------------- */
+/* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* --------------------------------------------------------------------------- */
 export default function EntityForm({
   initialValues,
   activityTags,
@@ -33,7 +38,11 @@ export default function EntityForm({
   jobs,
   employeeId,
 }) {
-  // Adding Job Titles Functionality
+  /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
+  const queryClient = useQueryClient();
+  const [form] = Form.useForm();
+
+  /* -----~~~~~>>>ADDING JOBS<<<~~~~~----- */
   const [AddJobButton, AddJobModal] = useAddItemModal(
     postJob,
     "title",
@@ -42,13 +51,9 @@ export default function EntityForm({
     "Add new job title"
   );
 
-  // keeping track of locations to filter buildings dropdown
+  /* -----~~~~~>>>DYNAMIC BUILDINGS DROPDOWN<<<~~~~~----- */
   const [activeLocation, setActiveLocation] = useState(
     initialValues?.location?.id || undefined
-  );
-
-  const [activeBuilding, setActiveBuilding] = useState(
-    initialValues?.building?.id || undefined
   );
 
   function handleLocationChange(value) {
@@ -58,8 +63,7 @@ export default function EntityForm({
     });
   }
 
-  //setting up mutations with react query
-  const queryClient = useQueryClient();
+  /* -----~~~~~>>>DATA MUTATION<<<~~~~~----- */
   const patchMutation = useMutation(patchDataConsumer, {
     onSuccess: () => {
       toast.success("Updated employee successfully");
@@ -73,10 +77,7 @@ export default function EntityForm({
     },
   });
 
-  // Initialize Form
-  const [form] = Form.useForm();
-
-  // Submiting logic
+  /* -----~~~~~>>>SUBMITTING<<<~~~~~----- */
   const onFinish = (values) => {
     console.log(values);
     employeeId
@@ -88,10 +89,9 @@ export default function EntityForm({
     console.log("Failed:", errorInfo);
   };
 
-  function displayRender(label) {
-    return label[label.length - 1];
-  }
-
+  /* --------------------------------------------------------------------------- */
+  /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+  /* --------------------------------------------------------------------------- */
   return (
     <>
       <Form
@@ -100,18 +100,20 @@ export default function EntityForm({
         onFinishFailed={onFinishFailed}
         layout="vertical"
         /* Here map the input data to form names */
-        initialValues={employeeId && {
-          internal_id: initialValues.internal_id,
-          email: initialValues.email,
-          first_name: initialValues.first_name,
-          last_name: initialValues.last_name,
-          floor: initialValues.floor,
-          seat: initialValues.seat,
-          job_title: initialValues.job_title?.id,
-          /* organizational_entity: [initialValues.organizational_entity.name], */
-          building: activeBuilding,
-          location: initialValues.location?.id,
-        }}
+        initialValues={
+          employeeId && {
+            internal_id: initialValues.internal_id,
+            email: initialValues.email,
+            first_name: initialValues.first_name,
+            last_name: initialValues.last_name,
+            floor: initialValues.floor,
+            seat: initialValues.seat,
+            job_title: initialValues.job_title?.id,
+            /* organizational_entity: [initialValues.organizational_entity.name], */
+            building: initialValues?.building?.id,
+            location: initialValues.location?.id,
+          }
+        }
       >
         <Form.Item label="Email" name="email" required>
           <Input placeholder="Add email" />
@@ -210,15 +212,16 @@ export default function EntityForm({
         >
           <Form.Item style={{ flexGrow: "1" }} label="Building" name="building">
             <Select placeholder="Select option">
-              {employeeId && locations
-                .filter((location) => location.id === activeLocation)[0]
-                .buildings.map((building) => {
-                  return (
-                    <Select.Option value={building.id}>
-                      {building.building_name}
-                    </Select.Option>
-                  );
-                })}
+              {employeeId &&
+                locations
+                  .filter((location) => location.id === activeLocation)[0]
+                  .buildings.map((building) => {
+                    return (
+                      <Select.Option value={building.id}>
+                        {building.building_name}
+                      </Select.Option>
+                    );
+                  })}
             </Select>
           </Form.Item>
 
@@ -268,7 +271,9 @@ export default function EntityForm({
             style={{ flexGrow: "1" }}
             label="Activity Tags"
             name="activity"
-            initialValue={employeeId && initialValues.activity?.map((tag) => tag.id)}
+            initialValue={
+              employeeId && initialValues.activity?.map((tag) => tag.id)
+            }
           >
             <Select
               mode="multiple"

@@ -1,23 +1,38 @@
-// Components
+/* ------------------------------------------------------------------------- */
+/* ~~~~~~IMPORTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ------------------------------------------------------------------------- */
+
+/* ROUTING */
+import Link from "next/link";
+
+/* COMPONENTS */
 import { Button } from "antd";
 import DataConsumersDataTable from "../../../components/tables/DataConsumersDataTable";
 
-// Data Fetching
+/* API FETCHING */
 import { dehydrate, QueryClient, useQuery } from "react-query";
 import getDataConsumers from "../../../api_utils/api_fetchers/getDataConsumers";
 
-// Routing
-import Link from "next/link";
-
+/* --------------------------------------------------------------------------- */
+/* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* --------------------------------------------------------------------------- */
 export default function Geographies() {
-  // Data fetching
-  const dataConsumersQuery = useQuery(["dataConsumers", 2 /* JSON depth */], getDataConsumers);
+  /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
+  const dataConsumersQuery = useQuery(
+    ["dataConsumers", 2 /* JSON depth */],
+    getDataConsumers
+  );
+
+  /* --------------------------------------------------------------------------- */
+  /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+  /* --------------------------------------------------------------------------- */
   return (
     <>
       <h2>Managing Employees (Market Data Consumers)</h2>
       <p style={{ maxWidth: "550px" }}>
-        Here you can add and modify employees at your company that consumer market data.
-        There are the employees where market data usage will be tracked and analyzed.
+        Here you can add and modify employees at your company that consumer
+        market data. There are the employees where market data usage will be
+        tracked and analyzed.
       </p>
       <Link href="employees/create/">
         <Button type="primary" style={{ marginBottom: "10px" }}>
@@ -28,19 +43,24 @@ export default function Geographies() {
         data={dataConsumersQuery.data}
         isLoading={dataConsumersQuery.isLoading}
         scrollView={{ x: 1500 }}
-      >
-      </DataConsumersDataTable>
+      ></DataConsumersDataTable>
     </>
   );
 }
 
+/* --------------------------------------------------------------------------- */
+/* ~~~~~~SERVERSIDE RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* --------------------------------------------------------------------------- */
+
 export async function getServerSideProps(context) {
   // Initializing cache from React Query
-  const queryClient = new QueryClient();
+  /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
+  //const queryClient = new QueryClient();
 
-  // Prefetching data consumers from Backend
+  /* -----~~~~~>>>DATA FETCHING<<<~~~~~----- */
   // await queryClient.prefetchQuery(["dataConsumers"], getDataConsumers);
 
+  /* -----~~~~~>>>PASSING PROPS<<<~~~~~----- */
   return {
     props: {
       dehydratedState: dehydrate(queryClient),

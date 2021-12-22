@@ -1,12 +1,19 @@
-// React
-import { useState } from "react";
+/* ------------------------------------------------------------------------- */
+/* ~~~~~~IMPORTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ------------------------------------------------------------------------- */
 
-// Routing
+/* ROUTING */
 import { useRouter } from "next/router";
 
-// Components
+/* HOOKS */
+import { useState } from "react";
+
+/* COMPONENTS */
 import { Modal } from "antd";
 
+/* --------------------------------------------------------------------------- */
+/* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* --------------------------------------------------------------------------- */
 export default function DeleteModal({
   modalVisibility,
   setModalVisible,
@@ -15,23 +22,24 @@ export default function DeleteModal({
   text,
   nextLink,
 }) {
-  // initialize routing
+  /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
   const router = useRouter();
-
   const [confirmLoading, setConfirmLoading] = useState(false);
 
-  // Handle submit
+  /* -----~~~~~>>>SUBMITTING<<<~~~~~----- */
   const handleSubmit = () => {
     mutator.mutate(idToDelete);
     setModalVisible(false);
-    // redirection
     nextLink && router.push(nextLink);
   };
 
-  // Handle cancel
   const handleCancel = () => {
     setModalVisible(false);
   };
+
+  /* --------------------------------------------------------------------------- */
+  /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+  /* --------------------------------------------------------------------------- */
   return (
     <>
       <Modal

@@ -1,37 +1,43 @@
-// React
-import { useState } from "react";
-import Link from "next/link";
+/* ------------------------------------------------------------------------- */
+/* ~~~~~~IMPORTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ------------------------------------------------------------------------- */
 
-// Routing
+/* ROUTING */
 import { useRouter } from "next/router";
 
-// Components
+/* COMPONENTS */
 import { Form, Input, Button, Select, Tooltip, Space, Modal } from "antd";
 import { InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
-// Data mutation
+/* API MUTATION */
 import { useQueryClient, useMutation, useQueries } from "react-query";
 import postEntityType from "../../api_utils/api_mutators/post/postEntityType";
 import postEntity from "../../api_utils/api_mutators/post/postEntity";
 import patchEntity from "../../api_utils/api_mutators/patch/patchEntity";
 
-// Notifications
+/* NOTIFICATIONS */
 import { toast } from "react-toastify";
 
-// Custom Hooks
+/* HOOKS */
 import useAddItemModal from "../../custom_hooks/useAddItemModal";
 
+/* --------------------------------------------------------------------------- */
+/* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* --------------------------------------------------------------------------- */
 export default function EntityForm({
   initialValues,
   entityTypes,
   parentEntities,
   entityId,
 }) {
-
-  // initializing router
+  /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
   const router = useRouter();
+  const queryClient = useQueryClient();
+  const [form] = Form.useForm();
+  const { TextArea } = Input;
+  const { Option } = Select;
 
-  // Adding Entity Types Functionality
+  /* -----~~~~~>>>ADDING ENTITY TYPES<<<~~~~~----- */
   const [AddEntityTypeButton, AddEntityTypeModal] = useAddItemModal(
     postEntityType,
     "name",
@@ -40,8 +46,7 @@ export default function EntityForm({
     "Add new entity type"
   );
 
-  //setting up mutations with react query
-  const queryClient = useQueryClient();
+  /* -----~~~~~>>>DATA MUTATION<<<~~~~~----- */
   const patchMutation = useMutation(patchEntity, {
     onSuccess: () => {
       toast.success("Updated entity successfully");
@@ -56,22 +61,7 @@ export default function EntityForm({
     },
   });
 
-  /* 
-  --------------------------------------
-  Handle main form
-  --------------------------------------
-  */
-
-  // Initialize Form
-  const [form] = Form.useForm();
-
-  // Initialize Text Area
-  const { TextArea } = Input;
-
-  // Initialize DropDown Options
-  const { Option } = Select;
-
-  // Submiting logic
+  /* -----~~~~~>>>SUBMITTING<<<~~~~~----- */
   const onFinish = (values) => {
     entityId
       ? patchMutation.mutate({ values: values, id: initialValues.id })
@@ -82,6 +72,9 @@ export default function EntityForm({
     console.log("Failed:", errorInfo);
   };
 
+  /* --------------------------------------------------------------------------- */
+  /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+  /* --------------------------------------------------------------------------- */
   return (
     <>
       <Form

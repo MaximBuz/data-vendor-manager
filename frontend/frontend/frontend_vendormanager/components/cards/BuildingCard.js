@@ -1,24 +1,33 @@
-// Data Mutation
+/* ------------------------------------------------------------------------- */
+/* ~~~~~~IMPORTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ------------------------------------------------------------------------- */
+
+/* API MUTATION */
 import deleteBuilding from "../../api_utils/api_mutators/delete/deleteBuilding";
 
-// Styling
+/* STYLING */
 import { UilBuilding } from "@iconscout/react-unicons";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
-// Custom Hooks
+/* HOOKS */
 import useDeleteConfirmation from "../../custom_hooks/useDeleteConfirmation";
 
+/* --------------------------------------------------------------------------- */
+/* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* --------------------------------------------------------------------------- */
 export default function BuildingCard({ building }) {
-
-  // Handle deletion
+  /* -----~~~~~>>>DELETION<<<~~~~~----- */
   const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
-    deleteBuilding /* Api Call */,
-    "Deleted building successfully" /* Success Notification Text */,
-    "locationWithBuildings" /* Query to invalidate on success */,
-    building.id /* Id to delete */,
-    "Are you sure you want to delete this building?" /* Confirmation Text */
+    deleteBuilding,
+    "Deleted building successfully",
+    "locationWithBuildings",
+    building.id,
+    "Are you sure you want to delete this building?"
   );
 
+  /* --------------------------------------------------------------------------- */
+  /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+  /* --------------------------------------------------------------------------- */
   return (
     <div
       style={{

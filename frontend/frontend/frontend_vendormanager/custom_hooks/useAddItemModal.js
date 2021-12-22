@@ -1,18 +1,25 @@
-// React
-import { useState } from "react";
+/* ------------------------------------------------------------------------- */
+/* ~~~~~~IMPORTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ------------------------------------------------------------------------- */
 
-// Components
-import { Form, Modal, Input, Tooltip, Button } from "antd";
-
-// Style
-import { PlusOutlined } from "@ant-design/icons";
-
-// Data Mutation
+/* API MUTATION */
 import { useQueryClient, useMutation } from "react-query";
 
-// Notifications
+/* COMPONENTS */
+import { Form, Modal, Input, Tooltip, Button } from "antd";
+
+/* STYLING */
+import { PlusOutlined } from "@ant-design/icons";
+
+/* NOTIFICATIONS */
 import { toast } from "react-toastify";
 
+/* HOOKS */
+import { useState } from "react";
+
+/* --------------------------------------------------------------------------- */
+/* ~~~~~~HOOK~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* --------------------------------------------------------------------------- */
 export default function useAddItemModal(
   apiCall,
   apiField,
@@ -21,8 +28,10 @@ export default function useAddItemModal(
   modalText,
   additionalValues
 ) {
-  //setting up mutations with react query
+  /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
   const queryClient = useQueryClient();
+  const [form] = Form.useForm();
+
   const mutation = useMutation(apiCall, {
     onSuccess: () => {
       toast.success(toastText);
@@ -30,33 +39,33 @@ export default function useAddItemModal(
     },
   });
 
-  // Opening and closing form
+  /* -----~~~~~>>>OPEN/CLOSE<<<~~~~~----- */
   const [visible, setVisible] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const showModal = () => setVisible(true);
 
-  // handling form inside modal
-  const [form] = Form.useForm();
-
-  // handle submit
+  /* -----~~~~~>>>SUBMITTING<<<~~~~~----- */
   const handleOk = () => {
     form
       .validateFields()
       .then((values) => {
         form.resetFields();
         additionalValues
-        ? mutation.mutate({ ...additionalValues, values})
-        : mutation.mutate({ values })
+          ? mutation.mutate({ ...additionalValues, values })
+          : mutation.mutate({ values });
         setVisible(false);
       })
       .catch((info) => console.log(info));
   };
 
-  // handle cancel
+  /* -----~~~~~>>>CANCELLING<<<~~~~~----- */
   const handleCancel = () => {
     setVisible(false);
   };
 
+  /* --------------------------------------------------------------------------- */
+  /* ~~~~~~RETURN ITEMS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+  /* --------------------------------------------------------------------------- */
   return [
     <Tooltip title={modalText} placement="right">
       <Button

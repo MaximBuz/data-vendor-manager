@@ -1,25 +1,30 @@
-// React
-import { useState } from "react";
+/* ------------------------------------------------------------------------- */
+/* ~~~~~~IMPORTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ------------------------------------------------------------------------- */
 
-// Routing
+/* ROUTING */
 import { useRouter } from "next/router";
 
-// Data Fetching
-import {
-  useQuery,
-} from "react-query";
+/* API FETCHING */
+import { useQuery } from "react-query";
 
 import getOrganizationalEntityRootChildren from "../../../api_utils/api_fetchers/getOrganizationalEntityRootChildren";
 import getActivityTags from "../../../api_utils/api_fetchers/getActivityTags";
 import getLocations from "../../../api_utils/api_fetchers/getLocations";
 import getJobs from "../../../api_utils/api_fetchers/getJobs";
 
-
-// Components
+/* COMPONENTS */
 import EmployeeForm from "../../../components/forms/EmployeeForm";
 import { Row, Col } from "antd";
 
+/* HOOKS */
+import { useState } from "react";
+
+/* --------------------------------------------------------------------------- */
+/* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* --------------------------------------------------------------------------- */
 export default function Employee() {
+  /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const activityTagsQuery = useQuery(
     ["activityTags", 0 /* Depth */],
     getActivityTags
@@ -35,6 +40,9 @@ export default function Employee() {
 
   const jobsQuery = useQuery(["jobs"], getJobs);
 
+  /* --------------------------------------------------------------------------- */
+  /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+  /* --------------------------------------------------------------------------- */
   return (
     <>
       <Col flex={0.3}>

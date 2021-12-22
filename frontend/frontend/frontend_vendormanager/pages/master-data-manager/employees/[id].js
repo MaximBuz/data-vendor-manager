@@ -1,57 +1,49 @@
-// React
-import { useState } from "react";
+/* ------------------------------------------------------------------------- */
+/* ~~~~~~IMPORTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ------------------------------------------------------------------------- */
 
-// Routing
+/* ROUTING */
 import { useRouter } from "next/router";
 
-// Data Fetching
-import {
-  dehydrate,
-  QueryClient,
-  useQuery,
-  useMutation,
-  useQueryClient,
-} from "react-query";
+/* API FETCHING */
+import { dehydrate, QueryClient, useQuery, useQueryClient } from "react-query";
 import getDataConsumer from "../../../api_utils/api_fetchers/getDataConsumer";
-import getOrganizationalEntities from "../../../api_utils/api_fetchers/getOrganizationalEntities";
 import getOrganizationalEntityRootChildren from "../../../api_utils/api_fetchers/getOrganizationalEntityRootChildren";
 import getActivityTags from "../../../api_utils/api_fetchers/getActivityTags";
 import getLocations from "../../../api_utils/api_fetchers/getLocations";
 import getJobs from "../../../api_utils/api_fetchers/getJobs";
 
-
-// Data Mutation
+/* API MUTATION */
 import deleteEmployee from "../../../api_utils/api_mutators/delete/deleteEmployee";
 
-// Components
+/* COMPONENTS */
 import EmployeeForm from "../../../components/forms/EmployeeForm";
 import { Row, Col, Divider, Button } from "antd";
 
-// Notifications
-import { toast } from "react-toastify";
-
-// Custom Hooks
+/* HOOKS */
 import useDeleteConfirmation from "../../../custom_hooks/useDeleteConfirmation";
 
+/* --------------------------------------------------------------------------- */
+/* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* --------------------------------------------------------------------------- */
 export default function Employee() {
-  /* get id of the employee */
+  /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
   const router = useRouter();
   const { id: employeeId } = router.query;
 
-  /* setting up mutations with react query */
   const queryClient = useQueryClient();
 
-    // Handle deletion
-    const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
-      deleteEmployee, // Api call
-      "Deleted employee successfully", // Success Notification Text
-      "dataConsumers", // Query to invalidate on success
-      employeeId, // Id to delete
-      "Are you sure you want to delete this employee?", // Confirmation Text 
-      "/master-data-manager/employees" // Next Link
-    );
+  /* -----~~~~~>>>DELETION<<<~~~~~----- */
+  const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
+    deleteEmployee, // Api call
+    "Deleted employee successfully", // Success Notification Text
+    "dataConsumers", // Query to invalidate on success
+    employeeId, // Id to delete
+    "Are you sure you want to delete this employee?", // Confirmation Text
+    "/master-data-manager/employees" // Next Link
+  );
 
-  /* Data fetching */
+  /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const dataConsumerQuery = useQuery(
     ["dataConsumer", employeeId, 2 /* Depth */],
     getDataConsumer
@@ -73,6 +65,9 @@ export default function Employee() {
 
   const jobsQuery = useQuery(["jobs"], getJobs);
 
+  /* --------------------------------------------------------------------------- */
+  /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+  /* --------------------------------------------------------------------------- */
   if (dataConsumerQuery.isLoading) {
     return <>Loading...</>;
   }
@@ -119,13 +114,16 @@ export default function Employee() {
   );
 }
 
-export async function getServerSideProps(context) {
-  // Initializing cache from React Query
-  const queryClient = new QueryClient();
+/* --------------------------------------------------------------------------- */
+/* ~~~~~~SERVERSIDE RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* --------------------------------------------------------------------------- */
 
+export async function getServerSideProps(context) {
+  /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
+  const queryClient = new QueryClient();
   const employeeId = context.params.id;
 
-  // Prefetching data
+  /* -----~~~~~>>>DATA FETCHING<<<~~~~~----- */
   await queryClient.prefetchQuery(
     ["organizationalEntityRootChildren", 10 /* Depth */],
     getOrganizationalEntityRootChildren
@@ -138,15 +136,10 @@ export async function getServerSideProps(context) {
     ["activityTags", 0 /* Depth */],
     getActivityTags
   );
-  await queryClient.prefetchQuery(
-    ["locations"],
-    getLocations
-  );
-  await queryClient.prefetchQuery(
-    ["jobs"],
-    getJobs
-  );
+  await queryClient.prefetchQuery(["locations"], getLocations);
+  await queryClient.prefetchQuery(["jobs"], getJobs);
 
+  /* -----~~~~~>>>PASSING PROPS<<<~~~~~----- */
   return {
     props: {
       dehydratedState: dehydrate(queryClient),
