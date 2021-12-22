@@ -135,17 +135,17 @@ export async function getServerSideProps(context) {
   const entityId = context.params.id;
 
   await queryClient.prefetchQuery(
-    ["organizationalEntity", entityId, 10 /* depth param */],
+    ["organizationalEntity", entityId, 10 /* depth */],
     getOrganizationalEntity
   );
 
   await queryClient.prefetchQuery(
-    ["entityTypes", 2 /* depth param */],
+    ["entityTypes", 2 /* depth */],
     getEntityTypes
   );
 
   await queryClient.prefetchQuery(
-    ["organizationalEntities", 1 /* depth param */],
+    ["organizationalEntities", 1 /* depth */],
     getOrganizationalEntities
   );
   await queryClient.prefetchQuery(["locations"], getLocations);
