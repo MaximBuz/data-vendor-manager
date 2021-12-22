@@ -1,13 +1,21 @@
-// Components
+/* ------------------------------------------------------------------------- */
+/* ~~~~~~IMPORTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ------------------------------------------------------------------------- */
+
+/* ROUTING */
+import Link from "next/link";
+
+/* COMPONENTS */
 import TreeDataTable from "../../../components/tables/TreeDataTable";
 import { Button, Tooltip } from "antd";
 
-// Routing
-import Link from "next/link";
-
-// Data Fetching
+/* API FETCHING */
 import { dehydrate, QueryClient, useQuery } from "react-query";
 import getOrganizationalEntityRootChildren from "../../../api_utils/api_fetchers/getOrganizationalEntityRootChildren";
+
+/* ------------------------------------------------------------------------- */
+/* ~~~~~~PREPARING COLUMNS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ------------------------------------------------------------------------- */
 
 const columns = [
   {
@@ -51,14 +59,19 @@ const columns = [
   },
 ];
 
+/* ------------------------------------------------------------------------- */
+/* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ------------------------------------------------------------------------- */
 export default function Organizations() {
-  // Data fetching
-  // the second parameter I'm giving inside the array is the depth I need
+  /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const { isLoading, error, data } = useQuery(
-    ["organizationalEntityRootChildren", 10],
+    ["organizationalEntityRootChildren", 10 /* depth */],
     getOrganizationalEntityRootChildren
   );
 
+  /* --------------------------------------------------------------------------- */
+  /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+  /* --------------------------------------------------------------------------- */
   return (
     <>
       <h2>Organizational structure modelling</h2>
@@ -84,15 +97,21 @@ export default function Organizations() {
   );
 }
 
+/* --------------------------------------------------------------------------- */
+/* ~~~~~~SERVERSIDE RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* --------------------------------------------------------------------------- */
+
 export async function getServerSideProps() {
+  /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
   const queryClient = new QueryClient();
 
-  // the second parameter I'm giving inside the array is the depth I need
+  /* -----~~~~~>>>DATA FETCHING<<<~~~~~----- */
   await queryClient.prefetchQuery(
     ["organizationalEntityRootChildren", 10],
     getOrganizationalEntityRootChildren
   );
 
+  /* -----~~~~~>>>PASSING PROPS<<<~~~~~----- */
   return {
     props: {
       dehydratedState: dehydrate(queryClient),

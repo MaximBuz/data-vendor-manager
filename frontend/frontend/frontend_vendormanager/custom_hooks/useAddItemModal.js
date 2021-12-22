@@ -18,7 +18,8 @@ export default function useAddItemModal(
   apiField,
   toastText,
   queryToInvalidate,
-  modalText
+  modalText,
+  additionalValues
 ) {
   //setting up mutations with react query
   const queryClient = useQueryClient();
@@ -43,7 +44,9 @@ export default function useAddItemModal(
       .validateFields()
       .then((values) => {
         form.resetFields();
-        mutation.mutate({ values });
+        additionalValues
+        ? mutation.mutate({ ...additionalValues, values})
+        : mutation.mutate({ values })
         setVisible(false);
       })
       .catch((info) => console.log(info));
@@ -77,5 +80,6 @@ export default function useAddItemModal(
         </Form.Item>
       </Form>
     </Modal>,
+    showModal,
   ];
 }

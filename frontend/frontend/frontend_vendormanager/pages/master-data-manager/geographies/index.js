@@ -1,17 +1,28 @@
-// Components
+/* ------------------------------------------------------------------------- */
+/* ~~~~~~IMPORTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ------------------------------------------------------------------------- */
+
+/* ROUTING */
+import Link from "next/link";
+
+/* COMPONENTS */
 import { Button } from "antd";
 import LocationDataTable from "../../../components/tables/LocationDataTable";
 
-// Data Fetching
+/* API FETCHING */
 import { dehydrate, QueryClient, useQuery } from "react-query";
 import getLocations from "../../../api_utils/api_fetchers/getLocations";
 
-// Routing
-import Link from "next/link";
-
+/* --------------------------------------------------------------------------- */
+/* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* --------------------------------------------------------------------------- */
 export default function Geographies() {
-  // Data fetching
+  /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const locationsQuery = useQuery(["locations"], getLocations);
+
+  /* --------------------------------------------------------------------------- */
+  /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+  /* --------------------------------------------------------------------------- */
   return (
     <>
       <h2>Business Location Modelling</h2>
@@ -29,20 +40,23 @@ export default function Geographies() {
         data={locationsQuery.data}
         isLoading={locationsQuery.isLoading}
         /* scrollView={{ x: 1100, y: 500 }} */
-      >
-
-      </LocationDataTable>
+      ></LocationDataTable>
     </>
   );
 }
 
+/* --------------------------------------------------------------------------- */
+/* ~~~~~~SERVERSIDE RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* --------------------------------------------------------------------------- */
+
 export async function getServerSideProps(context) {
-  // Initializing cache from React Query
+  /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
   const queryClient = new QueryClient();
 
-  // Prefetching Locations from Backend
+  /* -----~~~~~>>>DATA FETCHING<<<~~~~~----- */
   await queryClient.prefetchQuery(["locations"], getLocations);
 
+  /* -----~~~~~>>>PASSING PROPS<<<~~~~~----- */
   return {
     props: {
       dehydratedState: dehydrate(queryClient),

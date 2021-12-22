@@ -1,10 +1,11 @@
-// React
-import { useState } from "react";
+/* ------------------------------------------------------------------------- */
+/* ~~~~~~IMPORTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ------------------------------------------------------------------------- */
 
-// Routing
+/* ROUTING */
 import { useRouter } from "next/router";
 
-// Data Fetching
+/* API FETCHING */
 import {
   dehydrate,
   QueryClient,
@@ -16,86 +17,57 @@ import getLocationWithBuildings from "../../../api_utils/api_fetchers/getLocatio
 import getOrganizationalEntities from "../../../api_utils/api_fetchers/getOrganizationalEntities";
 import getOrganizationalEntityRootChildren from "../../../api_utils/api_fetchers/getOrganizationalEntityRootChildren";
 
-// Data Mutation
+/* API MUTATION */
 import postBuilding from "../../../api_utils/api_mutators/post/postBuilding";
 import deleteLocation from "../../../api_utils/api_mutators/delete/deleteLocation";
 
-// Components
+/* COMPONENTS */
 import LocationForm from "../../../components/forms/LocationForm";
 import BuildingCard from "../../../components/cards/BuildingCard";
 import { Row, Col, Tree, Divider, Modal, Form, Input, Button } from "antd";
 
-// Styling
+/* STYLING */
 import { UilMapMarkerPlus } from "@iconscout/react-unicons";
 
-// Notifications
+/* NOTIFICATIONS */
 import { toast } from "react-toastify";
 
-// Custom Hooks
+/* HOOKS */
 import useDeleteConfirmation from "../../../custom_hooks/useDeleteConfirmation";
+import useAddItemModal from "../../../custom_hooks/useAddItemModal";
+import { useState } from "react";
 
-
+/* --------------------------------------------------------------------------- */
+/* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* --------------------------------------------------------------------------- */
 export default function Organization() {
-  // get id of the location
+  /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
   const router = useRouter();
   const { id: locationId } = router.query;
 
-  //setting up mutations with react query
   const queryClient = useQueryClient();
 
-  // Handle deletion
+  /* -----~~~~~>>>DELETION<<<~~~~~----- */
   const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
     deleteLocation, // Api call
     "Deleted location successfully", // Success Notification Text
     "locations", // Query to invalidate on success
     locationId, // Id to delete
-    "Are you sure you want to delete this location?", // Confirmation Text 
+    "Are you sure you want to delete this location?", // Confirmation Text
     "/master-data-manager/geographies" // Next Link
   );
 
-  /* 
-  --------------------------------------
-  Handle Modal for adding new Buildings to location
-  --------------------------------------
-  */
+  /* -----~~~~~>>>ADDING BUILDINGS<<<~~~~~----- */
+  const [_, AddBuildingModal, showAddBuildingModal] = useAddItemModal(
+    postBuilding,
+    "building_name",
+    "Successfully added new building!",
+    "locationWithBuildings",
+    "Add new building",
+    { building_location: locationId } // Additional values
+  );
 
-  // creating mutator
-  const buildingMutation = useMutation(postBuilding, {
-    onSuccess: () => {
-      toast.success("Added building successfully");
-      queryClient.invalidateQueries("locationWithBuildings");
-    },
-  });
-
-  // modal functionality
-  const [newBuildingModalVisibility, setNewBuildingModalVisibility] =
-    useState(false);
-  const [confirmBuildingModalLoading, setConfirmBusinessModalLoading] =
-    useState(false);
-  const showModal = () => setNewBuildingModalVisibility(true);
-
-  // handling form inside modal
-  const [newBuildingModalForm] = Form.useForm();
-
-  // handle submit
-  const handleBuildingModalSubmit = () => {
-    newBuildingModalForm
-      .validateFields()
-      .then((values) => {
-        newBuildingModalForm.resetFields();
-        buildingMutation.mutate({
-          values: values,
-          building_location: locationId,
-        });
-        setNewBuildingModalVisibility(false);
-      })
-      .catch((info) => console.log(info));
-  };
-  const handleBuildingModalCancel = () => {
-    setNewBuildingModalVisibility(false);
-  };
-
-  // Data fetching for locations dropdown
+  /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const locationQuery = useQuery(
     ["locationWithBuildings", locationId],
     getLocationWithBuildings
@@ -103,7 +75,7 @@ export default function Organization() {
   const location = locationQuery?.data;
   const buildings = location?.buildings;
 
-  // Data fetching for preselecting organizational entities related to this location
+  /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const entitiesQuery = useQuery(
     ["organizationalEntities", 1 /* Depth parameter */],
     getOrganizationalEntities
@@ -111,13 +83,15 @@ export default function Organization() {
   const relatedEntities = entitiesQuery?.data.filter(
     (entity) => entity.location?.id == locationId
   );
-  // Data fetching tree structure
+
   const treeQuery = useQuery(
     ["organizationalEntityRootChildren", 10],
     getOrganizationalEntityRootChildren
   );
 
-
+  /* --------------------------------------------------------------------------- */
+  /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+  /* --------------------------------------------------------------------------- */
   if (locationQuery.isLoading) {
     return <>Loading...</>;
   }
@@ -133,7 +107,7 @@ export default function Organization() {
           <h2>
             Location in {location.city}, {location.country}
           </h2>
-          <LocationForm initialValues={location} locationId={locationId}/>
+          <LocationForm initialValues={location} locationId={locationId} />
         </Col>
         <Divider type="vertical" style={{ minHeight: "45em" }} />
         <Col flex={1}>
@@ -151,7 +125,7 @@ export default function Organization() {
             {/* Create new Building button */}
             {/* ------------------------------------------ */}
             <div
-              onClick={showModal}
+              onClick={showAddBuildingModal}
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -208,44 +182,32 @@ export default function Organization() {
         </Button>
       </Row>
 
-      <Modal
-        title="Add new Building to this location"
-        visible={newBuildingModalVisibility}
-        okText="Add"
-        onOk={handleBuildingModalSubmit}
-        confirmLoading={confirmBuildingModalLoading}
-        onCancel={handleBuildingModalCancel}
-      >
-        <Form form={newBuildingModalForm} preserve={false} layout="vertical">
-          <Form.Item name="building_name">
-            <Input placeholder="Add new Building to this location" />
-          </Form.Item>
-        </Form>
-      </Modal>
+      {AddBuildingModal}
       {DeleteModal}
-
     </>
   );
 }
 
-export async function getServerSideProps(context) {
-  // Initializing cache from React Query
-  const queryClient = new QueryClient();
+/* --------------------------------------------------------------------------- */
+/* ~~~~~~SERVERSIDE RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* --------------------------------------------------------------------------- */
 
+export async function getServerSideProps(context) {
+  /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
+  const queryClient = new QueryClient();
   const locationId = context.params.id;
 
-  // Prefetching the locations
+  /* -----~~~~~>>>DATA FETCHING<<<~~~~~----- */
   await queryClient.prefetchQuery(
     ["locationWithBuildings", locationId],
     getLocationWithBuildings
   );
 
-  // Prefetching organizational entities
   await queryClient.prefetchQuery(
-    ["organizationalEntities", 1 /* Depth parameter */],
+    ["organizationalEntities", 1 /* Depth */],
     getOrganizationalEntities
   );
-
+  /* -----~~~~~>>>PASSING PROPS<<<~~~~~----- */
   return {
     props: {
       dehydratedState: dehydrate(queryClient),

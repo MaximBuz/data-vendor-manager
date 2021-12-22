@@ -1,36 +1,15 @@
-// React
-import { useState } from "react";
+/* ------------------------------------------------------------------------- */
+/* ~~~~~~IMPORTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ------------------------------------------------------------------------- */
 
-// Routing
-import { useRouter } from "next/router";
-
-// Data Fetching
-import {
-  dehydrate,
-  QueryClient,
-  useQuery,
-  useMutation,
-  useQueryClient,
-} from "react-query";
-
-// Data Mutation
-import postLocation from "../../../api_utils/api_mutators/post/postLocation";
-
-// Components
+/* COMPONENTS */
 import LocationForm from "../../../components/forms/LocationForm";
-import { Row, Col, Divider, Form, Input } from "antd";
+import { Row, Col } from "antd";
 
-// Notifications
-import { toast } from "react-toastify";
-
+/* --------------------------------------------------------------------------- */
+/* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* --------------------------------------------------------------------------- */
 export default function CreateLocation() {
-  //setting up mutations with react query
-  const queryClient = useQueryClient();
-  const mutation = useMutation(postLocation, {
-    onSuccess: () => {
-      toast.success("Added location successfully")
-      queryClient.invalidateQueries("locations")},
-  });
 
   return (
     <>
