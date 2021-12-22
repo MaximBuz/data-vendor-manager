@@ -246,7 +246,7 @@ export default function LocationDataTable({
                 title="Edit this location or add buildings"
                 placement="left"
               >
-                <EditOutlined />
+                <EditOutlined/>
               </Tooltip>
             </Link>
             <Tooltip title="Delete this location" placement="left">

@@ -115,6 +115,7 @@ export default function EntityForm({
           }
         }
       >
+        <Divider orientation="middle" plain style={{color: "grey",  fontWeight: "lighter"}}>General Information</Divider>
         <Form.Item label="Email" name="email" required>
           <Input placeholder="Add email" />
         </Form.Item>
@@ -123,6 +124,7 @@ export default function EntityForm({
             display: "flex",
             gap: "10px",
             justifyContent: "space-between",
+            flexWrap: "wrap"
           }}
         >
           <Form.Item
@@ -148,17 +150,18 @@ export default function EntityForm({
             <Input placeholder="Add internal id" />
           </Form.Item>
         </div>
-        <Divider />
+        <Divider orientation="middle" plain style={{color: "grey",  fontWeight: "lighter"}}>Business Affiliation</Divider>
         <div
           style={{
             display: "flex",
             gap: "10px",
             justifyContent: "space-between",
             alignItems: "center",
+            flexWrap: "wrap"
           }}
         >
           <Form.Item
-            style={{ flexGrow: "2" }}
+            style={{ flexGrow: "1" }}
             initialValue={employeeId && initialValues.organizational_entity.id}
             label="Organizational Entity"
             name="organizational_entity"
@@ -173,7 +176,6 @@ export default function EntityForm({
 
           <Form.Item style={{ flexGrow: "1" }} name="location" label="Location">
             <Select
-              style={{ minWidth: "300px" }}
               onChange={handleLocationChange}
             >
               {locations &&
@@ -208,6 +210,7 @@ export default function EntityForm({
             display: "flex",
             gap: "10px",
             justifyContent: "space-between",
+            flexWrap: "wrap"
           }}
         >
           <Form.Item style={{ flexGrow: "1" }} label="Building" name="building">
@@ -233,13 +236,14 @@ export default function EntityForm({
             <Input placeholder="Add seat" />
           </Form.Item>
         </div>
-        <Divider />
+        <Divider orientation="middle" plain style={{color: "grey",  fontWeight: "lighter"}}>Job Description</Divider>
         <div
           style={{
             display: "flex",
             gap: "10px",
             justifyContent: "space-between",
             alignItems: "center",
+            flexWrap: "wrap"
           }}
         >
           <Form.Item
@@ -247,7 +251,7 @@ export default function EntityForm({
             label="Job Title"
             style={{ flexGrow: "1" }}
           >
-            <Select style={{ minWidth: "300px" }}>
+            <Select>
               {jobs &&
                 jobs.map((job) => {
                   return (
@@ -265,6 +269,7 @@ export default function EntityForm({
             gap: "10px",
             justifyContent: "space-between",
             alignItems: "center",
+            flexWrap: "wrap"
           }}
         >
           <Form.Item
