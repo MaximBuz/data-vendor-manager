@@ -100,6 +100,7 @@ export default function Employee() {
             organizationalTree={treeQuery?.data}
             locations={locationQuery?.data}
             jobs={jobsQuery?.data}
+            employeeId={employeeId}
           />
         </Col>
         <Divider type="vertical" style={{ minHeight: "50em" }} />

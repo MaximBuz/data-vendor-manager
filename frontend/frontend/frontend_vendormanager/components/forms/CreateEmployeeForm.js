@@ -15,7 +15,6 @@ import { InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
 // Data mutation
 import { useQueryClient, useMutation, useQueries } from "react-query";
-import postDataConsumer from "../../api_utils/api_mutators/post/postDataConsumer";
 import patchDataConsumer from "../../api_utils/api_mutators/patch/patchDataConsumer";
 import postJob from "../../api_utils/api_mutators/post/postJob";
 
@@ -31,7 +30,6 @@ export default function EntityForm({
   organizationalTree,
   locations,
   jobs,
-  employeeId,
 }) {
   // Adding Job Titles Functionality
   const [AddJobButton, AddJobModal] = useAddItemModal(
@@ -44,32 +42,26 @@ export default function EntityForm({
 
   // keeping track of locations to filter buildings dropdown
   const [activeLocation, setActiveLocation] = useState(
-    initialValues?.location?.id || undefined
+    initialValues.location?.id
   );
 
   const [activeBuilding, setActiveBuilding] = useState(
-    initialValues?.building?.id || undefined
-  );
+    initialValues.building?.id
+  )
 
   function handleLocationChange(value) {
-    setActiveLocation(value);
+    setActiveLocation(value)
     form.setFieldsValue({
-      building: undefined,
-    });
+      building: undefined
+    })
   }
 
   //setting up mutations with react query
   const queryClient = useQueryClient();
-  const patchMutation = useMutation(patchDataConsumer, {
+  const mutation = useMutation(patchDataConsumer, {
     onSuccess: () => {
       toast.success("Updated employee successfully");
       queryClient.invalidateQueries(["dataConsumers", "dataConsumer"]);
-    },
-  });
-  const postMutation = useMutation(postDataConsumer, {
-    onSuccess: () => {
-      toast.success("Added employee successfully");
-      queryClient.invalidateQueries(["dataConsumers"]);
     },
   });
 
@@ -79,9 +71,7 @@ export default function EntityForm({
   // Submiting logic
   const onFinish = (values) => {
     console.log(values);
-    employeeId
-      ? patchMutation.mutate({ values: values, id: initialValues.id })
-      : postMutation.mutate({ values: values });
+    mutation.mutate({ values: values, id: initialValues.id });
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -100,7 +90,7 @@ export default function EntityForm({
         onFinishFailed={onFinishFailed}
         layout="vertical"
         /* Here map the input data to form names */
-        initialValues={employeeId && {
+        initialValues={{
           internal_id: initialValues.internal_id,
           email: initialValues.email,
           first_name: initialValues.first_name,
@@ -157,7 +147,7 @@ export default function EntityForm({
         >
           <Form.Item
             style={{ flexGrow: "2" }}
-            initialValue={employeeId && initialValues.organizational_entity.id}
+            initialValue={initialValues.organizational_entity.id}
             label="Organizational Entity"
             name="organizational_entity"
           >
@@ -170,10 +160,7 @@ export default function EntityForm({
           </Form.Item>
 
           <Form.Item style={{ flexGrow: "1" }} name="location" label="Location">
-            <Select
-              style={{ minWidth: "300px" }}
-              onChange={handleLocationChange}
-            >
+            <Select style={{ minWidth: "300px" }} onChange={handleLocationChange}>
               {locations &&
                 locations.map((location) => {
                   return (
@@ -210,7 +197,7 @@ export default function EntityForm({
         >
           <Form.Item style={{ flexGrow: "1" }} label="Building" name="building">
             <Select placeholder="Select option">
-              {employeeId && locations
+              {locations
                 .filter((location) => location.id === activeLocation)[0]
                 .buildings.map((building) => {
                   return (
@@ -268,7 +255,7 @@ export default function EntityForm({
             style={{ flexGrow: "1" }}
             label="Activity Tags"
             name="activity"
-            initialValue={employeeId && initialValues.activity?.map((tag) => tag.id)}
+            initialValue={initialValues.activity?.map((tag) => tag.id)}
           >
             <Select
               mode="multiple"

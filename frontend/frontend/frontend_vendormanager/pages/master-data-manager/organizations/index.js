@@ -15,7 +15,7 @@ const columns = [
     dataIndex: "name",
     key: "name",
     fixed: "left",
-    width: "25%",
+    width: "35%",
     render: (text, record) => {
       return (
         <Link href={`/master-data-manager/organizations/${record.key}`}>
@@ -28,6 +28,7 @@ const columns = [
     title: "Entity Type",
     dataIndex: ["type", "name"],
     key: "type",
+    width: "15%"
   },
   {
     title: "Description",
@@ -46,6 +47,7 @@ const columns = [
     title: "Internal Id",
     dataIndex: "internal_id",
     key: "internal_id",
+    width: "20%"
   },
 ];
 
