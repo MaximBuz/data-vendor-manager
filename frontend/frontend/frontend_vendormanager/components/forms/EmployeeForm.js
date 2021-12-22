@@ -229,7 +229,7 @@ export default function EntityForm({
             <Select placeholder="Select option">
               {locations &&
                 locations
-                  .filter((location) => location.id === activeLocation)[0]
+                  .filter((location) => location.id === activeLocation)[0]?
                   .buildings.map((building) => {
                     return (
                       <Select.Option value={building.id}>
@@ -294,7 +294,6 @@ export default function EntityForm({
           >
             <Select
               mode="multiple"
-              style={{ width: "100%" }}
               placeholder="Please select activity tags"
               filterOption={(input, option) =>
                 option.key.toLowerCase().indexOf(input.toLowerCase()) >= 0 ||

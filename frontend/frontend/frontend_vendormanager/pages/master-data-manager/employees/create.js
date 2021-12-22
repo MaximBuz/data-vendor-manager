@@ -42,17 +42,17 @@ export default function Employee() {
   /* --------------------------------------------------------------------------- */
   return (
     <>
-      <Col flex={0.3}>
-        <h2>Add Employee (Data Consumer)</h2>
-        <Row>
+      <Row>
+        <Col span={16}>
+          <h2>Add Employee (Data Consumer)</h2>
           <EmployeeForm
             activityTags={activityTags}
             organizationalTree={treeQuery?.data}
             locations={locationQuery?.data}
             jobs={jobsQuery?.data}
           />
-        </Row>
-      </Col>
+        </Col>
+      </Row>
     </>
   );
 }
