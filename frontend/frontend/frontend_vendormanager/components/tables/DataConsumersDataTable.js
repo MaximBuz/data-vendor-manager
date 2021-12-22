@@ -5,7 +5,7 @@ import { Table, Empty, Tooltip } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
 // Data mutation
-import deleteLocation from "../../api_utils/api_mutators/delete/deleteLocation";
+import deleteEmployee from "../../api_utils/api_mutators/delete/deleteEmployee";
 
 // Routing
 import Link from "next/link";
@@ -20,6 +20,15 @@ export default function LocationDataTable({
   rowSelection,
 }) {
   const [idToDelete, setIdToDelete] = useState("");
+
+   // Handle deletion
+   const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
+    deleteEmployee, // Api call
+    "Deleted employee successfully", // Success Notification Text
+    ["dataConsumers",2], // Query to invalidate on success
+    idToDelete, // Id to delete
+    "Are you sure you want to delete this employee?" // Confirmation Text
+  );
 
   // defining the columns
   const columns = [
@@ -125,6 +134,7 @@ export default function LocationDataTable({
                 }}
               />
             </Tooltip>
+            {DeleteModal}
           </>
         );
       },
