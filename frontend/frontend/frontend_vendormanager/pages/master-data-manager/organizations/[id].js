@@ -76,7 +76,7 @@ export default function Organization() {
       <h2>
         {entity.name} ({entity.type.name})
       </h2>
-          <EntityForm initialValues={entity} entityTypes={entityTypes} parentEntities={parentEntities}/>
+          <EntityForm entityId={entityId} initialValues={entity} entityTypes={entityTypes} parentEntities={parentEntities}/>
         </Col>
         <Divider type="vertical" style={{minHeight: "45em"}}/>
         <Col

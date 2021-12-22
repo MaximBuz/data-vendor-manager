@@ -1,5 +1,5 @@
 // Components
-import CreateEntityForm from "../../../components/forms/CreateEntityForm";
+import EntityForm from "../../../components/forms/EntityForm";
 
 // Data Fetching
 import { dehydrate, QueryClient, useQuery } from "react-query";
@@ -33,7 +33,7 @@ export default function create() {
     return (
         <>
         <h2>Create a new organizational entity</h2>
-            <CreateEntityForm entityTypes={entityTypes} parentEntities={parentEntities} locations={locations}/>
+            <EntityForm entityTypes={entityTypes} parentEntities={parentEntities} locations={locations}/>
         </>
     )
 }

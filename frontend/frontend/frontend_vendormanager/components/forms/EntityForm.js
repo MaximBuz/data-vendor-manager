@@ -2,6 +2,9 @@
 import { useState } from "react";
 import Link from "next/link";
 
+// Routing
+import { useRouter } from "next/router";
+
 // Components
 import { Form, Input, Button, Select, Tooltip, Space, Modal } from "antd";
 import { InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
@@ -9,6 +12,7 @@ import { InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
 // Data mutation
 import { useQueryClient, useMutation, useQueries } from "react-query";
 import postEntityType from "../../api_utils/api_mutators/post/postEntityType";
+import postEntity from "../../api_utils/api_mutators/post/postEntity";
 import patchEntity from "../../api_utils/api_mutators/patch/patchEntity";
 
 // Notifications
@@ -21,25 +25,37 @@ export default function EntityForm({
   initialValues,
   entityTypes,
   parentEntities,
+  entityId,
 }) {
 
-// Adding Entity Types Functionality
-const [AddEntityTypeButton, AddEntityTypeModal] = useAddItemModal(
-  postEntityType,
-  "name",
-  "Successfully added entity type!",
-  "entityTypes",
-  "Add new entity type"
-);
+  // initializing router
+  const router = useRouter();
 
+  // Adding Entity Types Functionality
+  const [AddEntityTypeButton, AddEntityTypeModal] = useAddItemModal(
+    postEntityType,
+    "name",
+    "Successfully added entity type!",
+    "entityTypes",
+    "Add new entity type"
+  );
 
   //setting up mutations with react query
-  const queryClient = useQueryClient()
-  const mutation = useMutation(patchEntity, {onSuccess: () => {
-    toast.success("Updated entity successfully")
-    queryClient.invalidateQueries("organizationalEntityRootChildren")}})
+  const queryClient = useQueryClient();
+  const patchMutation = useMutation(patchEntity, {
+    onSuccess: () => {
+      toast.success("Updated entity successfully");
+      queryClient.invalidateQueries("organizationalEntityRootChildren");
+    },
+  });
+  const postMutation = useMutation(postEntity, {
+    onSuccess: () => {
+      toast.success("Added entity successfully");
+      queryClient.invalidateQueries("organizationalEntityRootChildren");
+      router.push("/master-data-manager/organizations/");
+    },
+  });
 
-  
   /* 
   --------------------------------------
   Handle main form
@@ -57,7 +73,9 @@ const [AddEntityTypeButton, AddEntityTypeModal] = useAddItemModal(
 
   // Submiting logic
   const onFinish = (values) => {
-    mutation.mutate({values: values, id: initialValues.id})
+    entityId
+      ? patchMutation.mutate({ values: values, id: initialValues.id })
+      : postMutation.mutate({ values: values });
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -72,13 +90,15 @@ const [AddEntityTypeButton, AddEntityTypeModal] = useAddItemModal(
         onFinishFailed={onFinishFailed}
         layout="vertical"
         /* Here map the input data to form names */
-        initialValues={{
-          name: initialValues.name,
-          type: initialValues.type.id,
-          description: initialValues.description,
-          internal_id: initialValues.internal_id,
-          parent: initialValues.parent?.id,
-        }}
+        initialValues={
+          entityId && {
+            name: initialValues.name,
+            type: initialValues.type.id,
+            description: initialValues.description,
+            internal_id: initialValues.internal_id,
+            parent: initialValues.parent?.id,
+          }
+        }
       >
         <Form.Item
           label="Name"
@@ -87,10 +107,10 @@ const [AddEntityTypeButton, AddEntityTypeModal] = useAddItemModal(
           tooltip={{
             title: "What is the name of this organizational entity?",
             icon: <InfoCircleOutlined />,
-            placement: "right"
+            placement: "right",
           }}
         >
-          <Input placeholder="input placeholder" />
+          <Input placeholder="Add a name" />
         </Form.Item>
 
         <Space size="small" align="center">
@@ -102,10 +122,13 @@ const [AddEntityTypeButton, AddEntityTypeModal] = useAddItemModal(
               title:
                 "What type of organizational entity is this? (e.g. division, business unit, legal entity, etc.)",
               icon: <InfoCircleOutlined />,
-              placement: "right"
+              placement: "right",
             }}
           >
-            <Select style={{ minWidth: "300px" }}>
+            <Select
+              placeholder="Choose an entity type"
+              style={{ minWidth: "300px" }}
+            >
               {entityTypes &&
                 entityTypes.map((type) => {
                   return <Option value={type.id}>{type.name}</Option>;
@@ -126,33 +149,41 @@ const [AddEntityTypeButton, AddEntityTypeModal] = useAddItemModal(
             title:
               "Does this entity have an ID in your company specifiy ERP system?",
             icon: <InfoCircleOutlined />,
-            placement: "right"
+            placement: "right",
           }}
         >
           <Input placeholder="Add the company specific ID of this entity" />
         </Form.Item>
 
         <Space size="small" align="center">
-        <Form.Item
-          name="parent"
-          label="Parent Entity"
-          tooltip={{
-            title:
-              "Is this entity controlled by another parent organization? (i.e. A department is controlled by a business unit",
-            icon: <InfoCircleOutlined />,
-            placement: "right"
-          }}
-        >
-          <Select style={{ minWidth: "300px" }}>
-            {parentEntities &&
-              parentEntities.map((entity) => {
-                if (entity.id === initialValues.id) return <Option disabled value={entity.id}>{entity.name}</Option>;
-                return <Option value={entity.id}>{entity.name}</Option>;
-              })}
-          </Select>
-        </Form.Item>
+          <Form.Item
+            name="parent"
+            label="Parent Entity"
+            tooltip={{
+              title:
+                "Is this entity controlled by another parent organization? (i.e. A department is controlled by a business unit",
+              icon: <InfoCircleOutlined />,
+              placement: "right",
+            }}
+          >
+            <Select
+              placeholder="Choose a parent entity"
+              style={{ minWidth: "300px" }}
+            >
+              {parentEntities &&
+                parentEntities.map((entity) => {
+                  if (entityId && entity.id === initialValues.id)
+                    return (
+                      <Option disabled value={entity.id}>
+                        {entity.name}
+                      </Option>
+                    );
+                  return <Option value={entity.id}>{entity.name}</Option>;
+                })}
+            </Select>
+          </Form.Item>
           <a href="/master-data-manager/organizations/create" target="_blank">
-          <Tooltip title="Add new Entity" placement="right">
+            <Tooltip title="Add new Entity" placement="right">
               <Button
                 style={{ position: "relative", top: "3px" }}
                 shape="circle"
@@ -161,15 +192,15 @@ const [AddEntityTypeButton, AddEntityTypeModal] = useAddItemModal(
             </Tooltip>
           </a>
         </Space>
-        <br/>
-        
+        <br />
+
         <Form.Item>
           <Button type="primary" htmlType="submit">
-            Save changes
+            {entityId ? "Save changes" : "Add entity"}
           </Button>
         </Form.Item>
       </Form>
-              {AddEntityTypeModal}
+      {AddEntityTypeModal}
     </>
   );
 }
