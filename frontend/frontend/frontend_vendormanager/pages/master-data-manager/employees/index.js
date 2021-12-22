@@ -55,7 +55,7 @@ export default function Geographies() {
 export async function getServerSideProps(context) {
   // Initializing cache from React Query
   /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
-  //const queryClient = new QueryClient();
+  const queryClient = new QueryClient();
 
   /* -----~~~~~>>>DATA FETCHING<<<~~~~~----- */
   // await queryClient.prefetchQuery(["dataConsumers"], getDataConsumers);

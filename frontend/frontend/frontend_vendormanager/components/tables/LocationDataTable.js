@@ -9,8 +9,8 @@ import Link from "next/link";
 import deleteLocation from "../../api_utils/api_mutators/delete/deleteLocation";
 
 /* COMPONENTS */
-import { Table, Empty, Tooltip } from "antd";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Table, Empty, Tooltip, Input, Space, Button } from "antd";
+import { EditOutlined, DeleteOutlined, SearchOutlined} from "@ant-design/icons";
 
 /* HOOKS */
 import useDeleteConfirmation from "../../custom_hooks/useDeleteConfirmation";
@@ -53,23 +53,173 @@ export default function LocationDataTable({
     {
       title: "Country",
       dataIndex: "country",
-      filters: uniqueCountries,
-      onFilter: (value, record) => record.country.indexOf(value) === 0,
       sorter: (a, b) => a.country.localeCompare(b.country),
+      filterDropdown: ({
+        setSelectedKeys,
+        selectedKeys,
+        confirm,
+        clearFilters,
+      }) => {
+        return (
+          <div style={{ padding: 8 }}>
+            <Input
+              autoFocus
+              placeholder="Search country"
+              style={{ marginBottom: 8, display: 'block', width: 250 }}
+              value={selectedKeys[0]}
+              onChange={(e) => {
+                setSelectedKeys(e.target.value ? [e.target.value] : []);
+                confirm({ closeDropdown: false });
+              }}
+              onPressEnter={() => confirm()}
+              onBlur={() => confirm()}
+            />
+            <Space>
+              <Button
+                onClick={() => {
+                  confirm();
+                }}
+                type="primary"
+                icon={<SearchOutlined />}
+                size="small"
+                style={{ width: 90 }}
+              >
+                Search
+              </Button>
+              <Button
+                onClick={() => {
+                  clearFilters();
+                  confirm();
+                }}
+                size="small"
+                style={{ width: 90 }}
+              >
+                Reset
+              </Button>
+            </Space>
+          </div>
+        );
+      },
+      filterIcon: () => {
+        return <SearchOutlined />;
+      },
+      onFilter: (value, record) => {
+        return record.country.toLowerCase().includes(value.toLowerCase());
+      },
     },
     {
       title: "State",
       dataIndex: "state",
-      filters: uniqueStates,
-      onFilter: (value, record) => record.state.indexOf(value) === 0,
       sorter: (a, b) => a.state.localeCompare(b.state),
+      filterDropdown: ({
+        setSelectedKeys,
+        selectedKeys,
+        confirm,
+        clearFilters,
+      }) => {
+        return (
+          <div style={{ padding: 8 }}>
+            <Input
+              autoFocus
+              placeholder="Search state"
+              style={{ marginBottom: 8, display: 'block', width: 250 }}
+              value={selectedKeys[0]}
+              onChange={(e) => {
+                setSelectedKeys(e.target.value ? [e.target.value] : []);
+                confirm({ closeDropdown: false });
+              }}
+              onPressEnter={() => confirm()}
+              onBlur={() => confirm()}
+            />
+            <Space>
+              <Button
+                onClick={() => {
+                  confirm();
+                }}
+                type="primary"
+                icon={<SearchOutlined />}
+                size="small"
+                style={{ width: 90 }}
+              >
+                Search
+              </Button>
+              <Button
+                onClick={() => {
+                  clearFilters();
+                  confirm();
+                }}
+                size="small"
+                style={{ width: 90 }}
+              >
+                Reset
+              </Button>
+            </Space>
+          </div>
+        );
+      },
+      filterIcon: () => {
+        return <SearchOutlined />;
+      },
+      onFilter: (value, record) => {
+        return record.state.toLowerCase().includes(value.toLowerCase());
+      },
     },
     {
       title: "City",
       dataIndex: "city",
-      filters: uniqueCities,
-      onFilter: (value, record) => record.city.indexOf(value) === 0,
       sorter: (a, b) => a.city.localeCompare(b.city),
+      filterDropdown: ({
+        setSelectedKeys,
+        selectedKeys,
+        confirm,
+        clearFilters,
+      }) => {
+        return (
+          <div style={{ padding: 8 }}>
+            <Input
+              autoFocus
+              placeholder="Search city"
+              style={{ marginBottom: 8, display: 'block', width: 250 }}
+              value={selectedKeys[0]}
+              onChange={(e) => {
+                setSelectedKeys(e.target.value ? [e.target.value] : []);
+                confirm({ closeDropdown: false });
+              }}
+              onPressEnter={() => confirm()}
+              onBlur={() => confirm()}
+            />
+            <Space>
+              <Button
+                onClick={() => {
+                  confirm();
+                }}
+                type="primary"
+                icon={<SearchOutlined />}
+                size="small"
+                style={{ width: 90 }}
+              >
+                Search
+              </Button>
+              <Button
+                onClick={() => {
+                  clearFilters();
+                  confirm();
+                }}
+                size="small"
+                style={{ width: 90 }}
+              >
+                Reset
+              </Button>
+            </Space>
+          </div>
+        );
+      },
+      filterIcon: () => {
+        return <SearchOutlined />;
+      },
+      onFilter: (value, record) => {
+        return record.city.toLowerCase().includes(value.toLowerCase());
+      },
     },
     {
       title: "Zip Code",

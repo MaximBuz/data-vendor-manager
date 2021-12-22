@@ -9,8 +9,12 @@ import Link from "next/link";
 import deleteEmployee from "../../api_utils/api_mutators/delete/deleteEmployee";
 
 /* COMPONENTS */
-import { Table, Empty, Tooltip } from "antd";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import { Table, Input, Button, Space, Empty, Tooltip } from "antd";
+import {
+  EditOutlined,
+  DeleteOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
 
 /* HOOKS */
 import useDeleteConfirmation from "../../custom_hooks/useDeleteConfirmation";
@@ -42,17 +46,173 @@ export default function LocationDataTable({
       dataIndex: "email",
       width: "15%",
       fixed: "left",
-      sorter: (a, b) => a.country.localeCompare(b.country),
+      sorter: (a, b) => a.email.localeCompare(b.email),
+      filterDropdown: ({
+        setSelectedKeys,
+        selectedKeys,
+        confirm,
+        clearFilters,
+      }) => {
+        return (
+          <div style={{ padding: 8 }}>
+            <Input
+              autoFocus
+              placeholder="Search email"
+              style={{ marginBottom: 8, display: "block", width: 250 }}
+              value={selectedKeys[0]}
+              onChange={(e) => {
+                setSelectedKeys(e.target.value ? [e.target.value] : []);
+                confirm({ closeDropdown: false });
+              }}
+              onPressEnter={() => confirm()}
+              onBlur={() => confirm()}
+            />
+            <Space>
+              <Button
+                onClick={() => {
+                  confirm();
+                }}
+                type="primary"
+                icon={<SearchOutlined />}
+                size="small"
+                style={{ width: 90 }}
+              >
+                Search
+              </Button>
+              <Button
+                onClick={() => {
+                  clearFilters();
+                  confirm();
+                }}
+                size="small"
+                style={{ width: 90 }}
+              >
+                Reset
+              </Button>
+            </Space>
+          </div>
+        );
+      },
+      filterIcon: () => {
+        return <SearchOutlined />;
+      },
+      onFilter: (value, record) => {
+        return record.email.toLowerCase().includes(value.toLowerCase());
+      },
     },
     {
       title: "First Name",
       dataIndex: "first_name",
-      sorter: (a, b) => a.state.localeCompare(b.state),
+      sorter: (a, b) => a.first_name.localeCompare(b.first_name),
+      filterDropdown: ({
+        setSelectedKeys,
+        selectedKeys,
+        confirm,
+        clearFilters,
+      }) => {
+        return (
+          <div style={{ padding: 8 }}>
+            <Input
+              autoFocus
+              placeholder="Search first name"
+              style={{ marginBottom: 8, display: "block", width: 250 }}
+              value={selectedKeys[0]}
+              onChange={(e) => {
+                setSelectedKeys(e.target.value ? [e.target.value] : []);
+                confirm({ closeDropdown: false });
+              }}
+              onPressEnter={() => confirm()}
+              onBlur={() => confirm()}
+            />
+            <Space>
+              <Button
+                onClick={() => {
+                  confirm();
+                }}
+                type="primary"
+                icon={<SearchOutlined />}
+                size="small"
+                style={{ width: 90 }}
+              >
+                Search
+              </Button>
+              <Button
+                onClick={() => {
+                  clearFilters();
+                  confirm();
+                }}
+                size="small"
+                style={{ width: 90 }}
+              >
+                Reset
+              </Button>
+            </Space>
+          </div>
+        );
+      },
+      filterIcon: () => {
+        return <SearchOutlined />;
+      },
+      onFilter: (value, record) => {
+        return record.first_name.toLowerCase().includes(value.toLowerCase());
+      },
     },
     {
       title: "Last Name",
       dataIndex: "last_name",
-      sorter: (a, b) => a.city.localeCompare(b.city),
+      sorter: (a, b) => a.last_name.localeCompare(b.last_name),
+      filterDropdown: ({
+        setSelectedKeys,
+        selectedKeys,
+        confirm,
+        clearFilters,
+      }) => {
+        return (
+          <div style={{ padding: 8 }}>
+            <Input
+              autoFocus
+              placeholder="Search last name"
+              style={{ marginBottom: 8, display: "block", width: 250 }}
+              value={selectedKeys[0]}
+              onChange={(e) => {
+                setSelectedKeys(e.target.value ? [e.target.value] : []);
+                confirm({ closeDropdown: false });
+              }}
+              onPressEnter={() => confirm()}
+              onBlur={() => confirm()}
+            />
+            <Space>
+              <Button
+                onClick={() => {
+                  confirm();
+                }}
+                type="primary"
+                icon={<SearchOutlined />}
+                size="small"
+                style={{ width: 90 }}
+              >
+                Search
+              </Button>
+              <Button
+                onClick={() => {
+                  clearFilters();
+                  confirm();
+                }}
+                size="small"
+                style={{ width: 90 }}
+              >
+                Reset
+              </Button>
+            </Space>
+          </div>
+        );
+      },
+      filterIcon: () => {
+        return <SearchOutlined />;
+      },
+      onFilter: (value, record) => {
+        return record.last_name.toLowerCase().includes(value.toLowerCase());
+      },
     },
     {
       title: "Job Title",
