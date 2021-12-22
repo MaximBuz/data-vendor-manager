@@ -14,49 +14,32 @@ import patchEntity from "../../api_utils/api_mutators/patch/patchEntity";
 // Notifications
 import { toast } from "react-toastify";
 
+// Custom Hooks
+import useAddItemModal from "../../custom_hooks/useAddItemModal";
+
 export default function EntityForm({
   initialValues,
   entityTypes,
   parentEntities,
 }) {
 
+// Adding Entity Types Functionality
+const [AddEntityTypeButton, AddEntityTypeModal] = useAddItemModal(
+  postEntityType,
+  "name",
+  "Successfully added entity type!",
+  "entityTypes",
+  "Add new entity type"
+);
+
+
   //setting up mutations with react query
   const queryClient = useQueryClient()
-  const typeMutation = useMutation(postEntityType)
   const mutation = useMutation(patchEntity, {onSuccess: () => {
     toast.success("Updated entity successfully")
     queryClient.invalidateQueries("organizationalEntityRootChildren")}})
 
-  /* 
-  --------------------------------------
-  Handle Modal for adding entity Types
-  --------------------------------------
-  */
-
-  // modal functionality
-  const [visible, setVisible] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
-  const [modalText, setModalText] = useState("Add new Entity Type");
-  const showModal = () => setVisible(true);
-
-  // handling form inside modal
-  const [modalForm] = Form.useForm();
-
-  // handle submit
-  const handleOk = () => {
-    modalForm
-      .validateFields()
-      .then((values) => {
-        modalForm.resetFields();
-        typeMutation.mutate({values})
-        setVisible(false);
-      })
-      .catch(info => console.log(info));
-  };
-  const handleCancel = () => {
-    setVisible(false);
-  };
-
+  
   /* 
   --------------------------------------
   Handle main form
@@ -71,11 +54,6 @@ export default function EntityForm({
 
   // Initialize DropDown Options
   const { Option } = Select;
-
-  // How to render location object
-  const transformedLocation =
-    initialValues.location &&
-    `${initialValues.location.street} ${initialValues.location.street_nr}, ${initialValues.location.city}, ${initialValues.location.country}`;
 
   // Submiting logic
   const onFinish = (values) => {
@@ -134,14 +112,7 @@ export default function EntityForm({
                 })}
             </Select>
           </Form.Item>
-          <Tooltip title="Add new entity type" placement="right">
-            <Button
-              onClick={showModal}
-              style={{ position: "relative", top: "3px" }}
-              shape="circle"
-              icon={<PlusOutlined />}
-            />
-          </Tooltip>
+          {AddEntityTypeButton}
         </Space>
 
         <Form.Item label="Description" name="description">
@@ -198,21 +169,7 @@ export default function EntityForm({
           </Button>
         </Form.Item>
       </Form>
-
-      <Modal
-        title="Add new Entity Type"
-        visible={visible}
-        okText="Add"
-        onOk={handleOk}
-        confirmLoading={confirmLoading}
-        onCancel={handleCancel}
-      >
-        <Form form={modalForm} preserve={false} layout="vertical">
-          <Form.Item name="name">
-            <Input placeholder="Add a new Entity Type" />
-          </Form.Item>
-        </Form>
-      </Modal>
+              {AddEntityTypeModal}
     </>
   );
 }

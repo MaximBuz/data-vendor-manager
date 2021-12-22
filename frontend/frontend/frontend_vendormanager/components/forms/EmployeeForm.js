@@ -13,9 +13,13 @@ import { InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
 // Data mutation
 import { useQueryClient, useMutation, useQueries } from "react-query";
 import patchLocation from "../../api_utils/api_mutators/patch/patchLocation";
+import postJob from "../../api_utils/api_mutators/post/postJob";
 
 // Notifications
 import { toast } from "react-toastify";
+
+// Custom Hooks
+import useAddItemModal from "../../custom_hooks/useAddItemModal";
 
 export default function EntityForm({
   initialValues,
@@ -24,6 +28,15 @@ export default function EntityForm({
   locations,
   jobs,
 }) {
+  // Adding Job Titles Functionality
+  const [AddJobButton, AddJobModal] = useAddItemModal(
+    postJob,
+    "title",
+    "Successfully added new job title!",
+    "jobs",
+    "Add new job title"
+  );
+
   //setting up mutations with react query
   const queryClient = useQueryClient();
   const mutation = useMutation(patchLocation, {
@@ -115,7 +128,7 @@ export default function EntityForm({
           }}
         >
           <Form.Item
-            style={{ flexGrow: "1" }}
+            style={{ flexGrow: "2" }}
             initialValue={initialValues.organizational_entity.id}
             label="Organizational Entity"
             name="organizational_entity"
@@ -128,12 +141,12 @@ export default function EntityForm({
             />
           </Form.Item>
 
-          <Form.Item name="location" label="Location">
+          <Form.Item style={{ flexGrow: "1" }} name="location" label="Location">
             <Select style={{ minWidth: "300px" }}>
               {locations &&
                 locations.map((location) => {
                   return (
-                    <Option value={location.id}>
+                    <Select.Option value={location.id}>
                       {location.street +
                         " " +
                         location.street_nr +
@@ -141,7 +154,7 @@ export default function EntityForm({
                         location.city +
                         ", " +
                         location.country}
-                    </Option>
+                    </Select.Option>
                   );
                 })}
             </Select>
@@ -164,7 +177,7 @@ export default function EntityForm({
             justifyContent: "space-between",
           }}
         >
-          <Form.Item label="Building" name="building">
+          <Form.Item style={{ flexGrow: "1" }} label="Building" name="building">
             <Select></Select>
           </Form.Item>
 
@@ -193,18 +206,14 @@ export default function EntityForm({
             <Select style={{ minWidth: "300px" }}>
               {jobs &&
                 jobs.map((job) => {
-                  return <Option value={job.id}>{job.title}</Option>;
+                  return (
+                    <Select.Option value={job.id}>{job.title}</Select.Option>
+                  );
                 })}
             </Select>
           </Form.Item>
 
-          <Tooltip title="Add new Job" placement="right">
-            <Button
-              style={{ position: "relative", top: "3px" }}
-              shape="circle"
-              icon={<PlusOutlined />}
-            />
-          </Tooltip>
+          {AddJobButton}
         </div>
         <div
           style={{
@@ -252,6 +261,7 @@ export default function EntityForm({
           </Button>
         </Form.Item>
       </Form>
+      {AddJobModal}
     </>
   );
 }

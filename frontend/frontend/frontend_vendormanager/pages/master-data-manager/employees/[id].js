@@ -43,7 +43,7 @@ export default function Employee() {
 
   /* Data fetching */
   const dataConsumerQuery = useQuery(
-    ["dataConsumer", employeeId, 2 /* Depth parameter */],
+    ["dataConsumer", employeeId, 2 /* Depth */],
     getDataConsumer
   );
   const dataConsumer = dataConsumerQuery?.data;
@@ -114,10 +114,26 @@ export async function getServerSideProps(context) {
 
   const employeeId = context.params.id;
 
-  // Prefetching organizational entities
+  // Prefetching data
   await queryClient.prefetchQuery(
-    ["organizationalEntities", 1 /* Depth parameter */],
-    getOrganizationalEntities
+    ["organizationalEntityRootChildren", 10 /* Depth */],
+    getOrganizationalEntityRootChildren
+  );
+  await queryClient.prefetchQuery(
+    ["dataConsumer", employeeId, 2 /* Depth */],
+    getDataConsumer
+  );
+  await queryClient.prefetchQuery(
+    ["activityTags", 0 /* Depth */],
+    getActivityTags
+  );
+  await queryClient.prefetchQuery(
+    ["locations"],
+    getLocations
+  );
+  await queryClient.prefetchQuery(
+    ["jobs"],
+    getJobs
   );
 
   return {

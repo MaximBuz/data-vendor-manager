@@ -1,8 +1,4 @@
-// React
-import { useState } from "react";
-
 // Routing
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 // Components
@@ -13,7 +9,6 @@ import {
   Select,
   Tooltip,
   Space,
-  Modal,
   Col,
   Row,
   Divider,
@@ -21,12 +16,15 @@ import {
 import { InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
 // Data mutation
-import { useQueryClient, useMutation, useQueries } from "react-query";
+import { useQueryClient, useMutation } from "react-query";
 import postEntityType from "../../api_utils/api_mutators/post/postEntityType";
 import postEntity from "../../api_utils/api_mutators/post/postEntity";
 
 // Notifications
 import { toast } from "react-toastify";
+
+// Custom Hooks
+import useAddItemModal from "../../custom_hooks/useAddItemModal";
 
 export default function CreateEntityForm({
   entityTypes,
@@ -36,45 +34,23 @@ export default function CreateEntityForm({
   // Initializing router
   const router = useRouter();
 
+  // Adding Entity Types Functionality
+  const [AddTypeButton, AddTypeModal] = useAddItemModal(
+    postEntityType,
+    "name",
+    "Successfully added entity type!",
+    "entityTypes",
+    "Add new entity type"
+  );
+
   //setting up mutations with react query
   const queryClient = useQueryClient();
-  const typeMutation = useMutation(postEntityType);
   const mutation = useMutation(postEntity, {
     onSuccess: () => {
       toast.success("Added entity successfully");
       queryClient.invalidateQueries("organizationalEntityRootChildren");
     },
   });
-
-  /* 
-  --------------------------------------
-  Handle Modal for adding entity Types
-  --------------------------------------
-  */
-
-  // modal functionality
-  const [visible, setVisible] = useState(false);
-  const [confirmLoading, setConfirmLoading] = useState(false);
-  const [modalText, setModalText] = useState("Add new Entity Type");
-  const showModal = () => setVisible(true);
-
-  // handling form inside modal
-  const [modalForm] = Form.useForm();
-
-  // handle submit
-  const handleOk = () => {
-    modalForm
-      .validateFields()
-      .then((values) => {
-        modalForm.resetFields();
-        typeMutation.mutate({ values });
-        setVisible(false);
-      })
-      .catch((info) => console.log(info));
-  };
-  const handleCancel = () => {
-    setVisible(false);
-  };
 
   /* 
   --------------------------------------
@@ -161,14 +137,7 @@ export default function CreateEntityForm({
                     })}
                 </Select>
               </Form.Item>
-              <Tooltip title="Add new entity type" placement="right">
-                <Button
-                  onClick={showModal}
-                  style={{ position: "relative", top: "3px" }}
-                  shape="circle"
-                  icon={<PlusOutlined />}
-                />
-              </Tooltip>
+              {AddTypeButton}
             </Space>
 
             <Form.Item label="Description" name="description">
@@ -270,20 +239,7 @@ export default function CreateEntityForm({
         </Form.Item>
       </Form>
 
-      <Modal
-        title="Add new Entity Type"
-        visible={visible}
-        okText="Add"
-        onOk={handleOk}
-        confirmLoading={confirmLoading}
-        onCancel={handleCancel}
-      >
-        <Form form={modalForm} preserve={false} layout="vertical">
-          <Form.Item name="name">
-            <Input placeholder="Add a new Entity Type" />
-          </Form.Item>
-        </Form>
-      </Modal>
+      {AddTypeModal}
     </>
   );
 }
