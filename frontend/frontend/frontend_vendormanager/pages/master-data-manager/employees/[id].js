@@ -21,11 +21,11 @@ import getJobs from "../../../api_utils/api_fetchers/getJobs";
 
 
 // Data Mutation
-import deleteLocation from "../../../api_utils/api_mutators/delete/deleteLocation";
+import deleteEmployee from "../../../api_utils/api_mutators/delete/deleteEmployee";
 
 // Components
 import EmployeeForm from "../../../components/forms/EmployeeForm";
-import { Row, Col, Tree, Divider, Button } from "antd";
+import { Row, Col, Divider, Button } from "antd";
 
 // Notifications
 import { toast } from "react-toastify";
@@ -34,12 +34,22 @@ import { toast } from "react-toastify";
 import useDeleteConfirmation from "../../../custom_hooks/useDeleteConfirmation";
 
 export default function Employee() {
-  /* get id of the location */
+  /* get id of the employee */
   const router = useRouter();
   const { id: employeeId } = router.query;
 
   /* setting up mutations with react query */
   const queryClient = useQueryClient();
+
+    // Handle deletion
+    const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
+      deleteEmployee, // Api call
+      "Deleted employee successfully", // Success Notification Text
+      "dataConsumers", // Query to invalidate on success
+      employeeId, // Id to delete
+      "Are you sure you want to delete this employee?", // Confirmation Text 
+      "/master-data-manager/employees" // Next Link
+    );
 
   /* Data fetching */
   const dataConsumerQuery = useQuery(
@@ -99,11 +109,11 @@ export default function Employee() {
       </Row>
       <Divider></Divider>
       <Row justify="center">
-        <Button onClick={"showDeleteModal"} type="primary" danger>
-          Delete Location
+        <Button onClick={showDeleteModal} type="primary" danger>
+          Delete Employee
         </Button>
       </Row>
-      {/* {DeleteModal} */}
+      {DeleteModal}
     </>
   );
 }

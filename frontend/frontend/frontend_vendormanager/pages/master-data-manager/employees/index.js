@@ -39,7 +39,7 @@ export async function getServerSideProps(context) {
   const queryClient = new QueryClient();
 
   // Prefetching data consumers from Backend
-  // await queryClient.prefetchQuery(["DataConsumers"], getDataConsumers);
+  // await queryClient.prefetchQuery(["dataConsumers"], getDataConsumers);
 
   return {
     props: {

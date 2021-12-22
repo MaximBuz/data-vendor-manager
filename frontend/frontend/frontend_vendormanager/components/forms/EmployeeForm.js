@@ -81,7 +81,7 @@ export default function EntityForm({
           seat: initialValues.seat,
           job_title: initialValues.job_title?.id,
           /* organizational_entity: [initialValues.organizational_entity.name], */
-          building: initialValues.building.building_name,
+          building: initialValues.building?.building_name,
           location: initialValues.location?.id,
         }}
       >

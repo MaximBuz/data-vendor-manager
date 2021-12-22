@@ -78,29 +78,29 @@ export default function LocationDataTable({
           <Tooltip
             placement="topLeft"
             title={
-              record.organizational_entity.location?.street +
+              record.location?.street +
               " " +
-              record.organizational_entity.location?.street_nr +
+              record.location?.street_nr +
               ", " +
-              record.organizational_entity.location?.zip_code +
+              record.location?.zip_code +
               " " +
-              record.organizational_entity.location?.city +
+              record.location?.city +
               ", " +
-              record.organizational_entity.location?.state +
+              record.location?.state +
               ", " +
-              record.organizational_entity.location?.country
+              record.location?.country
             }
           >
-            {record.organizational_entity.location?.city +
+            {record.location?.city +
               ", " +
-              record.organizational_entity.location?.country}
+              record.location?.country}
           </Tooltip>
         );
       },
     },
     {
       title: "Building",
-      render: (text, record) => record.building.building_name,
+      render: (text, record) => record.building?.building_name,
     },
     {
       title: "",
