@@ -21,6 +21,8 @@ export default function EntityForm({
   initialValues,
   activityTags,
   organizationalTree,
+  locations,
+  jobs,
 }) {
   //setting up mutations with react query
   const queryClient = useQueryClient();
@@ -64,15 +66,15 @@ export default function EntityForm({
           last_name: initialValues.last_name,
           floor: initialValues.floor,
           seat: initialValues.seat,
-          job_title: initialValues.job_title.title,
+          job_title: initialValues.job_title?.id,
           /* organizational_entity: [initialValues.organizational_entity.name], */
           building: initialValues.building.building_name,
+          location: initialValues.location?.id,
         }}
       >
         <Form.Item label="Email" name="email" required>
           <Input placeholder="Add email" />
         </Form.Item>
-        <Divider />
         <div
           style={{
             display: "flex",
@@ -109,6 +111,7 @@ export default function EntityForm({
             display: "flex",
             gap: "10px",
             justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
           <Form.Item
@@ -118,15 +121,41 @@ export default function EntityForm({
             name="organizational_entity"
           >
             <TreeSelect
-              treeLine={true}
+              treeLine={{ showLeafIcon: false }}
               treeData={organizationalTree}
               treeDefaultExpandAll
               placeholder="Please select entity"
             />
           </Form.Item>
-          <Form.Item style={{ flexGrow: "1" }} label="Location" name="location">
-            <Input placeholder="Location" disabled />
+
+          <Form.Item name="location" label="Location">
+            <Select style={{ minWidth: "300px" }}>
+              {locations &&
+                locations.map((location) => {
+                  return (
+                    <Option value={location.id}>
+                      {location.street +
+                        " " +
+                        location.street_nr +
+                        ", " +
+                        location.city +
+                        ", " +
+                        location.country}
+                    </Option>
+                  );
+                })}
+            </Select>
           </Form.Item>
+
+          <a href="/master-data-manager/geographies/create" target="_blank">
+            <Tooltip title="Add new Location" placement="right">
+              <Button
+                style={{ position: "relative", top: "3px" }}
+                shape="circle"
+                icon={<PlusOutlined />}
+              />
+            </Tooltip>
+          </a>
         </div>
         <div
           style={{
@@ -136,9 +165,7 @@ export default function EntityForm({
           }}
         >
           <Form.Item label="Building" name="building">
-            <Select>
-              
-            </Select>
+            <Select></Select>
           </Form.Item>
 
           <Form.Item style={{ flexGrow: "1" }} label="Floor" name="floor">
@@ -150,9 +177,35 @@ export default function EntityForm({
           </Form.Item>
         </div>
         <Divider />
-        <Form.Item label="Job Title" name="job_title">
-          <Input placeholder="Add job title" />
-        </Form.Item>
+        <div
+          style={{
+            display: "flex",
+            gap: "10px",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}
+        >
+          <Form.Item
+            name="job_title"
+            label="Job Title"
+            style={{ flexGrow: "1" }}
+          >
+            <Select style={{ minWidth: "300px" }}>
+              {jobs &&
+                jobs.map((job) => {
+                  return <Option value={job.id}>{job.title}</Option>;
+                })}
+            </Select>
+          </Form.Item>
+
+          <Tooltip title="Add new Job" placement="right">
+            <Button
+              style={{ position: "relative", top: "3px" }}
+              shape="circle"
+              icon={<PlusOutlined />}
+            />
+          </Tooltip>
+        </div>
         <div
           style={{
             display: "flex",

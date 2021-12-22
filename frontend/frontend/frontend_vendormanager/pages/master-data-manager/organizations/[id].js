@@ -46,13 +46,6 @@ export default function Organization() {
   );
   const parentEntities = parentEntitiesQuery?.data;
 
-  // Data fetching for locations dropdown
-  const locationsQuery = useQuery(
-    ["locations"],
-    getLocations
-  );
-  const locations = locationsQuery?.data;
-
   // Data fetching tree structure
   const treeQuery = useQuery(
     ["organizationalEntityRootChildren", 10],
@@ -83,9 +76,9 @@ export default function Organization() {
       <h2>
         {entity.name} ({entity.type.name})
       </h2>
-          <EntityForm initialValues={entity} entityTypes={entityTypes} parentEntities={parentEntities} locations={locations}/>
+          <EntityForm initialValues={entity} entityTypes={entityTypes} parentEntities={parentEntities}/>
         </Col>
-        <Divider type="vertical" style={{minHeight: "70vh"}}/>
+        <Divider type="vertical" style={{minHeight: "45em"}}/>
         <Col
           flex={1}
         >

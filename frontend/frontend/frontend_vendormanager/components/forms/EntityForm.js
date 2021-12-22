@@ -18,7 +18,6 @@ export default function EntityForm({
   initialValues,
   entityTypes,
   parentEntities,
-  locations
 }) {
 
   //setting up mutations with react query
@@ -101,7 +100,6 @@ export default function EntityForm({
           description: initialValues.description,
           internal_id: initialValues.internal_id,
           parent: initialValues.parent?.id,
-          location: initialValues.location?.id,
         }}
       >
         <Form.Item
@@ -193,35 +191,7 @@ export default function EntityForm({
           </a>
         </Space>
         <br/>
-        <Space size="small" align="center">
-        <Form.Item
-          name="location"
-          label="Location"
-          tooltip={{
-            title:
-              "Please only submit a location, if this organizational entity can be described by one location only.",
-            icon: <InfoCircleOutlined />,
-            placement: "right"
-          }}
-        >
-          <Select style={{ minWidth: "300px" }}>
-            {locations &&
-              locations.map((location) => {
-                return <Option value={location.id}>{location.street + " " + location.street_nr + ", " + location.city + ", " + location.country}</Option>;
-              })}
-          </Select>
-        </Form.Item>
-        <a href="/master-data-manager/geographies/create" target="_blank">
-          <Tooltip title="Add new Location" placement="right">
-              <Button
-                style={{ position: "relative", top: "3px" }}
-                shape="circle"
-                icon={<PlusOutlined />}
-              />
-            </Tooltip>
-          </a>
-        </Space>
-
+        
         <Form.Item>
           <Button type="primary" htmlType="submit">
             Save changes

@@ -135,7 +135,7 @@ export default function Organization() {
           </h2>
           <LocationForm initialValues={location} />
         </Col>
-        <Divider type="vertical" style={{ minHeight: "70vh" }} />
+        <Divider type="vertical" style={{ minHeight: "45em" }} />
         <Col flex={1}>
           <div
             style={{
@@ -174,7 +174,7 @@ export default function Organization() {
             {/* ------------------------------------------ */}
           </div>
         </Col>
-        <Divider type="vertical" style={{ minHeight: "70vh" }} />
+        <Divider type="vertical" style={{ minHeight: "45em" }} />
         <Col flex={1}>
           <h2>Entities associated with this location</h2>
           {/* Displaying Entities at that location */}

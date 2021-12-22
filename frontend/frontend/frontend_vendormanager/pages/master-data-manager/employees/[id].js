@@ -16,6 +16,9 @@ import getDataConsumer from "../../../api_utils/api_fetchers/getDataConsumer";
 import getOrganizationalEntities from "../../../api_utils/api_fetchers/getOrganizationalEntities";
 import getOrganizationalEntityRootChildren from "../../../api_utils/api_fetchers/getOrganizationalEntityRootChildren";
 import getActivityTags from "../../../api_utils/api_fetchers/getActivityTags";
+import getLocations from "../../../api_utils/api_fetchers/getLocations";
+import getJobs from "../../../api_utils/api_fetchers/getJobs";
+
 
 // Data Mutation
 import deleteLocation from "../../../api_utils/api_mutators/delete/deleteLocation";
@@ -30,35 +33,35 @@ import { toast } from "react-toastify";
 // Custom Hooks
 import useDeleteConfirmation from "../../../custom_hooks/useDeleteConfirmation";
 
-
 export default function Employee() {
-  // get id of the location
+  /* get id of the location */
   const router = useRouter();
   const { id: employeeId } = router.query;
 
-  //setting up mutations with react query
+  /* setting up mutations with react query */
   const queryClient = useQueryClient();
 
-  // Data fetching for employee data
+  /* Data fetching */
   const dataConsumerQuery = useQuery(
-    ["dataConsumer", employeeId, 2 /* Depth parameter */ ],
+    ["dataConsumer", employeeId, 2 /* Depth parameter */],
     getDataConsumer
-  )
+  );
   const dataConsumer = dataConsumerQuery?.data;
 
-  // Data fetching for activity tags dropdown
   const activityTagsQuery = useQuery(
     ["activityTags", 0 /* Depth */],
     getActivityTags
-  )
+  );
   const activityTags = activityTagsQuery?.data;
 
-  // Data fetching organizations tree structure
   const treeQuery = useQuery(
     ["organizationalEntityRootChildren", 10],
     getOrganizationalEntityRootChildren
   );
 
+  const locationQuery = useQuery(["locations"], getLocations);
+
+  const jobsQuery = useQuery(["jobs"], getJobs);
 
   if (dataConsumerQuery.isLoading) {
     return <>Loading...</>;
@@ -73,34 +76,25 @@ export default function Employee() {
       <Row gutter={[16, 16]}>
         <Col flex={1}>
           <h2>
-            Employee XXX
+            Employee:{" "}
+            {dataConsumer?.first_name +
+              " " +
+              dataConsumer?.last_name +
+              " (" +
+              dataConsumer?.email +
+              ")"}
           </h2>
-          <EmployeeForm initialValues={dataConsumer} activityTags={activityTags} organizationalTree={treeQuery?.data}/>
+          <EmployeeForm
+            initialValues={dataConsumer}
+            activityTags={activityTags}
+            organizationalTree={treeQuery?.data}
+            locations={locationQuery?.data}
+            jobs={jobsQuery?.data}
+          />
         </Col>
-        <Divider type="vertical" style={{ minHeight: "70vh" }} />
+        <Divider type="vertical" style={{ minHeight: "50em" }} />
         <Col flex={1}>
-          <h2>Organizational Affiliation</h2>
-          {/* ------------------------------------------ */}
-          <div
-            style={{
-              height: "40em",
-              overflow: "scroll",
-              backgroundColor: "white",
-              border: "1px solid #d9d9d9",
-            }}
-          >
-            <Tree
-              showLine={{ showLeafIcon: false }}
-              defaultExpandAll
-              multiple={true}
-              defaultSelectedKeys={[]}
-              /* selectable= {false} */
-              /* onSelect={"onSelect"} */
-              treeData={treeQuery?.data}
-              style={{ padding: "10px 0 0 10px", minHeigth: "100%" }}
-            />
-          </div>
-          {/* ------------------------------------------ */}
+          <h2>Vendor Connections</h2>
         </Col>
       </Row>
       <Divider></Divider>

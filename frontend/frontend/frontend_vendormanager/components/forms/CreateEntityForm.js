@@ -175,7 +175,7 @@ export default function CreateEntityForm({
               <TextArea placeholder="Add a description of this organizational entity" />
             </Form.Item>
           </Col>
-          {<Divider type="vertical" style={{ minHeight: "70vh" }} />}
+          {<Divider type="vertical" style={{ minHeight: "45em" }} />}
           <Col flex={1}>
             <Form.Item
               label="Internal ID"

@@ -1,6 +1,6 @@
 // Components
 import TreeDataTable from "../../../components/tables/TreeDataTable";
-import {Button} from "antd";
+import { Button, Tooltip } from "antd";
 
 // Routing
 import Link from "next/link";
@@ -17,36 +17,35 @@ const columns = [
     fixed: "left",
     width: "25%",
     render: (text, record) => {
-      return <Link href={`/master-data-manager/organizations/${record.key}`}>{text}</Link>
+      return (
+        <Link href={`/master-data-manager/organizations/${record.key}`}>
+          {text}
+        </Link>
+      );
     },
   },
   {
     title: "Entity Type",
     dataIndex: ["type", "name"],
     key: "type",
-    width: "10%",
   },
   {
     title: "Description",
     dataIndex: "description",
     key: "description",
     ellipsis: true,
-    width: "15%",
-  },
-  {
-    title: "Location",
-    dataIndex: ["location", "country"],
     render: (text, record) => {
-      if (record.location) return <p>{text + ", " + record.location?.city}</p>;
+      return (
+        <Tooltip placement="topLeft" title={text}>
+          {text}
+        </Tooltip>
+      );
     },
-    key: "location",
-    width: "15%",
   },
   {
     title: "Internal Id",
     dataIndex: "internal_id",
     key: "internal_id",
-    width: "20%",
   },
 ];
 
@@ -67,15 +66,17 @@ export default function Organizations() {
         parent relationships.
       </p>
       <Link href="organizations/create/">
-        <Button type="primary" style={{marginBottom: "10px"}}>Add new Entity</Button>
+        <Button type="primary" style={{ marginBottom: "10px" }}>
+          Add new Entity
+        </Button>
       </Link>
       <TreeDataTable
         columns={columns}
         data={data}
         rowSelection={false}
         isLoading={isLoading}
-        scrollView={{ x: 1500, y: 500 }}
-        pagination={{defaultPageSize: 10, hideOnSinglePage: true}}
+        /* scrollView={{ x: 1500, y: 500 }} */
+        pagination={{ defaultPageSize: 10, hideOnSinglePage: true }}
       />
     </>
   );
