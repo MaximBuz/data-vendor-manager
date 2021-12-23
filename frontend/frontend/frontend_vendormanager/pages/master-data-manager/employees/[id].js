@@ -100,7 +100,7 @@ export default function Employee() {
         </Col>
         <Divider type="vertical" style={{ minHeight: "50em" }} />
         <Col flex={1}>
-          <h2>Vendor Connections</h2>
+          <h2>Installed Trackers</h2>
         </Col>
       </Row>
       <Divider></Divider>
