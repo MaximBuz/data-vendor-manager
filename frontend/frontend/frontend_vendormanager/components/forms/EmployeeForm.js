@@ -22,6 +22,7 @@ import { useQueryClient, useMutation } from "react-query";
 import postDataConsumer from "../../api_utils/api_mutators/post/postDataConsumer";
 import patchDataConsumer from "../../api_utils/api_mutators/patch/patchDataConsumer";
 import postJob from "../../api_utils/api_mutators/post/postJob";
+import postActivityTag from "../../api_utils/api_mutators/post/postActivityTag";
 
 /* NOTIFICATIONS */
 import { toast } from "react-toastify";
@@ -54,6 +55,17 @@ export default function EntityForm({
     "jobs",
     "Add new job title"
   );
+
+  /* -----~~~~~>>>ADDING ACTIVITY TAGS<<<~~~~~----- */
+  const [AddActivityTagButton, AddActivityTagModal] = useAddItemModal(
+    postActivityTag,
+    "name",
+    "Successfully added new activity tag!",
+    ["activityTags", 0],
+    "Add new activity tag"
+  );
+
+
 
   /* -----~~~~~>>>DYNAMIC BUILDINGS DROPDOWN<<<~~~~~----- */
   const [activeLocation, setActiveLocation] = useState(
@@ -306,14 +318,7 @@ export default function EntityForm({
               ))}
             </Select>
           </Form.Item>
-          <Tooltip title="Add new activity tag" placement="right">
-            <Button
-              onClick={"showModal"}
-              style={{ position: "relative", top: "3px" }}
-              shape="circle"
-              icon={<PlusOutlined />}
-            />
-          </Tooltip>
+          {AddActivityTagButton}
         </div>
 
         <Form.Item>
@@ -322,6 +327,7 @@ export default function EntityForm({
           </Button>
         </Form.Item>
       </Form>
+      {AddActivityTagModal}
       {AddJobModal}
     </>
   );
