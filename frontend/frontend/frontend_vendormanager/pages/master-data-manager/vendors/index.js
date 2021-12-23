@@ -5,11 +5,6 @@
 /* ROUTING */
 import Link from "next/link";
 
-/* API FETCHING */
-import { dehydrate, QueryClient, useQuery, useQueryClient } from "react-query";
-import getBBGLicenseTree from "../../../api_utils/api_fetchers/getBBGLicenseTree";
-import getBBGFirmIds from "../../../api_utils/api_fetchers/getBBGFirmIds";
-
 /* COMPONENTS */
 import { Button, Divider, Radio } from "antd";
 import BBGLicenseTreeDataTable from "../../../components/tables/BBGLicenseTreeDataTable";
@@ -25,20 +20,6 @@ export default function Vendors() {
   /* -----~~~~~>>>SWITCHING TABLES<<<~~~~~----- */
   const [activeTable, setActiveTable] = useState("treeView");
   const onRadioChange = (e) => setActiveTable(e.target.value);
-
-  /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
-  const bbgLicenseTreeQuery = useQuery(
-    ["bbgLicenseTree", 0 /* Depth */],
-    getBBGLicenseTree
-  );
-  const bbgFirmQuery = useQuery(
-    ["bbgFirm", 1 /* Depth */],
-    getBBGFirmIds
-  );
-
-
-  const treeData = bbgLicenseTreeQuery?.data;
-  const bbgFirmData = bbgFirmQuery?.data;
 
   /* --------------------------------------------------------------------------- */
   /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -84,9 +65,9 @@ export default function Vendors() {
       
       {
       activeTable === "treeView"
-      ? <BBGLicenseTreeDataTable data={treeData} scrollView={{ x: 1500 }} />
+      ? <BBGLicenseTreeDataTable scrollView={{ x: 1500 }} />
       : activeTable === "firmId"
-      ? <BBGFirmDataTable data={bbgFirmData} />
+      ? <BBGFirmDataTable />
       : "test"
       }
       

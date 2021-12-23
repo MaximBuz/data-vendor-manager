@@ -5,10 +5,12 @@
 /* ROUTING */
 import Link from "next/link";
 
-/* COMPONENTS */
-import { Table, Empty } from "antd";
+/* API FETCHING */
+import { dehydrate, QueryClient, useQuery, useQueryClient } from "react-query";
+import getBBGLicenseTree from "../../api_utils/api_fetchers/getBBGLicenseTree";
 
 /* COMPONENTS */
+import { Table, Empty } from "antd";
 import { Tooltip } from "antd";
 
 /* --------------------------------------------------------------------------- */
@@ -20,6 +22,12 @@ export default function BBGLicenseTreeDataTable({
   scrollView,
   rowSelection,
 }) {
+  /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
+  const { isLoading, isError, data, error } = useQuery(
+    ["bbgLicenseTree", 0 /* Depth */],
+    getBBGLicenseTree
+  );
+
   /* -----~~~~~>>>COLUMN DEFINITION<<<~~~~~----- */
   const columns = [
     {

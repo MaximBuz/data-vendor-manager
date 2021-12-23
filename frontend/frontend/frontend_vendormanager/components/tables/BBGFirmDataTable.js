@@ -5,6 +5,10 @@
 /* ROUTING */
 import Link from "next/link";
 
+/* API FETCHING */
+import { dehydrate, QueryClient, useQuery, useQueryClient } from "react-query";
+import getBBGFirmIds from "../../api_utils/api_fetchers/getBBGFirmIds";
+
 /* API MUTATION */
 import deleteLocation from "../../api_utils/api_mutators/delete/deleteLocation";
 
@@ -29,18 +33,6 @@ export default function LocationDataTable({
   scrollView,
   rowSelection,
 }) {
-  /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
-  const uniqueCountries = [
-    ...new Set(
-      data?.map((item) => ({ text: item.country, value: item.country }))
-    ),
-  ];
-  const uniqueStates = [
-    ...new Set(data?.map((item) => ({ text: item.state, value: item.state }))),
-  ];
-  const uniqueCities = [
-    ...new Set(data?.map((item) => ({ text: item.city, value: item.city }))),
-  ];
 
   /* -----~~~~~>>>DELETION<<<~~~~~----- */
   const [idToDelete, setIdToDelete] = useState("");
@@ -50,6 +42,12 @@ export default function LocationDataTable({
     "locations", // Query to invalidate on success
     idToDelete, // Id to delete
     "Are you sure you want to delete this location?" // Confirmation Text
+  );
+
+  /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
+  const { isLoading, isError, data, error } = useQuery(
+    ["bbgFirm", 1 /* Depth */],
+    getBBGFirmIds
   );
 
   /* -----~~~~~>>>COLUMN DEFINITION<<<~~~~~----- */
