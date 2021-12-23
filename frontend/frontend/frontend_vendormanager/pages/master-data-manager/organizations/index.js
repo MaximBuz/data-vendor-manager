@@ -6,7 +6,7 @@
 import Link from "next/link";
 
 /* COMPONENTS */
-import TreeDataTable from "../../../components/tables/TreeDataTable";
+import EntityTreeDataTable from "../../../components/tables/EntityTreeDataTable";
 import { Button, Tooltip } from "antd";
 
 /* API FETCHING */
@@ -85,7 +85,7 @@ export default function Organizations() {
           Add new Entity
         </Button>
       </Link>
-      <TreeDataTable
+      <EntityTreeDataTable
         columns={columns}
         data={data}
         rowSelection={false}
