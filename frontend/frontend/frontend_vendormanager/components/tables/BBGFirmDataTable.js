@@ -6,10 +6,10 @@
 import Link from "next/link";
 
 /* API MUTATION */
-import deleteEmployee from "../../api_utils/api_mutators/delete/deleteEmployee";
+import deleteLocation from "../../api_utils/api_mutators/delete/deleteLocation";
 
 /* COMPONENTS */
-import { Table, Input, Button, Space, Empty, Tooltip } from "antd";
+import { Table, Empty, Tooltip, Input, Space, Button } from "antd";
 import {
   EditOutlined,
   DeleteOutlined,
@@ -29,24 +29,34 @@ export default function LocationDataTable({
   scrollView,
   rowSelection,
 }) {
+  /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
+  const uniqueCountries = [
+    ...new Set(
+      data?.map((item) => ({ text: item.country, value: item.country }))
+    ),
+  ];
+  const uniqueStates = [
+    ...new Set(data?.map((item) => ({ text: item.state, value: item.state }))),
+  ];
+  const uniqueCities = [
+    ...new Set(data?.map((item) => ({ text: item.city, value: item.city }))),
+  ];
+
   /* -----~~~~~>>>DELETION<<<~~~~~----- */
   const [idToDelete, setIdToDelete] = useState("");
   const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
-    deleteEmployee, // Api call
-    "Deleted employee successfully", // Success Notification Text
-    ["dataConsumers", 2], // Query to invalidate on success
+    deleteLocation, // Api call
+    "Deleted location successfully", // Success Notification Text
+    "locations", // Query to invalidate on success
     idToDelete, // Id to delete
-    "Are you sure you want to delete this employee?" // Confirmation Text
+    "Are you sure you want to delete this location?" // Confirmation Text
   );
 
   /* -----~~~~~>>>COLUMN DEFINITION<<<~~~~~----- */
   const columns = [
     {
-      title: "Email",
-      dataIndex: "email",
-      width: "15%",
-      fixed: "left",
-      sorter: (a, b) => a.email.localeCompare(b.email),
+      title: "Bloomberg Firm Number",
+      dataIndex: "firm_number",
       filterDropdown: ({
         setSelectedKeys,
         selectedKeys,
@@ -57,7 +67,7 @@ export default function LocationDataTable({
           <div style={{ padding: 8 }}>
             <Input
               autoFocus
-              placeholder="Search email"
+              placeholder="Search for Bloomberg Firm Numbers"
               style={{ marginBottom: 8, display: "block", width: 250 }}
               value={selectedKeys[0]}
               onChange={(e) => {
@@ -97,206 +107,101 @@ export default function LocationDataTable({
         return <SearchOutlined />;
       },
       onFilter: (value, record) => {
-        return record.email.toLowerCase().includes(value.toLowerCase());
+        return record.firm_number.toLowerCase().includes(value.toLowerCase());
       },
     },
     {
-      title: "First Name",
-      dataIndex: "first_name",
-      sorter: (a, b) => a.first_name.localeCompare(b.first_name),
-      filterDropdown: ({
-        setSelectedKeys,
-        selectedKeys,
-        confirm,
-        clearFilters,
-      }) => {
-        return (
-          <div style={{ padding: 8 }}>
-            <Input
-              autoFocus
-              placeholder="Search first name"
-              style={{ marginBottom: 8, display: "block", width: 250 }}
-              value={selectedKeys[0]}
-              onChange={(e) => {
-                setSelectedKeys(e.target.value ? [e.target.value] : []);
-                confirm({ closeDropdown: false });
-              }}
-              onPressEnter={() => confirm()}
-              onBlur={() => confirm()}
-            />
-            <Space>
-              <Button
-                onClick={() => {
-                  confirm();
-                }}
-                type="primary"
-                icon={<SearchOutlined />}
-                size="small"
-                style={{ width: 90 }}
-              >
-                Search
-              </Button>
-              <Button
-                onClick={() => {
-                  clearFilters();
-                  confirm();
-                }}
-                size="small"
-                style={{ width: 90 }}
-              >
-                Reset
-              </Button>
-            </Space>
-          </div>
-        );
-      },
-      filterIcon: () => {
-        return <SearchOutlined />;
-      },
-      onFilter: (value, record) => {
-        return record.first_name.toLowerCase().includes(value.toLowerCase());
-      },
-    },
-    {
-      title: "Last Name",
-      dataIndex: "last_name",
-      sorter: (a, b) => a.last_name.localeCompare(b.last_name),
-      filterDropdown: ({
-        setSelectedKeys,
-        selectedKeys,
-        confirm,
-        clearFilters,
-      }) => {
-        return (
-          <div style={{ padding: 8 }}>
-            <Input
-              autoFocus
-              placeholder="Search last name"
-              style={{ marginBottom: 8, display: "block", width: 250 }}
-              value={selectedKeys[0]}
-              onChange={(e) => {
-                setSelectedKeys(e.target.value ? [e.target.value] : []);
-                confirm({ closeDropdown: false });
-              }}
-              onPressEnter={() => confirm()}
-              onBlur={() => confirm()}
-            />
-            <Space>
-              <Button
-                onClick={() => {
-                  confirm();
-                }}
-                type="primary"
-                icon={<SearchOutlined />}
-                size="small"
-                style={{ width: 90 }}
-              >
-                Search
-              </Button>
-              <Button
-                onClick={() => {
-                  clearFilters();
-                  confirm();
-                }}
-                size="small"
-                style={{ width: 90 }}
-              >
-                Reset
-              </Button>
-            </Space>
-          </div>
-        );
-      },
-      filterIcon: () => {
-        return <SearchOutlined />;
-      },
-      onFilter: (value, record) => {
-        return record.last_name.toLowerCase().includes(value.toLowerCase());
-      },
-    },
-    {
-      title: "Job Title",
-      render: (text, record) => record.job_title?.title,
-    },
-    {
-      title: "Activity Tags",
-      ellipsis: { showTitle: false },
-      render: (text, record) => (
-        <Tooltip
-          placement="topLeft"
-          title={record.activity?.map((tag) => tag.name).join(", ")}
-        >
-          {record.activity?.map((tag) => tag.name).join(", ")}
-        </Tooltip>
-      ),
-    },
-    {
-      title: "Business Affiliation",
-      render: (text, record) => (
-        <Tooltip
-          placement="topLeft"
-          title={
-            record.organizational_entity?.name +
-            ", " +
-            record.organizational_entity?.parent?.name
-          }
-        >
-          {record.organizational_entity?.name}
-        </Tooltip>
-      ),
-    },
-    {
-      title: "Location",
-      ellipsis: true,
+      title: "Affiliated Business Entity",
       render: (text, record) => {
         return (
-          <Tooltip
-            placement="topLeft"
-            title={
-              record.location?.street +
-              " " +
-              record.location?.street_nr +
-              ", " +
-              record.location?.zip_code +
-              " " +
-              record.location?.city +
-              ", " +
-              record.location?.state +
-              ", " +
-              record.location?.country
-            }
+          <Link
+            href={`master-data-manager/organizations/${record.organizational_entity?.id}`}
           >
-            {record.location?.city + ", " + record.location?.country}
-          </Tooltip>
+            {record.organizational_entity?.name}
+          </Link>
         );
       },
-    },
-    {
-      title: "Building",
-      render: (text, record) => record.building?.building_name,
+      sorter: (a, b) =>
+        a.organizational_entity?.name.localeCompare(
+          b.organizational_entity.name
+        ),
+      filterDropdown: ({
+        setSelectedKeys,
+        selectedKeys,
+        confirm,
+        clearFilters,
+      }) => {
+        return (
+          <div style={{ padding: 8 }}>
+            <Input
+              autoFocus
+              placeholder="Search for Business Entities"
+              style={{ marginBottom: 8, display: "block", width: 250 }}
+              value={selectedKeys[0]}
+              onChange={(e) => {
+                setSelectedKeys(e.target.value ? [e.target.value] : []);
+                confirm({ closeDropdown: false });
+              }}
+              onPressEnter={() => confirm()}
+              onBlur={() => confirm()}
+            />
+            <Space>
+              <Button
+                onClick={() => {
+                  confirm();
+                }}
+                type="primary"
+                icon={<SearchOutlined />}
+                size="small"
+                style={{ width: 90 }}
+              >
+                Search
+              </Button>
+              <Button
+                onClick={() => {
+                  clearFilters();
+                  confirm();
+                }}
+                size="small"
+                style={{ width: 90 }}
+              >
+                Reset
+              </Button>
+            </Space>
+          </div>
+        );
+      },
+      filterIcon: () => {
+        return <SearchOutlined />;
+      },
+      onFilter: (value, record) => {
+        return record.organizational_entity?.name
+          .toLowerCase()
+          .includes(value.toLowerCase());
+      },
     },
     {
       title: "",
-      width: "4.5%",
+      width: "3%",
       fixed: "right",
       render: (text, record) => {
         return (
           <>
-            <Space>
-              <Link href={`employees/${record.key}`}>
-                <Tooltip title="Edit this employee" placement="topLeft">
-                  <EditOutlined />
-                </Tooltip>
-              </Link>
-              <Tooltip title="Delete this employee" placement="topLeft">
-                <DeleteOutlined
-                  onClick={() => {
-                    setIdToDelete(record.key);
-                    showDeleteModal();
-                  }}
-                />
+          <Space>
+            <Link href={`employees/${record.key}`}>
+              <Tooltip title="Edit" placement="topLeft">
+                <EditOutlined />
               </Tooltip>
-            </Space>
+            </Link>
+            <Tooltip title="Delete" placement="topLeft">
+              <DeleteOutlined
+                onClick={() => {
+                  setIdToDelete(record.key);
+                  showDeleteModal();
+                }}
+              />
+            </Tooltip>
+          </Space>
             {DeleteModal}
           </>
         );
@@ -316,6 +221,7 @@ export default function LocationDataTable({
           dataSource={data}
           scroll={scrollView}
         />
+        {DeleteModal}
       </>
     );
   } else if (isLoading) {

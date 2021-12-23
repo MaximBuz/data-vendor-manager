@@ -10,7 +10,11 @@ import deleteLocation from "../../api_utils/api_mutators/delete/deleteLocation";
 
 /* COMPONENTS */
 import { Table, Empty, Tooltip, Input, Space, Button } from "antd";
-import { EditOutlined, DeleteOutlined, SearchOutlined} from "@ant-design/icons";
+import {
+  EditOutlined,
+  DeleteOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
 
 /* HOOKS */
 import useDeleteConfirmation from "../../custom_hooks/useDeleteConfirmation";
@@ -65,7 +69,7 @@ export default function LocationDataTable({
             <Input
               autoFocus
               placeholder="Search country"
-              style={{ marginBottom: 8, display: 'block', width: 250 }}
+              style={{ marginBottom: 8, display: "block", width: 250 }}
               value={selectedKeys[0]}
               onChange={(e) => {
                 setSelectedKeys(e.target.value ? [e.target.value] : []);
@@ -122,7 +126,7 @@ export default function LocationDataTable({
             <Input
               autoFocus
               placeholder="Search state"
-              style={{ marginBottom: 8, display: 'block', width: 250 }}
+              style={{ marginBottom: 8, display: "block", width: 250 }}
               value={selectedKeys[0]}
               onChange={(e) => {
                 setSelectedKeys(e.target.value ? [e.target.value] : []);
@@ -179,7 +183,7 @@ export default function LocationDataTable({
             <Input
               autoFocus
               placeholder="Search city"
-              style={{ marginBottom: 8, display: 'block', width: 250 }}
+              style={{ marginBottom: 8, display: "block", width: 250 }}
               value={selectedKeys[0]}
               onChange={(e) => {
                 setSelectedKeys(e.target.value ? [e.target.value] : []);
@@ -241,22 +245,24 @@ export default function LocationDataTable({
       render: (text, record) => {
         return (
           <>
-            <Link href={`geographies/${record.key}`}>
-              <Tooltip
-                title="Edit this location or add buildings"
-                placement="left"
-              >
-                <EditOutlined/>
+            <Space>
+              <Link href={`geographies/${record.key}`}>
+                <Tooltip
+                  title="Edit this location or add buildings"
+                  placement="topLeft"
+                >
+                  <EditOutlined />
+                </Tooltip>
+              </Link>
+              <Tooltip title="Delete this location" placement="topLeft">
+                <DeleteOutlined
+                  onClick={() => {
+                    setIdToDelete(record.key);
+                    showDeleteModal();
+                  }}
+                />
               </Tooltip>
-            </Link>
-            <Tooltip title="Delete this location" placement="left">
-              <DeleteOutlined
-                onClick={() => {
-                  setIdToDelete(record.key);
-                  showDeleteModal();
-                }}
-              />
-            </Tooltip>
+            </Space>
           </>
         );
       },

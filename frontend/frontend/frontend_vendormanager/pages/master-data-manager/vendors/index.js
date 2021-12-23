@@ -8,20 +8,37 @@ import Link from "next/link";
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery, useQueryClient } from "react-query";
 import getBBGLicenseTree from "../../../api_utils/api_fetchers/getBBGLicenseTree";
+import getBBGFirmIds from "../../../api_utils/api_fetchers/getBBGFirmIds";
 
 /* COMPONENTS */
 import { Button, Divider, Radio } from "antd";
 import BBGLicenseTreeDataTable from "../../../components/tables/BBGLicenseTreeDataTable";
+import BBGFirmDataTable from "../../../components/tables/BBGFirmDataTable";
+
+/* HOOKS */
+import { useState } from "react";
 
 /* ------------------------------------------------------------------------- */
 /* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /* ------------------------------------------------------------------------- */
 export default function Vendors() {
+  /* -----~~~~~>>>SWITCHING TABLES<<<~~~~~----- */
+  const [activeTable, setActiveTable] = useState("treeView");
+  const onRadioChange = (e) => setActiveTable(e.target.value);
+
   /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
-  const { isLoading, isError, data, error } = useQuery(
-    ["BBGLicenseTree", 0 /* Depth */],
+  const bbgLicenseTreeQuery = useQuery(
+    ["bbgLicenseTree", 0 /* Depth */],
     getBBGLicenseTree
   );
+  const bbgFirmQuery = useQuery(
+    ["bbgFirm", 1 /* Depth */],
+    getBBGFirmIds
+  );
+
+
+  const treeData = bbgLicenseTreeQuery?.data;
+  const bbgFirmData = bbgFirmQuery?.data;
 
   /* --------------------------------------------------------------------------- */
   /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -57,17 +74,22 @@ export default function Vendors() {
           </Button>
         </Link>
       </div>
-      <Radio.Group defaultValue="treeView" style={{marginBottom: "5px"}}>
+      <Radio.Group onChange={onRadioChange} value={activeTable} defaultValue="treeView" style={{ marginBottom: "5px" }}>
         <Radio value="treeView">Tree View</Radio>
         <Radio value="firmId">Firm ID</Radio>
         <Radio value="accountNr">Account Nr</Radio>
         <Radio value="sid">SID</Radio>
         <Radio value="uuid">UUID</Radio>
       </Radio.Group>
-      <BBGLicenseTreeDataTable
-        data={data}
-        scrollView={{ x: 1500 }}
-      />
+      
+      {
+      activeTable === "treeView"
+      ? <BBGLicenseTreeDataTable data={treeData} scrollView={{ x: 1500 }} />
+      : activeTable === "firmId"
+      ? <BBGFirmDataTable data={bbgFirmData} />
+      : "test"
+      }
+      
     </>
   );
 }
