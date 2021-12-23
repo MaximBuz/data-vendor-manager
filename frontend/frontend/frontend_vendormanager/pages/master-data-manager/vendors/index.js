@@ -57,7 +57,7 @@ export default function Vendors() {
       </div>
       <Radio.Group onChange={onRadioChange} value={activeTable} defaultValue="treeView" style={{ marginBottom: "5px" }}>
         <Radio value="treeView">Tree View</Radio>
-        <Radio value="firmId">Firm ID</Radio>
+        <Radio value="firmNumber">Firm ID</Radio>
         <Radio value="accountNr">Account Nr</Radio>
         <Radio value="sid">SID</Radio>
         <Radio value="uuid">UUID</Radio>
@@ -66,7 +66,7 @@ export default function Vendors() {
       {
       activeTable === "treeView"
       ? <BBGLicenseTreeDataTable scrollView={{ x: 1500 }} />
-      : activeTable === "firmId"
+      : activeTable === "firmNumber"
       ? <BBGFirmDataTable />
       : "test"
       }

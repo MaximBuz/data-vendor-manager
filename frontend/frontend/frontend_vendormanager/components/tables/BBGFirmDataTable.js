@@ -113,7 +113,7 @@ export default function LocationDataTable({
       render: (text, record) => {
         return (
           <Link
-            href={`master-data-manager/organizations/${record.organizational_entity?.id}`}
+            href={`organizations/${record.organizational_entity?.id}`}
           >
             {record.organizational_entity?.name}
           </Link>
