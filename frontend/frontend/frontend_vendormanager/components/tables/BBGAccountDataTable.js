@@ -10,7 +10,7 @@ import { dehydrate, QueryClient, useQuery, useQueryClient } from "react-query";
 import getBBGFirmIds from "../../api_utils/api_fetchers/getBBGFirmIds";
 
 /* API MUTATION */
-import deleteBBGFirmNr from "../../api_utils/api_mutators/delete/deleteBBGFirmNr";
+import deleteLocation from "../../api_utils/api_mutators/delete/deleteLocation";
 
 /* COMPONENTS */
 import { Table, Empty, Tooltip, Input, Space, Button } from "antd";
@@ -28,18 +28,20 @@ import { useState } from "react";
 /* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /* --------------------------------------------------------------------------- */
 export default function LocationDataTable({
+  data,
+  isLoading,
   scrollView,
-  rowSelection
+  rowSelection,
 }) {
 
   /* -----~~~~~>>>DELETION<<<~~~~~----- */
   const [idToDelete, setIdToDelete] = useState("");
   const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
-    deleteBBGFirmNr, // Api call
-    "Deleted bloomberg firm number successfully", // Success Notification Text
-    ["bbgFirm", 1 /* Depth */], // Query to invalidate on success
+    deleteLocation, // Api call
+    "Deleted location successfully", // Success Notification Text
+    "locations", // Query to invalidate on success
     idToDelete, // Id to delete
-    "Are you sure you want to delete this firm number and all associated children?" // Confirmation Text
+    "Are you sure you want to delete this location?" // Confirmation Text
   );
 
   /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
@@ -184,7 +186,7 @@ export default function LocationDataTable({
         return (
           <>
           <Space>
-            <Link href={`vendors/${record.id}`}>
+            <Link href={`employees/${record.key}`}>
               <Tooltip title="Edit" placement="left">
                 <EditOutlined />
               </Tooltip>
@@ -192,7 +194,7 @@ export default function LocationDataTable({
             <Tooltip title="Delete" placement="top">
               <DeleteOutlined
                 onClick={() => {
-                  setIdToDelete(record.id);
+                  setIdToDelete(record.key);
                   showDeleteModal();
                 }}
               />

@@ -17,10 +17,8 @@ import { Tooltip } from "antd";
 /* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /* --------------------------------------------------------------------------- */
 export default function BBGLicenseTreeDataTable({
-  data,
-  isLoading,
   scrollView,
-  rowSelection,
+  rowSelection
 }) {
   /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const { isLoading, isError, data, error } = useQuery(
