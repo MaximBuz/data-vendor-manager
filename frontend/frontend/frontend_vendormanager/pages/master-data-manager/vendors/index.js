@@ -34,7 +34,7 @@ export default function Vendors() {
         Bloomberg
       </Divider>
       <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-        <Link href="vendors/bloomberg/create/">
+        <Link href="vendors/bloomberg/firm-numbers/create/">
           <Button type="primary" style={{ marginBottom: "10px" }}>
             Add Firm Nr
           </Button>

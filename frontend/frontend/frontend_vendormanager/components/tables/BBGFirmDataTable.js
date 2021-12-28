@@ -4,6 +4,7 @@
 
 /* ROUTING */
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery, useQueryClient } from "react-query";
@@ -31,20 +32,19 @@ export default function LocationDataTable({
   scrollView,
   rowSelection
 }) {
-
   /* -----~~~~~>>>DELETION<<<~~~~~----- */
   const [idToDelete, setIdToDelete] = useState("");
   const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
     deleteBBGFirmNr, // Api call
     "Deleted bloomberg firm number successfully", // Success Notification Text
-    ["bbgFirm", 1 /* Depth */], // Query to invalidate on success
+    ["bbgFirmNrs",1], // Query to invalidate on success
     idToDelete, // Id to delete
     "Are you sure you want to delete this firm number and all associated children?" // Confirmation Text
   );
 
   /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const { isLoading, isError, data, error } = useQuery(
-    ["bbgFirmNrs", 1 /* Depth */],
+    ["bbgFirmNrs",1],
     getBBGFirmNrs
   );
 
