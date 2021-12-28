@@ -7,7 +7,7 @@ import Link from "next/link";
 
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery, useQueryClient } from "react-query";
-import getBBGFirmIds from "../../api_utils/api_fetchers/getBBGFirmIds";
+import getBBGFirmNrs from "../../api_utils/api_fetchers/getBBGFirmNrs";
 
 /* API MUTATION */
 import deleteBBGFirmNr from "../../api_utils/api_mutators/delete/deleteBBGFirmNr";
@@ -44,8 +44,8 @@ export default function LocationDataTable({
 
   /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const { isLoading, isError, data, error } = useQuery(
-    ["bbgFirm", 1 /* Depth */],
-    getBBGFirmIds
+    ["bbgFirmNrs", 1 /* Depth */],
+    getBBGFirmNrs
   );
 
   /* -----~~~~~>>>COLUMN DEFINITION<<<~~~~~----- */
@@ -184,7 +184,7 @@ export default function LocationDataTable({
         return (
           <>
           <Space>
-            <Link href={`vendors/${record.id}`}>
+            <Link href={`vendors/bloomberg/firm-numbers/${record.id}`}>
               <Tooltip title="Edit" placement="left">
                 <EditOutlined />
               </Tooltip>

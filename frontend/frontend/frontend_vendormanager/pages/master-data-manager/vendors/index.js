@@ -36,7 +36,7 @@ export default function Vendors() {
       <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
         <Link href="vendors/bloomberg/create/">
           <Button type="primary" style={{ marginBottom: "10px" }}>
-            Add Firm ID
+            Add Firm Nr
           </Button>
         </Link>
         <Link href="vendors/bloomberg/create/">
@@ -57,7 +57,7 @@ export default function Vendors() {
       </div>
       <Radio.Group onChange={onRadioChange} value={activeTable} defaultValue="treeView" style={{ marginBottom: "5px" }}>
         <Radio value="treeView">Tree View</Radio>
-        <Radio value="firmNumber">Firm ID</Radio>
+        <Radio value="firmNumber">Firm Nr</Radio>
         <Radio value="accountNr">Account Nr</Radio>
         <Radio value="sid">SID</Radio>
         <Radio value="uuid">UUID</Radio>
