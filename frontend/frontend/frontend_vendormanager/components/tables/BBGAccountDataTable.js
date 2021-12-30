@@ -180,7 +180,7 @@ export default function BBGAccountDataTable({
       },
     },
     {
-      title: "Child of Bloomberg Firm Number",
+      title: "Parent Bloomberg Firm Number",
       render: (text, record) => {
         return (
           <Link

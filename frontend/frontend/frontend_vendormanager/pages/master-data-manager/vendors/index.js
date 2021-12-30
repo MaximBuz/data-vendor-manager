@@ -56,13 +56,16 @@ export default function Vendors() {
           </Button>
         </Link>
       </div>
+      <div style={{display: "flex"}}>
+      <div style={{position: "relative", bottom: "1px", marginRight: "10px"}}>Show:</div>
       <Radio.Group onChange={onRadioChange} value={activeTable} defaultValue="treeView" style={{ marginBottom: "5px" }}>
         <Radio value="treeView">Tree View</Radio>
-        <Radio value="firmNumber">Firm Nr</Radio>
-        <Radio value="accountNumber">Account Nr</Radio>
-        <Radio value="sid">SID</Radio>
-        <Radio value="uuid">UUID</Radio>
+        <Radio value="firmNumber">Firm Numbers</Radio>
+        <Radio value="accountNumber">Account Numbers</Radio>
+        <Radio value="sid">Subscription IDs</Radio>
+        <Radio value="uuid">Unique User IDs</Radio>
       </Radio.Group>
+      </div>
       
       {
       activeTable === "treeView"
