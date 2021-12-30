@@ -7,16 +7,15 @@ import { useRouter } from "next/router";
 
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery } from "react-query";
-import getBBGAccountNr from "../../../../../api_utils/api_fetchers/getBBGAccountNr";
+import getBBGSubscription from "../../../../../api_utils/api_fetchers/getBBGSubscription";
 import getBBGFirmNrs from "../../../../../api_utils/api_fetchers/getBBGFirmNrs";
-import getLocations from "../../../../../api_utils/api_fetchers/getLocations";
 
 /* API MUTATION */
-import deleteBBGAccountNr from "../../../../../api_utils/api_mutators/delete/deleteBBGAccountNr";
+import deleteBBGSubscription from "../../../../../api_utils/api_mutators/delete/deleteBBGSubscription";
 
 /* COMPONENTS */
-import BBGAccountNrForm from "../../../../../components/forms/BBGAccountNrForm";
-import { Row, Col, Tree, Divider, Button } from "antd";
+import BBGSubscriptionForm from "../../../../../components/forms/BBGSubscriptionForm";
+import { Row, Col, Divider, Button } from "antd";
 
 /* HOOKS */
 import useDeleteConfirmation from "../../../../../custom_hooks/useDeleteConfirmation";
@@ -24,37 +23,35 @@ import useDeleteConfirmation from "../../../../../custom_hooks/useDeleteConfirma
 /* --------------------------------------------------------------------------- */
 /* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /* --------------------------------------------------------------------------- */
-export default function BBGAccountNr() {
+export default function BBGSubscription() {
   /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
   const router = useRouter();
-  const { id: accountNrId } = router.query;
+  const { id: subscriptionId } = router.query;
 
   /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
-  const BBGAccountNrQuery = useQuery(
-    ["bbgAccountNr", accountNrId, 2 /* depth param */],
-    getBBGAccountNr
+  const BBGSubscriptionQuery = useQuery(
+    ["bbgSubscription", subscriptionId, 1 /* depth param */],
+    getBBGSubscription
   );
-  const locations = useQuery(["locations", 2], getLocations);
-  const firmNrsQuery = useQuery(["bbgFirmNrs", 1], getBBGFirmNrs);
 
   /* -----~~~~~>>>DELETION<<<~~~~~----- */
   const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
-    deleteBBGAccountNr, // Api call
-    "Deleted Bloomberg Account Nr successfully", // Success Notification Text
-    ["bbgAccountNrs", 1 /* Depth */], // Query to invalidate on success
-    accountNrId, // Id to delete
-    "Are you sure you want to delete this Bloomberg Account Number (and all its children)?", // Confirmation Text
+    deleteBBGSubscription, // Api call
+    "Deleted Bloomberg Subscription successfully", // Success Notification Text
+    ["bbgSubscriptions", 1 /* Depth */], // Query to invalidate on success
+    subscriptionId, // Id to delete
+    "Are you sure you want to delete this Bloomberg Subscription (and all its children)?", // Confirmation Text
     "/master-data-manager/vendors" // Next Link
   );
 
   /* --------------------------------------------------------------------------- */
   /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
   /* --------------------------------------------------------------------------- */
-  if (BBGAccountNrQuery.isLoading || locations.isLoading) {
+  if (BBGSubscriptionQuery.isLoading) {
     return <>Loading...</>;
   }
 
-  if (BBGAccountNrQuery.error || locations.error) {
+  if (BBGSubscriptionQuery.error) {
     return <>Error...</>;
   }
 
@@ -63,23 +60,18 @@ export default function BBGAccountNr() {
       <Row gutter={[16, 16]}>
         <Col flex={2}>
           <h2>
-            {BBGAccountNrQuery.data?.account_number} (
-            {BBGAccountNrQuery.data?.location?.street},{" "}
-            {BBGAccountNrQuery.data?.location?.city},{" "}
-            {BBGAccountNrQuery.data?.location?.country})
+            {BBGSubscriptionQuery.data?.subscription_id}
           </h2>
-          <BBGAccountNrForm
-            accountNrId={accountNrId}
-            initialValues={BBGAccountNrQuery?.data}
-            locations={locations?.data}
-            firmNrs={firmNrsQuery?.data}
+          <BBGSubscriptionIdForm
+            subscriptionId={subscriptionId}
+            initialValues={BBGSubscriptionQuery?.data}
           />
         </Col>
       </Row>
       <Divider></Divider>
       <Row justify="center">
         <Button onClick={showDeleteModal} type="primary" danger>
-          Delete Location
+          Delete Subscription
         </Button>
       </Row>
       {DeleteModal}
@@ -96,7 +88,7 @@ export async function getServerSideProps(context) {
   const queryClient = new QueryClient();
 
   /* -----~~~~~>>>DATA FETCHING<<<~~~~~----- */
-  const accountNrId = context.params.id;
+  const subscriptionId = context.params.id;
 
   /* -----~~~~~>>>PASSING PROPS<<<~~~~~----- */
   return {
