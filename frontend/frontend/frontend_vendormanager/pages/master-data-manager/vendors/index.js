@@ -10,6 +10,7 @@ import { Button, Divider, Radio } from "antd";
 import BBGLicenseTreeDataTable from "../../../components/tables/BBGLicenseTreeDataTable";
 import BBGFirmDataTable from "../../../components/tables/BBGFirmDataTable";
 import BBGAccountDataTable from "../../../components/tables/BBGAccountDataTable";
+import BBGSubscriptionDataTable from "../../../components/tables/BBGSubscriptionDataTable";
 
 /* HOOKS */
 import { useState } from "react";
@@ -74,6 +75,8 @@ export default function Vendors() {
       ? <BBGFirmDataTable />
       : activeTable === "accountNumber"
       ? <BBGAccountDataTable /> 
+      : activeTable === "sid"
+      ? <BBGSubscriptionDataTable />
       : "test"
       }
       
