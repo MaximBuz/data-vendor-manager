@@ -1,0 +1,39 @@
+/* ------------------------------------------------------------------------- */
+/* ~~~~~~IMPORTS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* ------------------------------------------------------------------------- */
+
+/* API FETCHING */
+import { useQuery } from "react-query";
+import getLocations from "../../../../../api_utils/api_fetchers/getLocations";
+import getBBGFirmNrs from "../../../../../api_utils/api_fetchers/getBBGFirmNrs";
+
+/* COMPONENTS */
+import BBGAccountNrForm from "../../../../../components/forms/BBGAccountNrForm";
+import { Row, Col } from "antd";
+
+/* --------------------------------------------------------------------------- */
+/* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+/* --------------------------------------------------------------------------- */
+export default function BBGFirmNr() {
+  /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
+  const locations = useQuery(["locations", 2], getLocations);
+  const firmNrsQuery = useQuery(["bbgFirmNrs", 1], getBBGFirmNrs);
+
+  /* --------------------------------------------------------------------------- */
+  /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
+  /* --------------------------------------------------------------------------- */
+
+  return (
+    <>
+      <Row gutter={[16, 16]}>
+        <Col flex={0.3}>
+          <h2>Add new Bloomberg Account Number</h2>
+          <BBGAccountNrForm
+            locations={locations?.data}
+            firmNrs={firmNrsQuery?.data}
+          />
+        </Col>
+      </Row>
+    </>
+  );
+}
