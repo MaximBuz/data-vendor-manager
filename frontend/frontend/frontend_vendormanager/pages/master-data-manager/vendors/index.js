@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Button, Divider, Radio } from "antd";
 import BBGLicenseTreeDataTable from "../../../components/tables/BBGLicenseTreeDataTable";
 import BBGFirmDataTable from "../../../components/tables/BBGFirmDataTable";
+import BBGAccountDataTable from "../../../components/tables/BBGAccountDataTable";
 
 /* HOOKS */
 import { useState } from "react";
@@ -58,7 +59,7 @@ export default function Vendors() {
       <Radio.Group onChange={onRadioChange} value={activeTable} defaultValue="treeView" style={{ marginBottom: "5px" }}>
         <Radio value="treeView">Tree View</Radio>
         <Radio value="firmNumber">Firm Nr</Radio>
-        <Radio value="accountNr">Account Nr</Radio>
+        <Radio value="accountNumber">Account Nr</Radio>
         <Radio value="sid">SID</Radio>
         <Radio value="uuid">UUID</Radio>
       </Radio.Group>
@@ -68,6 +69,8 @@ export default function Vendors() {
       ? <BBGLicenseTreeDataTable scrollView={{ x: 1500 }} />
       : activeTable === "firmNumber"
       ? <BBGFirmDataTable />
+      : activeTable === "accountNumber"
+      ? <BBGAccountDataTable /> 
       : "test"
       }
       
