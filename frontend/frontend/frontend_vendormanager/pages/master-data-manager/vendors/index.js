@@ -40,7 +40,7 @@ export default function Vendors() {
             Add Firm Nr
           </Button>
         </Link>
-        <Link href="vendors/bloomberg/create/">
+        <Link href="vendors/bloomberg/account-numbers/create/">
           <Button type="primary" style={{ marginBottom: "10px" }}>
             Add Account Nr
           </Button>

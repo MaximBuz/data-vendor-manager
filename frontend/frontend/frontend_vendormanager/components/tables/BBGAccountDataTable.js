@@ -257,7 +257,7 @@ export default function BBGAccountDataTable({
         return (
           <>
           <Space>
-            <Link href={`employees/${record.key}`}>
+            <Link href={`vendors/bloomberg/account-numbers/${record.id}`}>
               <Tooltip title="Edit" placement="left">
                 <EditOutlined />
               </Tooltip>

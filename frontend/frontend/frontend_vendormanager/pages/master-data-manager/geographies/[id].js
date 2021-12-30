@@ -145,7 +145,7 @@ export default function Organization() {
         </Col>
         <Divider type="vertical" style={{ minHeight: "45em" }} />
         <Col flex={1}>
-          <h2>Entities associated with this location</h2>
+          <h2>Employees associated with this location</h2>
           {/* Displaying Entities at that location */}
           {/* ------------------------------------------ */}
           <div
@@ -160,7 +160,7 @@ export default function Organization() {
               showLine={{ showLeafIcon: false }}
               defaultExpandAll
               multiple={true}
-              defaultSelectedKeys={relatedEntities.map((entity) => entity.id)}
+              defaultSelectedKeys={relatedEntities.map((entity) => entity.key)}
               /* selectable= {false} */
               /* onSelect={"onSelect"} */
               treeData={treeQuery.data}
