@@ -46,7 +46,7 @@ export default function Vendors() {
             Add Account Nr
           </Button>
         </Link>
-        <Link href="vendors/bloomberg/create/">
+        <Link href="vendors/bloomberg/subscriptions/create/">
           <Button type="primary" style={{ marginBottom: "10px" }}>
             Add Subscription ID
           </Button>

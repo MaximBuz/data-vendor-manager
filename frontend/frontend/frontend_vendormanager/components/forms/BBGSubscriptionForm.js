@@ -80,7 +80,7 @@ export default function BBGSubscriptionForm({
         initialValues={
           subscriptionId && {
             subscription_id: initialValues.subscription_id,
-            account_number: initialValues.bloomberg_account?.id,
+            bloomberg_account: initialValues.bloomberg_account?.id,
           }
         }
       >
@@ -100,11 +100,11 @@ export default function BBGSubscriptionForm({
         </Form.Item>
         <Form.Item
           style={{ flexGrow: "1" }}
-          name="account_number"
+          name="bloomberg_account"
           label="Parent Bloomberg Account Number"
           tooltip={{
             title:
-              initialValues.bloomberg_account?.description ||
+              initialValues?.bloomberg_account?.description ||
               "An account number, or a customer number, is created for every location where billable SIDs (licenses), circuits or services are installed. Multiple account numbers can be created in one location if required for billing / administrative purposes.",
             icon: <InfoCircleOutlined />,
             placement: "right",
