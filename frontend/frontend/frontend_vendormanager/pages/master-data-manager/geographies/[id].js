@@ -14,8 +14,7 @@ import {
   useQueryClient,
 } from "react-query";
 import getLocationWithBuildings from "../../../api_utils/api_fetchers/getLocationWithBuildings";
-import getOrganizationalEntities from "../../../api_utils/api_fetchers/getOrganizationalEntities";
-import getOrganizationalEntityRootChildren from "../../../api_utils/api_fetchers/getOrganizationalEntityRootChildren";
+import getDataConsumers from "../../../api_utils/api_fetchers/getDataConsumers";
 
 /* API MUTATION */
 import postBuilding from "../../../api_utils/api_mutators/post/postBuilding";
@@ -71,17 +70,9 @@ export default function Organization() {
   const location = locationQuery?.data;
   const buildings = location?.buildings;
 
-  const entitiesQuery = useQuery(
-    ["organizationalEntities", 1 /* Depth parameter */],
-    getOrganizationalEntities
-  );
-  const relatedEntities = entitiesQuery?.data.filter(
-    (entity) => entity.location?.id == locationId
-  );
-
-  const treeQuery = useQuery(
-    ["organizationalEntityRootChildren", 10],
-    getOrganizationalEntityRootChildren
+  const dataConsumersQuery = useQuery(
+    ["dataConsumers", 2 /* JSON depth */],
+    getDataConsumers
   );
 
   /* --------------------------------------------------------------------------- */
@@ -156,16 +147,7 @@ export default function Organization() {
               border: "1px solid #d9d9d9",
             }}
           >
-            <Tree
-              showLine={{ showLeafIcon: false }}
-              defaultExpandAll
-              multiple={true}
-              defaultSelectedKeys={relatedEntities.map((entity) => entity.key)}
-              /* selectable= {false} */
-              /* onSelect={"onSelect"} */
-              treeData={treeQuery.data}
-              style={{ padding: "10px 0 0 10px", minHeigth: "100%" }}
-            />
+
           </div>
           {/* ------------------------------------------ */}
         </Col>
