@@ -249,12 +249,12 @@ export default function LocationDataTable({
               <Link href={`geographies/${record.key}`}>
                 <Tooltip
                   title="Edit this location or add buildings"
-                  placement="topLeft"
+                  placement="left"
                 >
                   <EditOutlined />
                 </Tooltip>
               </Link>
-              <Tooltip title="Delete this location" placement="topLeft">
+              <Tooltip title="Delete" placement="top">
                 <DeleteOutlined
                   onClick={() => {
                     setIdToDelete(record.key);

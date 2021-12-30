@@ -73,32 +73,6 @@ export default function BBGFirmNr() {
             organizationalTree = {treeQuery.data}
           />
         </Col>
-        <Divider type="vertical" style={{ minHeight: "45em" }} />
-        <Col flex={1}>
-          <h2>Entity associated with this Firm Number</h2>
-          {/* Displaying Entities at that location */}
-          {/* ------------------------------------------ */}
-          <div
-            style={{
-              height: "40em",
-              overflow: "scroll",
-              backgroundColor: "white",
-              border: "1px solid #d9d9d9",
-            }}
-          >
-            <Tree
-              showLine={{ showLeafIcon: false }}
-              defaultExpandAll
-              multiple={true}
-              // defaultSelectedKeys={relatedEntities.map((entity) => entity.key)}
-              /* selectable= {false} */
-              /* onSelect={"onSelect"} */
-              treeData={treeQuery.data}
-              style={{ padding: "10px 0 0 10px", minHeigth: "100%" }}
-            />
-          </div>
-          {/* ------------------------------------------ */}
-        </Col>
         </Row>
       <Divider></Divider>
       <Row justify="center">

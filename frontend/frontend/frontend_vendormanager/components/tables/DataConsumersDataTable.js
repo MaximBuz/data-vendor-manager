@@ -284,11 +284,11 @@ export default function LocationDataTable({
           <>
             <Space>
               <Link href={`employees/${record.key}`}>
-                <Tooltip title="Edit this employee" placement="topLeft">
+                <Tooltip title="Edit" placement="left">
                   <EditOutlined />
                 </Tooltip>
               </Link>
-              <Tooltip title="Delete this employee" placement="topLeft">
+              <Tooltip title="Delete" placement="top">
                 <DeleteOutlined
                   onClick={() => {
                     setIdToDelete(record.key);
