@@ -23,6 +23,7 @@ import { toast } from "react-toastify";
 export default function BBGSubscriptionForm({
   initialValues,
   subscriptionId,
+  accounts
 }) {
   /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
   const queryClient = useQueryClient();
@@ -78,9 +79,8 @@ export default function BBGSubscriptionForm({
         /* Here map the input data to form names */
         initialValues={
           subscriptionId && {
-            account_number: initialValues.account_number,
-            firm_number: initialValues.firm_number?.id,
-            location: initialValues.location?.id,
+            subscription_id: initialValues.subscription_id,
+            account_number: initialValues.bloomberg_account?.id,
           }
         }
       >
@@ -88,24 +88,24 @@ export default function BBGSubscriptionForm({
           tooltip={{
             title:
               initialValues?.description ||
-              "An account number, or a customer number, is created for every location where billable SIDs (licenses), circuits or services are installed. Multiple account numbers can be created in one location if required for billing / administrative purposes.",
+              "An SID is a unique number which Bloomberg uses to track the progression of a license. SIDs are also linked to any entitlements or exchanges, allowing them to be carried across various actions. SID attached to a service are considered billable and represent one paid license.",
             icon: <InfoCircleOutlined />,
             placement: "right",
           }}
           rules={[{ required: true, message: "This number is required!" }]}
-          label="Bloomberg Account Number"
-          name="account_number"
+          label="Bloomberg Subscription ID (SID)"
+          name="subscription_id"
         >
-          <Input placeholder="Add Account Number" />
+          <Input placeholder="Add Subscription ID" />
         </Form.Item>
         <Form.Item
           style={{ flexGrow: "1" }}
-          name="firm_number"
-          label="Parent Bloomberg Firm Number"
+          name="account_number"
+          label="Parent Bloomberg Account Number"
           tooltip={{
             title:
-              initialValues?.firm_number.description ||
-              "An account must be under a firm number. Firm number can be regarded as the 'umbrella' number under which all related accounts are grouped. These accounts/entities under the same umbrella have to be in a control relationship with one another or under a common control.",
+              initialValues.bloomberg_account?.description ||
+              "An account number, or a customer number, is created for every location where billable SIDs (licenses), circuits or services are installed. Multiple account numbers can be created in one location if required for billing / administrative purposes.",
             icon: <InfoCircleOutlined />,
             placement: "right",
           }}
@@ -118,40 +118,11 @@ export default function BBGSubscriptionForm({
           ]}
         >
           <Select>
-            {firmNrs &&
-              firmNrs.map((number) => {
+            {accounts &&
+              accounts.map((account) => {
                 return (
-                  <Select.Option value={number.id}>
-                    {number.firm_number} ({number.organizational_entity?.name})
-                  </Select.Option>
-                );
-              })}
-          </Select>
-        </Form.Item>
-        <Form.Item
-          style={{ flexGrow: "1" }}
-          name="location"
-          label="Location"
-          rules={[
-            {
-              required: true,
-              message:
-                "Every bloomberg account number must be assigned to one business location!",
-            },
-          ]}
-        >
-          <Select>
-            {locations &&
-              locations.map((location) => {
-                return (
-                  <Select.Option value={location.id}>
-                    {location.street +
-                      " " +
-                      location.street_nr +
-                      ", " +
-                      location.city +
-                      ", " +
-                      location.country}
+                  <Select.Option value={account.id}>
+                    {account.account_number} ({account.location?.street} {account.location?.city} {account.location?.country})
                   </Select.Option>
                 );
               })}
@@ -160,7 +131,7 @@ export default function BBGSubscriptionForm({
 
         <Form.Item>
           <Button type="primary" htmlType="submit">
-            {subscriptionId ? "Save changes" : "Add Account Number"}
+            {subscriptionId ? "Save changes" : "Add Subscription"}
           </Button>
         </Form.Item>
       </Form>

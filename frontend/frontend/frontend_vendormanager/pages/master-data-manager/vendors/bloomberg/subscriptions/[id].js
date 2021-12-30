@@ -8,7 +8,7 @@ import { useRouter } from "next/router";
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery } from "react-query";
 import getBBGSubscription from "../../../../../api_utils/api_fetchers/getBBGSubscription";
-import getBBGFirmNrs from "../../../../../api_utils/api_fetchers/getBBGFirmNrs";
+import getBBGAccountNrs from "../../../../../api_utils/api_fetchers/getBBGAccountNrs";
 
 /* API MUTATION */
 import deleteBBGSubscription from "../../../../../api_utils/api_mutators/delete/deleteBBGSubscription";
@@ -32,6 +32,11 @@ export default function BBGSubscription() {
   const BBGSubscriptionQuery = useQuery(
     ["bbgSubscription", subscriptionId, 1 /* depth param */],
     getBBGSubscription
+  );
+
+  const BBGAccountQuery = useQuery(
+    ["bbgAccountNrs", 1 /* Depth */],
+    getBBGAccountNrs
   );
 
   /* -----~~~~~>>>DELETION<<<~~~~~----- */
@@ -62,9 +67,10 @@ export default function BBGSubscription() {
           <h2>
             {BBGSubscriptionQuery.data?.subscription_id}
           </h2>
-          <BBGSubscriptionIdForm
+          <BBGSubscriptionForm
             subscriptionId={subscriptionId}
             initialValues={BBGSubscriptionQuery?.data}
+            accounts={BBGAccountQuery?.data}
           />
         </Col>
       </Row>
