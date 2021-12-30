@@ -4,6 +4,7 @@
 
 /* ROUTING */
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 /* API FETCHING */
 import {
@@ -23,7 +24,7 @@ import deleteLocation from "../../../api_utils/api_mutators/delete/deleteLocatio
 /* COMPONENTS */
 import LocationForm from "../../../components/forms/LocationForm";
 import BuildingCard from "../../../components/cards/BuildingCard";
-import { Row, Col, Tree, Divider, Modal, Form, Input, Button } from "antd";
+import { Row, Col, Divider, Button, Table } from "antd";
 
 /* STYLING */
 import { UilMapMarkerPlus } from "@iconscout/react-unicons";
@@ -71,9 +72,27 @@ export default function Organization() {
   const buildings = location?.buildings;
 
   const dataConsumersQuery = useQuery(
-    ["dataConsumers", 2 /* JSON depth */],
+    ["dataConsumers", 0 /* JSON depth */, locationId],
     getDataConsumers
   );
+  /* -----~~~~~>>>COLUMN DEFINITION<<<~~~~~----- */
+  const dataConsumersColumns = [
+    {
+      title: "Email",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: "Name",
+      render: (text, record) => {
+        return (
+          <Link href={`/master-data-manager/employees/${record?.id}`}>
+              {`${record?.first_name} ${record?.last_name}`}
+          </Link>
+        );
+      },
+    },
+  ];
 
   /* --------------------------------------------------------------------------- */
   /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -139,16 +158,10 @@ export default function Organization() {
           <h2>Employees associated with this location</h2>
           {/* Displaying Entities at that location */}
           {/* ------------------------------------------ */}
-          <div
-            style={{
-              height: "40em",
-              overflow: "scroll",
-              backgroundColor: "white",
-              border: "1px solid #d9d9d9",
-            }}
-          >
-
-          </div>
+          <Table
+            dataSource={dataConsumersQuery?.data}
+            columns={dataConsumersColumns}
+          />
           {/* ------------------------------------------ */}
         </Col>
       </Row>
@@ -181,8 +194,8 @@ export async function getServerSideProps(context) {
   );
 
   await queryClient.prefetchQuery(
-    ["organizationalEntities", 1 /* Depth */],
-    getOrganizationalEntities
+    ["dataConsumers", 0 /* JSON depth */, locationId],
+    getDataConsumers
   );
   /* -----~~~~~>>>PASSING PROPS<<<~~~~~----- */
   return {
