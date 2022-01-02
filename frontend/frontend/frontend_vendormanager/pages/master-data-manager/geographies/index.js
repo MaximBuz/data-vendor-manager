@@ -124,11 +124,11 @@ export default function Geographies() {
         <p>
           You can download the following template and fill in your locations
           manually by using i.e. Microsoft Excel. Please make sure to save and
-          upload the file in the corract format afterwards.
+          upload the file in the correct file format afterwards.
         </p>
         <div style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
           <Button type="primary" icon={<DownloadOutlined />} onClick={() => refetch()}>
-            Download Excel Template
+            Download CSV Template
           </Button>
         </div>
       </Modal>
