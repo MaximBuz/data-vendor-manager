@@ -11,6 +11,7 @@ import BBGLicenseTreeDataTable from "../../../components/tables/BBGLicenseTreeDa
 import BBGFirmDataTable from "../../../components/tables/BBGFirmDataTable";
 import BBGAccountDataTable from "../../../components/tables/BBGAccountDataTable";
 import BBGSubscriptionDataTable from "../../../components/tables/BBGSubscriptionDataTable";
+import BBGuuidDataTable from "../../../components/tables/BBGuuidDataTable";
 
 /* HOOKS */
 import { useState } from "react";
@@ -51,7 +52,7 @@ export default function Vendors() {
             Add Subscription ID
           </Button>
         </Link>
-        <Link href="vendors/bloomberg/create/">
+        <Link href="vendors/bloomberg/uuids/create/">
           <Button type="primary" style={{ marginBottom: "10px" }}>
             Add User ID
           </Button>
@@ -77,7 +78,7 @@ export default function Vendors() {
       ? <BBGAccountDataTable /> 
       : activeTable === "sid"
       ? <BBGSubscriptionDataTable />
-      : "test"
+      : <BBGuuidDataTable/>
       }
       
     </>
