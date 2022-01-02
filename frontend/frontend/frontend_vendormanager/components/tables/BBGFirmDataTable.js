@@ -198,7 +198,6 @@ export default function LocationDataTable({
               />
             </Tooltip>
           </Space>
-            {DeleteModal}
           </>
         );
       },

@@ -297,7 +297,6 @@ export default function LocationDataTable({
                 />
               </Tooltip>
             </Space>
-            {DeleteModal}
           </>
         );
       },
@@ -316,6 +315,7 @@ export default function LocationDataTable({
           dataSource={data}
           scroll={scrollView}
         />
+        {DeleteModal}
       </>
     );
   } else if (isLoading) {

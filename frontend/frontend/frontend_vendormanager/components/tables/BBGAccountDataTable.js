@@ -271,7 +271,6 @@ export default function BBGAccountDataTable({
               />
             </Tooltip>
           </Space>
-            {DeleteModal}
           </>
         );
       },

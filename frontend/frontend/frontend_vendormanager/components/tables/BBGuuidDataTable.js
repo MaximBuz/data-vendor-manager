@@ -27,11 +27,7 @@ import { useState } from "react";
 /* --------------------------------------------------------------------------- */
 /* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /* --------------------------------------------------------------------------- */
-export default function BBGuuidDataTable({
-  scrollView,
-  rowSelection,
-}) {
-
+export default function BBGuuidDataTable({ scrollView, rowSelection }) {
   /* -----~~~~~>>>DELETION<<<~~~~~----- */
   const [idToDelete, setIdToDelete] = useState("");
   const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
@@ -180,9 +176,7 @@ export default function BBGuuidDataTable({
       title: "Employee (Data Consumer)",
       render: (text, record) => {
         return (
-          <Link
-            href={`employees/${record.data_consumer?.id}`}
-          >
+          <Link href={`employees/${record.data_consumer?.id}`}>
             {`${record.data_consumer?.email} (${record.data_consumer?.first_name} ${record.data_consumer?.last_name}) `}
           </Link>
         );
@@ -247,22 +241,21 @@ export default function BBGuuidDataTable({
       render: (text, record) => {
         return (
           <>
-          <Space>
-            <Link href={`vendors/bloomberg/uuids/${record.id}`}>
-              <Tooltip title="Edit" placement="left">
-                <EditOutlined />
+            <Space>
+              <Link href={`vendors/bloomberg/uuids/${record.id}`}>
+                <Tooltip title="Edit" placement="left">
+                  <EditOutlined />
+                </Tooltip>
+              </Link>
+              <Tooltip title="Delete" placement="top">
+                <DeleteOutlined
+                  onClick={() => {
+                    setIdToDelete(record.id);
+                    showDeleteModal();
+                  }}
+                />
               </Tooltip>
-            </Link>
-            <Tooltip title="Delete" placement="top">
-              <DeleteOutlined
-                onClick={() => {
-                  setIdToDelete(record.id);
-                  showDeleteModal();
-                }}
-              />
-            </Tooltip>
-          </Space>
-            {DeleteModal}
+            </Space>
           </>
         );
       },

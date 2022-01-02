@@ -198,7 +198,6 @@ export default function BBGSubscriptionDataTable({
               />
             </Tooltip>
           </Space>
-            {DeleteModal}
           </>
         );
       },
