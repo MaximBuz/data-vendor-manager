@@ -9,7 +9,7 @@ import Link from "next/link";
 import deleteLocation from "../../api_utils/api_mutators/delete/deleteLocation";
 
 /* COMPONENTS */
-import { Table, Empty, Tooltip, Input, Space, Button } from "antd";
+import { Table, Empty, Tooltip, Input, Space, Button, Typography } from "antd";
 import {
   EditOutlined,
   DeleteOutlined,
@@ -30,17 +30,7 @@ export default function LocationDataTable({
   rowSelection,
 }) {
   /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
-  const uniqueCountries = [
-    ...new Set(
-      data?.map((item) => ({ text: item.country, value: item.country }))
-    ),
-  ];
-  const uniqueStates = [
-    ...new Set(data?.map((item) => ({ text: item.state, value: item.state }))),
-  ];
-  const uniqueCities = [
-    ...new Set(data?.map((item) => ({ text: item.city, value: item.city }))),
-  ];
+  const { Text } = Typography;
 
   /* -----~~~~~>>>DELETION<<<~~~~~----- */
   const [idToDelete, setIdToDelete] = useState("");
@@ -241,7 +231,8 @@ export default function LocationDataTable({
     },
     {
       title: "",
-      width: "3%",
+      width: "6%",
+      fixed: "right",
       render: (text, record) => {
         return (
           <>
@@ -279,7 +270,26 @@ export default function LocationDataTable({
           columns={columns}
           rowSelection={rowSelection}
           dataSource={data}
-          scroll={scrollView}
+          /* scroll={scrollView}
+          pagination={false}
+          summary={pageData => {
+            let total = 0;
+            pageData.forEach(({ zip_code }) => {
+              total += parseInt(zip_code);
+            });
+            return (
+              <>
+              <Table.Summary.Row>
+                <Table.Summary.Cell></Table.Summary.Cell>
+                <Table.Summary.Cell></Table.Summary.Cell>
+                <Table.Summary.Cell>Total:</Table.Summary.Cell>
+                <Table.Summary.Cell>
+                  <Text type="danger">{total}</Text>
+                </Table.Summary.Cell>
+              </Table.Summary.Row>
+              </>
+            )
+          }} */
         />
         {DeleteModal}
       </>

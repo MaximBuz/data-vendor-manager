@@ -101,7 +101,7 @@ export default function Geographies() {
       <LocationDataTable
         data={locationsQuery.data}
         isLoading={locationsQuery.isLoading}
-        /* scrollView={{ x: 1100, y: 500 }} */
+        scrollView={{ y: 500 }}
       ></LocationDataTable>
       <Modal
         title="How to upload your business locations"
