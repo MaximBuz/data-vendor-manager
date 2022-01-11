@@ -17,10 +17,10 @@ export default function Home() {
 
   /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const usageDataQuery = useQuery(
-    ["aggregatedUsage",
-    "data-consumer",
-    {
-      start_date: "2022-01-01"
+    ["aggregatedUsage", "data-consumer" /* ...group by */, {
+      /* Filters */
+      start_date: "2022-01-01",
+      country: "Uni"
     }
     ],
     getAggregatedUsage
