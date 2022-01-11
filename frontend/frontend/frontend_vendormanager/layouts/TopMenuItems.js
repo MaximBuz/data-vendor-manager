@@ -12,7 +12,8 @@ import {
     UserSwitchOutlined,
     ApartmentOutlined,
     BankOutlined,
-    GlobalOutlined
+    GlobalOutlined,
+    FieldTimeOutlined
   } from "@ant-design/icons";
 import { UilSitemap } from '@iconscout/react-unicons'
 
@@ -21,8 +22,8 @@ export default function TopMenuItems({activeModule, activeRoute}) {
   if(activeModule === "cost-manager") {return (
     <>
       <Menu theme="dark" defaultSelectedKeys={[activeRoute]} mode="horizontal">
-        <Menu.Item key="/cost-manager/* Here put it route */" icon={<BarChartOutlined />}>
-          <Link href="/cost-manager">Cost Manager</Link>
+        <Menu.Item key="/cost-manager/usage" icon={<FieldTimeOutlined />}>
+          <Link href="/cost-manager/usage">Usage Analysis</Link>
         </Menu.Item>
       </Menu>
     </>

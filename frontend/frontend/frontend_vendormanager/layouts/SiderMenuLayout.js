@@ -57,7 +57,7 @@ export default function SiderMenuLayout(props) {
             <Link href="/dashboard">Dashboard</Link>
           </Menu.Item>
           <Menu.Item key="cost-manager" icon={<BarChartOutlined />}>
-            <Link href="/cost-manager">Cost Manager</Link>
+            <Link href="/cost-manager/usage">Cost Manager</Link>
           </Menu.Item>
           <Menu.Item key="license-manager" disabled icon={<FileDoneOutlined />}>
             <Link href="/license-manager">License Manager</Link>
