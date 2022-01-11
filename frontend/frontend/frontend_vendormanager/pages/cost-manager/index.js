@@ -20,7 +20,7 @@ export default function Home() {
     ["aggregatedUsage", "data-consumer" /* ...group by */, {
       /* Filters */
       start_date: "2022-01-01",
-      country: "Uni"
+      activity_tag: [1]
     }
     ],
     getAggregatedUsage
