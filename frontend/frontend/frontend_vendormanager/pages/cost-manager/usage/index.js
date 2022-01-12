@@ -5,12 +5,13 @@
 /* API FETCHING */
 import { dehydrate, useQuery, useQueryClient } from "react-query";
 import getAggregatedUsage from "../../../api_utils/api_fetchers/getAggregatedUsage";
+import getUsageStatisticsByDataConsumer from "../../../api_utils/api_fetchers/getUsageStatisticsByDataConsumer";
 
 /* COMPONENTS */
 import UsageOverTimeChart from "../../../components/charts/UsageOverTime";
 import UsageByEntityChart from "../../../components/charts/UsageByEntity";
 import UsageByActivityTagChart from "../../../components/charts/UsageByActivityTag";
-import { Modal, Button } from "antd";
+import { Modal, Button, Statistic, Divider } from "antd";
 
 /* HOOKS */
 import { useState } from "react";
@@ -49,6 +50,15 @@ export default function Home() {
       },
     ],
     getAggregatedUsage
+  );
+  const usageStatistics = useQuery(
+    [
+      "usageStatistics",
+      {
+        /* Filters */
+      },
+    ],
+    getUsageStatisticsByDataConsumer
   );
 
   /* -----~~~~~>>>STYLING PARAMETERS<<<~~~~~----- */
@@ -114,6 +124,21 @@ export default function Home() {
             usageDataQuery={usageByEntity}
             size="small"
             openModal={setUsageByEntityModalVisibility}
+          />
+        </div>
+        
+        {/* USAGE STATISTICS SMALL TILE */}
+        <div style={{...smallChartContainerStyle, minWidth: "300px", minHeight: "100px"}}>
+          <Statistic 
+            title="Mean Usage Time (per Employee)" 
+            value={usageStatistics.data[0].first_quartile}
+            suffix="hours"
+          />
+          <Divider style={{margin: 6}}/>
+          <Statistic
+            title="Standart Deviation"
+            value={usageStatistics.data[0].std.split(".")[0]}
+            suffix="hours"
           />
         </div>
 
