@@ -8,6 +8,8 @@ import getAggregatedUsage from "../../../api_utils/api_fetchers/getAggregatedUsa
 
 /* COMPONENTS */
 import UsageOverTimeChart from "../../../components/charts/UsageOverTime";
+import UsageByEntityChart from "../../../components/charts/UsageByEntity";
+import UsageByActivityTagChart from "../../../components/charts/UsageByActivityTag";
 import { Modal, Button } from "antd";
 
 /* HOOKS */
@@ -18,34 +20,73 @@ import { useState } from "react";
 /* ------------------------------------------------------------------------- */
 export default function Home() {
   /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
-  const usageDataQuery = useQuery(
+  const usageByTime = useQuery(
     [
       "aggregatedUsage",
       "time" /* ...group by */,
       {
+        /* Filters */ freq: "d",
+      },
+    ],
+    getAggregatedUsage
+  );
+  const usageByEntity = useQuery(
+    [
+      "aggregatedUsage",
+      "entity" /* ...group by */,
+      {
         /* Filters */
-        freq: "d",
+      },
+    ],
+    getAggregatedUsage
+  );
+  const usageByActivityTag = useQuery(
+    [
+      "aggregatedUsage",
+      "activity-tag" /* ...group by */,
+      {
+        /* Filters */
       },
     ],
     getAggregatedUsage
   );
 
-  /* -----~~~~~>>>MODALS<<<~~~~~----- */
-  const openusageOverTimeModal = {};
+  /* -----~~~~~>>>STYLING PARAMETERS<<<~~~~~----- */
+  const smallChartContainerStyle = {
+    width: "fit-content",
+    maxWidth: "400px",
+    height: "fit-content",
+    padding: "20px",
+    borderRadius: "2px",
+    borderStyle: "solid",
+    borderWidth: "1px",
+    borderColor: "rgb(217, 217, 217)",
+    backgroundColor: "white",
+  };
+
+  /* -----~~~~~>>>HANDLE USAGE OVER TIME MODAL<<<~~~~~----- */
   const [usageOverTimeModalVisibility, setUsageOverTimeModalVisibility] =
     useState(false);
-  const handleCancel = () => {
-    setUsageOverTimeModalVisibility(false);
-  };
+  const closeUsageOverTimeModal = () => setUsageOverTimeModalVisibility(false);
+
+  /* -----~~~~~>>>HANDLE USAGE BY ENTITY MODAL<<<~~~~~----- */
+  const [usageByEntityModalVisibility, setUsageByEntityModalVisibility] =
+    useState(false);
+  const closeUsageByEntityModal = () => setUsageByEntityModalVisibility(false);
+
+  /* -----~~~~~>>>HANDLE USAGE BY ACTIVITY TAG MODAL<<<~~~~~----- */
+  const [usageByActivityTagModalVisibility, setUsageByActivityTagModalVisibility] =
+    useState(false);
+  const closeUsageByActivityTagModal = () => setUsageByActivityTagModalVisibility(false);
 
   /* --------------------------------------------------------------------------- */
   /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
   /* --------------------------------------------------------------------------- */
-  if (usageDataQuery.isLoading) {
+  if (usageByTime.isLoading) {
     return <>Loading...</>;
   }
 
-  if (usageDataQuery.error) {
+  if (usageByTime.error) {
     return <>Error...</>;
   }
 
@@ -57,25 +98,31 @@ export default function Home() {
         Services across your organization. You can easily filter, group and
         export data and see where potential savings might be possible.
       </p>
-      <div style={{ display: "flex", width: "100%" }}>
-        <div
-          style={{
-            width: "fit-content",
-            height: "fit-content",
-            padding: "20px",
-            borderRadius: "2px",
-            borderStyle: "solid",
-            borderWidth: "1px",
-            borderColor: "rgb(217, 217, 217)",
-            margin: "20px",
-            backgroundColor: "white",
-          }}
-        >
-          {/* USAGE OVER TIME CHART SMALL TILE */}
+      <div style={{ display: "flex", flexDirection: "row", gap: "10px", overflowX: "scroll", padding: "0 0 10px 0"}}>
+        {/* USAGE OVER TIME CHART SMALL TILE */}
+        <div style={smallChartContainerStyle}>
           <UsageOverTimeChart
-            usageDataQuery={usageDataQuery}
+            usageDataQuery={usageByTime}
             size="small"
             openModal={setUsageOverTimeModalVisibility}
+          />
+        </div>
+
+        {/* USAGE BY ENTITY CHART SMALL TILE */}
+        <div style={smallChartContainerStyle}>
+          <UsageByEntityChart
+            usageDataQuery={usageByEntity}
+            size="small"
+            openModal={setUsageByEntityModalVisibility}
+          />
+        </div>
+
+        {/* USAGE BY ACTIVITY TAG CHART SMALL TILE */}
+        <div style={smallChartContainerStyle}>
+          <UsageByActivityTagChart
+            usageDataQuery={usageByActivityTag}
+            size="small"
+            openModal={setUsageByActivityTagModalVisibility}
           />
         </div>
       </div>
@@ -86,14 +133,46 @@ export default function Home() {
         okText="Close"
         closable={false}
         footer={[
-          <Button type="secondary" onClick={handleCancel}>
+          <Button type="secondary" onClick={closeUsageOverTimeModal}>
             Close
           </Button>,
         ]}
-        onOk={handleCancel}
+        onOk={closeUsageOverTimeModal}
         width={850}
       >
-        <UsageOverTimeChart usageDataQuery={usageDataQuery} size="large" />
+        <UsageOverTimeChart usageDataQuery={usageByTime} size="large" />
+      </Modal>
+
+      {/* USAGE BY ENTITY LARGE MODAL */}
+      <Modal
+        visible={usageByEntityModalVisibility}
+        okText="Close"
+        closable={false}
+        footer={[
+          <Button type="secondary" onClick={closeUsageByEntityModal}>
+            Close
+          </Button>,
+        ]}
+        onOk={closeUsageByEntityModal}
+        width={850}
+      >
+        <UsageByEntityChart usageDataQuery={usageByEntity} size="large" />
+      </Modal>
+      
+      {/* USAGE BY ACTIVITY TAG LARGE MODAL */}
+      <Modal
+        visible={usageByActivityTagModalVisibility}
+        okText="Close"
+        closable={false}
+        footer={[
+          <Button type="secondary" onClick={closeUsageByActivityTagModal}>
+            Close
+          </Button>,
+        ]}
+        onOk={closeUsageByActivityTagModal}
+        width={850}
+      >
+        <UsageByActivityTagChart usageDataQuery={usageByActivityTag} size="large" />
       </Modal>
     </>
   );

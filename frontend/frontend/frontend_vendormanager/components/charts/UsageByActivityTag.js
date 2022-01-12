@@ -10,7 +10,7 @@ import { Radio } from "antd";
 import { FullscreenOutlined } from "@ant-design/icons";
 
 /* CHARTS */
-import { Line } from "@ant-design/plots";
+import { Bar } from "@ant-design/plots";
 
 /* HOOKS */
 import { useState } from "react";
@@ -27,30 +27,27 @@ export default function UsageOverTimeChart({
   const [durationType, setDurationType] = useState("h");
 
   /* -----~~~~~>>>DATA TRANSFORMATION<<<~~~~~----- */
-  const newUsageData = usageDataQuery.data?.map((entry) => ({
-    date: entry.start_time,
+  const transformedData = usageDataQuery.data?.map((entry) => ({
+    activity_tag_pk: entry.activity_tag_pk,
+    activity_tag: entry.activity_tag,
     duration: parse(
-      `${entry.sum.split(":")[0]}h:${entry.sum.split(":")[0]}m`,
+      `${entry.usage_time.split(":")[0]}h:${entry.usage_time.split(":")[0]}m`,
       durationType
     ),
   }));
-console.log(newUsageData);
+
   /* -----~~~~~>>>USER CONTROLS<<<~~~~~----- */
   const onRadioChange = (e) => setDurationType(e.target.value);
 
   /* -----~~~~~>>>CHART CONFIGURATION<<<~~~~~----- */
 
   const config = {
-    data: newUsageData,
-    autoFit: false,
+    data: transformedData,
     width: size == "small" ? 300 : size == "medium" ? 600 : 800,
     height: size == "small" ? 100 : size == "medium" ? 300 : 500,
-    xField: "date",
-    yField: "duration",
-    point: {
-      size: size == "small" ? 0 : size == "medium" ? 4 : 5,
-      shape: "diamond",
-    },
+    xField: "duration",
+    yField: "activity_tag",
+    barWidthRatio: size == "small" ? 0.3 : size == "medium" ? 0.4 : 0.4,
     tooltip: {
       formatter: (item) => {
         return {
@@ -80,14 +77,13 @@ console.log(newUsageData);
       },
       tickCount: size == "small" ? 3 : size == "medium" ? 5 : 8,
     },
-    slider:
+    scrollbar:
       size == "small"
         ? false
         : size == "medium"
         ? false
         : {
-            start: 0,
-            end: 1,
+            type: "vertical",
           },
   };
 
@@ -112,7 +108,7 @@ console.log(newUsageData);
         }}
       >
         <h2 style={{ marginBottom: "20px", lineHeight: "1em" }}>
-          Usage over Time
+          Usage by Activity Tag
         </h2>
         {size != "small" ? (
           <Radio.Group
@@ -135,7 +131,7 @@ console.log(newUsageData);
           />
         )}
       </div>
-      <Line {...config} />
+      <Bar {...config} />
     </>
   );
 }
