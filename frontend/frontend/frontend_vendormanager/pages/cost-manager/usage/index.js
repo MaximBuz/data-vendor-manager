@@ -12,6 +12,7 @@ import UsageOverTimeChart from "../../../components/charts/UsageOverTime";
 import UsageByEntityChart from "../../../components/charts/UsageByEntity";
 import UsageByActivityTagChart from "../../../components/charts/UsageByActivityTag";
 import { Modal, Button, Statistic, Divider, Spin, Empty } from "antd";
+import { FilterOutlined } from "@ant-design/icons";
 
 /* HOOKS */
 import { useState } from "react";
@@ -67,7 +68,7 @@ export default function Home() {
     maxWidth: "400px",
     height: "fit-content",
     minHeight: "150px",
-    minWidth: "300px",
+    minWidth: "350px",
     padding: "20px",
     borderRadius: "2px",
     borderStyle: "solid",
@@ -87,9 +88,12 @@ export default function Home() {
   const closeUsageByEntityModal = () => setUsageByEntityModalVisibility(false);
 
   /* -----~~~~~>>>HANDLE USAGE BY ACTIVITY TAG MODAL<<<~~~~~----- */
-  const [usageByActivityTagModalVisibility, setUsageByActivityTagModalVisibility] =
-    useState(false);
-  const closeUsageByActivityTagModal = () => setUsageByActivityTagModalVisibility(false);
+  const [
+    usageByActivityTagModalVisibility,
+    setUsageByActivityTagModalVisibility,
+  ] = useState(false);
+  const closeUsageByActivityTagModal = () =>
+    setUsageByActivityTagModalVisibility(false);
 
   /* --------------------------------------------------------------------------- */
   /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -98,12 +102,31 @@ export default function Home() {
   return (
     <>
       <h2>Usage Analysis</h2>
-      <p style={{ maxWidth: "550px" }}>
-        Here you can see a variety of statistics on the usage of Market Data
-        Services across your organization. You can easily filter, group and
-        export data and see where potential savings might be possible.
-      </p>
-      <div style={{ display: "flex", flexDirection: "row", gap: "10px", overflowX: "scroll", padding: "0 0 10px 0"}}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
+      >
+        <p style={{ maxWidth: "550px" }}>
+          Here you can see a variety of statistics on the usage of Market Data
+          Services across your organization. You can easily filter, group and
+          export data and see where potential savings might be possible.
+        </p>
+        <Button type="primary" icon={<FilterOutlined />} size="large">
+          Filter
+        </Button>
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          gap: "10px",
+          overflowX: "scroll",
+          padding: "0 0 10px 0",
+        }}
+      >
         {/* USAGE OVER TIME CHART SMALL TILE */}
         <div style={smallChartContainerStyle}>
           <UsageOverTimeChart
@@ -121,26 +144,32 @@ export default function Home() {
             openModal={setUsageByEntityModalVisibility}
           />
         </div>
-        
+
         {/* USAGE STATISTICS SMALL TILE */}
-        <div style={{...smallChartContainerStyle, minWidth: "300px", minHeight: "150px"}}>
-          {usageStatistics.isLoading
-          ? <Spin/>
-          : usageStatistics.isError
-          ? <Empty/>
-          : (
+        <div
+          style={{
+            ...smallChartContainerStyle,
+            minWidth: "350px",
+            minHeight: "150px",
+          }}
+        >
+          {usageStatistics.isLoading ? (
+            <Spin />
+          ) : usageStatistics.isError ? (
+            <Empty />
+          ) : (
             <>
-            <Statistic 
-              title="Mean Usage Time (per Employee)" 
-              value={usageStatistics.data[0].first_quartile}
-              suffix="hours"
-            />
-            <Divider style={{margin: 6}}/>
-            <Statistic
-              title="Standart Deviation"
-              value={usageStatistics.data[0].std.split(".")[0]}
-              suffix="hours"
-            />
+              <Statistic
+                title="Mean Usage Time (per Employee)"
+                value={usageStatistics.data[0].first_quartile}
+                suffix="hours"
+              />
+              <Divider style={{ margin: 6 }} />
+              <Statistic
+                title="Standart Deviation"
+                value={usageStatistics.data[0].std.split(".")[0]}
+                suffix="hours"
+              />
             </>
           )}
         </div>
@@ -186,7 +215,7 @@ export default function Home() {
       >
         <UsageByEntityChart usageDataQuery={usageByEntity} size="large" />
       </Modal>
-      
+
       {/* USAGE BY ACTIVITY TAG LARGE MODAL */}
       <Modal
         visible={usageByActivityTagModalVisibility}
@@ -200,7 +229,10 @@ export default function Home() {
         onOk={closeUsageByActivityTagModal}
         width={850}
       >
-        <UsageByActivityTagChart usageDataQuery={usageByActivityTag} size="large" />
+        <UsageByActivityTagChart
+          usageDataQuery={usageByActivityTag}
+          size="large"
+        />
       </Modal>
     </>
   );
