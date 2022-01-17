@@ -6,7 +6,7 @@
 import parse from "parse-duration";
 
 /* COMPONENTS */
-import { Radio } from "antd";
+import { Radio, Spin, Empty } from "antd";
 import { FullscreenOutlined } from "@ant-design/icons";
 
 /* CHARTS */
@@ -91,11 +91,11 @@ export default function UsageOverTimeChart({
   /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
   /* --------------------------------------------------------------------------- */
   if (usageDataQuery.isLoading) {
-    return <>Loading...</>;
+    return <Spin/>;
   }
 
   if (usageDataQuery.error) {
-    return <>Error...</>;
+    return <Empty/>;
   }
 
   return (

@@ -11,7 +11,7 @@ import getUsageStatisticsByDataConsumer from "../../../api_utils/api_fetchers/ge
 import UsageOverTimeChart from "../../../components/charts/UsageOverTime";
 import UsageByEntityChart from "../../../components/charts/UsageByEntity";
 import UsageByActivityTagChart from "../../../components/charts/UsageByActivityTag";
-import { Modal, Button, Statistic, Divider } from "antd";
+import { Modal, Button, Statistic, Divider, Spin, Empty } from "antd";
 
 /* HOOKS */
 import { useState } from "react";
@@ -66,6 +66,8 @@ export default function Home() {
     width: "fit-content",
     maxWidth: "400px",
     height: "fit-content",
+    minHeight: "150px",
+    minWidth: "300px",
     padding: "20px",
     borderRadius: "2px",
     borderStyle: "solid",
@@ -92,13 +94,6 @@ export default function Home() {
   /* --------------------------------------------------------------------------- */
   /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
   /* --------------------------------------------------------------------------- */
-  if (usageByTime.isLoading) {
-    return <>Loading...</>;
-  }
-
-  if (usageByTime.error) {
-    return <>Error...</>;
-  }
 
   return (
     <>
@@ -128,18 +123,26 @@ export default function Home() {
         </div>
         
         {/* USAGE STATISTICS SMALL TILE */}
-        <div style={{...smallChartContainerStyle, minWidth: "300px", minHeight: "100px"}}>
-          <Statistic 
-            title="Mean Usage Time (per Employee)" 
-            value={usageStatistics.data[0].first_quartile}
-            suffix="hours"
-          />
-          <Divider style={{margin: 6}}/>
-          <Statistic
-            title="Standart Deviation"
-            value={usageStatistics.data[0].std.split(".")[0]}
-            suffix="hours"
-          />
+        <div style={{...smallChartContainerStyle, minWidth: "300px", minHeight: "150px"}}>
+          {usageStatistics.isLoading
+          ? <Spin/>
+          : usageStatistics.isError
+          ? <Empty/>
+          : (
+            <>
+            <Statistic 
+              title="Mean Usage Time (per Employee)" 
+              value={usageStatistics.data[0].first_quartile}
+              suffix="hours"
+            />
+            <Divider style={{margin: 6}}/>
+            <Statistic
+              title="Standart Deviation"
+              value={usageStatistics.data[0].std.split(".")[0]}
+              suffix="hours"
+            />
+            </>
+          )}
         </div>
 
         {/* USAGE BY ACTIVITY TAG CHART SMALL TILE */}
