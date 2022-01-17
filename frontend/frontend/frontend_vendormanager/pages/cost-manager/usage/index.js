@@ -6,15 +6,16 @@
 import { dehydrate, useQuery, useQueryClient } from "react-query";
 import getAggregatedUsage from "../../../api_utils/api_fetchers/getAggregatedUsage";
 import getUsageStatisticsByDataConsumer from "../../../api_utils/api_fetchers/getUsageStatisticsByDataConsumer";
-import getUsageStatisticsByDataConsumerOverTime from "../../../api_utils/api_fetchers/getUsageStatisticsByDataConsumerOverTime";
 
-/* COMPONENTS */
+/* CHARTS */
 import UsageOverTimeChart from "../../../components/charts/UsageOverTime";
 import UsageByEntityChart from "../../../components/charts/UsageByEntity";
 import UsageByActivityTagChart from "../../../components/charts/UsageByActivityTag";
-import UsageBoxPlot from "../../../components/charts/UsageBoxPlot";
+
+/* COMPONENTS */
 import { Modal, Button, Statistic, Divider, Spin, Empty } from "antd";
 import { FilterOutlined } from "@ant-design/icons";
+import UsageFilter from "../../../components/drawers/UsageFilter";
 
 /* HOOKS */
 import { useState } from "react";
@@ -66,15 +67,6 @@ export default function Home() {
     ],
     getUsageStatisticsByDataConsumer
   );
-  const usageStatisticsOverTime = useQuery(
-    [
-      "usageStatisticsOverTime",
-      {
-        /* Filters */
-      },
-    ],
-    getUsageStatisticsByDataConsumerOverTime
-  );
 
   /* -----~~~~~>>>STYLING PARAMETERS<<<~~~~~----- */
   const smallChartContainerStyle = {
@@ -110,9 +102,7 @@ export default function Home() {
   setUsageByActivityTagModalVisibility(false);
   
   /* -----~~~~~>>>HANDLE USAGE BOX PLOT MODAL<<<~~~~~----- */
-  const [usageBoxPlotModalVisibility, setUsageBoxPlotModalVisibility] =
-    useState(false);
-  const closeUsageBoxPlotModal = () => setUsageBoxPlotModalVisibility(false);
+  const [ filterDrawerVisibility, setFilterDrawerVisibility] = useState(false);
   
   /* --------------------------------------------------------------------------- */
   /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -133,8 +123,8 @@ export default function Home() {
           Services across your organization. You can easily filter, group and
           export data and see where potential savings might be possible.
         </p>
-        <Button type="primary" icon={<FilterOutlined />} size="large">
-          Filter
+        <Button type="primary" icon={<FilterOutlined />} size="large" onClick={() => setFilterDrawerVisibility(true)}>
+          Set Filters and Timeframes
         </Button>
       </div>
       <div
@@ -201,15 +191,6 @@ export default function Home() {
             openModal={setUsageByActivityTagModalVisibility}
           />
         </div>
-        
-        {/* USAGE BOX PLOT OVER TIME */}
-        <div style={smallChartContainerStyle}>
-          <UsageBoxPlot
-            usageDataQuery={usageStatisticsOverTime}
-            size="small"
-            openModal={setUsageBoxPlotModalVisibility}
-          />
-        </div>
 
       </div>
 
@@ -264,24 +245,7 @@ export default function Home() {
         />
       </Modal>
 
-      {/* USAGE STATISTICS BOX PLOT MODAL */}
-      <Modal
-        visible={usageBoxPlotModalVisibility}
-        okText="Close"
-        closable={false}
-        footer={[
-          <Button type="secondary" onClick={closeUsageBoxPlotModal}>
-            Close
-          </Button>,
-        ]}
-        onOk={closeUsageBoxPlotModal}
-        width={850}
-      >
-        <UsageBoxPlot
-          usageDataQuery={usageStatisticsOverTime}
-          size="large"
-        />
-      </Modal>
+      <UsageFilter onClose={() => setFilterDrawerVisibility(false)} visible={filterDrawerVisibility}/>
     </>
   );
 }

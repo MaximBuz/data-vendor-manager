@@ -34,8 +34,6 @@ export default function UsageOverTimeChart({
       durationType
     ),
   }));
-  console.log(usageDataQuery.data);
-  console.log(newUsageData);
   /* -----~~~~~>>>USER CONTROLS<<<~~~~~----- */
   const onRadioChange = (e) => setDurationType(e.target.value);
 
