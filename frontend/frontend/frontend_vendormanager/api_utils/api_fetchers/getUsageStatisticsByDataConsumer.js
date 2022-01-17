@@ -1,7 +1,7 @@
 import apiClient from "../http-common";
 
 export default async function getUsageStatisticsByDataConsumer({ queryKey }) {
-    const [_, group_by, params] = queryKey;
+    const [_, params] = queryKey;
 
     // Getting the aggregated statistics from backend
     const { data } = await apiClient.get(

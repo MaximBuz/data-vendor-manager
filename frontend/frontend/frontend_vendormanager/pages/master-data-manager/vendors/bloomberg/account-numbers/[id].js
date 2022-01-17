@@ -35,7 +35,7 @@ export default function BBGAccountNr() {
     getBBGAccountNr
   );
   const locations = useQuery(["locations", 2], getLocations);
-  const firmNrsQuery = useQuery(["bbgFirmNrs", 1], getBBGFirmNrs);
+  const BBGFirmsQuery = useQuery(["bbgFirmNrs", 1], getBBGFirmNrs);
 
   /* -----~~~~~>>>DELETION<<<~~~~~----- */
   const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
@@ -72,7 +72,7 @@ export default function BBGAccountNr() {
             accountNrId={accountNrId}
             initialValues={BBGAccountNrQuery?.data}
             locations={locations?.data}
-            firmNrs={firmNrsQuery?.data}
+            firmNrs={BBGFirmsQuery?.data}
           />
         </Col>
       </Row>

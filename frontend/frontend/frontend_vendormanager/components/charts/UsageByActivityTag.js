@@ -27,7 +27,7 @@ export default function UsageOverTimeChart({
   const [durationType, setDurationType] = useState("h");
 
   /* -----~~~~~>>>DATA TRANSFORMATION<<<~~~~~----- */
-  const transformedData = usageDataQuery.data?.map((entry) => ({
+  const transformedData = usageDataQuery.data && usageDataQuery.data.map((entry) => ({
     activity_tag_pk: entry.activity_tag_pk,
     activity_tag: entry.activity_tag,
     duration: parse(

@@ -19,21 +19,47 @@ import UsageFilter from "../../../components/drawers/UsageFilter";
 
 /* HOOKS */
 import { useState } from "react";
+import { useEffect } from "react";
 
 /* DATA UTILS */
 import parse from "parse-duration";
+import moment from "moment";
 
 /* ------------------------------------------------------------------------- */
 /* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /* ------------------------------------------------------------------------- */
 export default function Home() {
+  /* -----~~~~~>>>HANDLE FILTER<<<~~~~~----- */
+  const [ filterDrawerVisibility, setFilterDrawerVisibility] = useState(false);
+  const [filters, setFilters] = useState({
+    start_date: moment().subtract(1, "months").format("YYYY-MM-DD"),
+    end_date: moment().format("YYYY-MM-DD"),
+    /* data_consumer: */
+    entity: [],
+    location: [],
+    country: null,
+    state: null,
+    city: null,
+    job_title: [],
+    activity_tag: [],
+    bbg_firm_number: [],
+    bbg_account_number: [],
+    bbg_subscription_id: [],
+    bbg_uuid: [],
+  });
+
+  useEffect(() => {
+    console.log(filters);
+  }, [filters])
+
   /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const usageByTime = useQuery(
     [
       "aggregatedUsage",
       "time" /* ...group by */,
       {
-        /* Filters */ freq: "d",
+        ...filters,
+        freq: "d"
       },
     ],
     getAggregatedUsage
@@ -42,9 +68,7 @@ export default function Home() {
     [
       "aggregatedUsage",
       "entity" /* ...group by */,
-      {
-        /* Filters */
-      },
+      filters
     ],
     getAggregatedUsage
   );
@@ -52,18 +76,14 @@ export default function Home() {
     [
       "aggregatedUsage",
       "activity-tag" /* ...group by */,
-      {
-        /* Filters */
-      },
+      filters
     ],
     getAggregatedUsage
   );
   const usageStatistics = useQuery(
     [
       "usageStatistics",
-      {
-        /* Filters */
-      },
+      filters
     ],
     getUsageStatisticsByDataConsumer
   );
@@ -100,9 +120,7 @@ export default function Home() {
   ] = useState(false);
   const closeUsageByActivityTagModal = () =>
   setUsageByActivityTagModalVisibility(false);
-  
-  /* -----~~~~~>>>HANDLE USAGE BOX PLOT MODAL<<<~~~~~----- */
-  const [ filterDrawerVisibility, setFilterDrawerVisibility] = useState(false);
+
   
   /* --------------------------------------------------------------------------- */
   /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -170,13 +188,13 @@ export default function Home() {
             <>
               <Statistic
                 title="Mean Usage Time (per Employee)"
-                value={Math.round(parse(usageStatistics.data[0].first_quartile, "h"))}
+                value={usageStatistics.data && Math.round(parse(usageStatistics.data[0].first_quartile, "h"))}
                 suffix="hours"
               />
               <Divider style={{ margin: 6 }} />
               <Statistic
                 title="Standart Deviation"
-                value={Math.round(parse(usageStatistics.data[0].std, "h"))}
+                value={usageStatistics.data && Math.round(parse(usageStatistics.data[0].std, "h"))}
                 suffix="hours"
               />
             </>
@@ -245,7 +263,7 @@ export default function Home() {
         />
       </Modal>
 
-      <UsageFilter onClose={() => setFilterDrawerVisibility(false)} visible={filterDrawerVisibility}/>
+      <UsageFilter onClose={() => setFilterDrawerVisibility(false)} visible={filterDrawerVisibility} setFilters={setFilters} filters={filters}/>
     </>
   );
 }

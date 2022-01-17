@@ -7,6 +7,9 @@ import getOrganizationalEntityRootChildren from "../../api_utils/api_fetchers/ge
 import getActivityTags from "../../api_utils/api_fetchers/getActivityTags";
 import getLocations from "../../api_utils/api_fetchers/getLocations";
 import getJobs from "../../api_utils/api_fetchers/getJobs";
+import getBBGSubscriptions from "../../api_utils/api_fetchers/getBBGSubscriptions";
+import getBBGAccountNrs from "../../api_utils/api_fetchers/getBBGAccountNrs";
+import getBBGFirmNrs from "../../api_utils/api_fetchers/getBBGFirmNrs";
 
 /* COMPONENTS */
 import {
@@ -38,23 +41,22 @@ export default function UsageFilter(props) {
   const { Option } = Select;
 
   /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
-  const activityTagsQuery = useQuery(
-    ["activityTags", 0 /* Depth */],
-    getActivityTags
-  );
-
-  const treeQuery = useQuery(
-    ["organizationalEntityRootChildren", 10],
-    getOrganizationalEntityRootChildren
-  );
-
+  const activityTagsQuery = useQuery(["activityTags", 0 /* Depth */],getActivityTags);
+  const treeQuery = useQuery(["organizationalEntityRootChildren", 10],getOrganizationalEntityRootChildren);
   const locationQuery = useQuery(["locations"], getLocations);
-
   const jobsQuery = useQuery(["jobs"], getJobs);
+  const BBGSubscriptionsQuery = useQuery(["bbgSubscriptions", 1 /* Depth */],getBBGSubscriptions);
+  const BBGAccountQuery = useQuery(["bbgAccountNrs", 1 /* Depth */],getBBGAccountNrs);
+  const BBGFirmsQuery = useQuery(["bbgFirmNrs", 1], getBBGFirmNrs);
 
   /* -----~~~~~>>>HANDLE FORM SUBMITTING<<<~~~~~----- */
   const onFinish = (values) => {
-    console.log(values);
+    props.setFilters({
+      ...props.filters,
+      ...values,
+      start_date: values.timeframe[0].format("YYYY-MM-DD"),
+      end_date: values.timeframe[1].format("YYYY-MM-DD"),
+    })
   };
 
   return (
@@ -85,7 +87,7 @@ export default function UsageFilter(props) {
         <Divider orientation="middle" plain style={{color: "grey",  fontWeight: "lighter"}}>Geography</Divider>
         <Row gutter={16}>
           <Col span={24}>
-            <Form.Item label="Locations" name="locations">
+            <Form.Item label="Locations" name="location">
               <Select>
                 {locationQuery.data?.map((location) => {
                   return (
@@ -126,9 +128,11 @@ export default function UsageFilter(props) {
           <Col span={24}>
             <Form.Item
               label="Organizational Entities"
-              name="organizational_entity"
+              name="entity"
             >
               <TreeSelect
+                showSearch
+                treeNodeFilterProp='title'
                 treeLine={{ showLeafIcon: false }}
                 treeData={treeQuery.data}
                 treeDefaultExpandAll
@@ -140,7 +144,7 @@ export default function UsageFilter(props) {
         </Row>
         <Row gutter={16}>
           <Col span={24}>
-            <Form.Item name="jobTitles" label="Job Titles">
+            <Form.Item name="job_title" label="Job Titles">
               <Select
                 mode="multiple"
                 placeholder="Please select job titles"
@@ -160,7 +164,7 @@ export default function UsageFilter(props) {
         </Row>
         <Row gutter={16}>
           <Col span={24}>
-            <Form.Item name="activityTags" label="Activity Tags">
+            <Form.Item name="activity_tag" label="Activity Tags">
             <Select
               mode="multiple"
               placeholder="Please select activity tags"
@@ -179,6 +183,77 @@ export default function UsageFilter(props) {
           </Col>
         </Row>
         <Divider orientation="middle" plain style={{color: "grey",  fontWeight: "lighter"}}>Vendor (Bloomberg)</Divider>
+        <Row gutter={16}>
+          <Col span={8}>
+            <Form.Item
+              name="bbg_subscription_id"
+              label="Subscriptions (SIDs)"
+            >
+            <Select
+              mode="multiple"
+              placeholder="Please select SIDs"
+              filterOption={(input, option) =>
+                option.key.toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
+                option.key.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              }
+            >
+                {BBGSubscriptionsQuery.data?.map((subscription) => {
+                    return (
+                      <Select.Option value={subscription.id} key={subscription.subscription_id}>
+                        {subscription.subscription_id}
+                      </Select.Option>
+                    );
+                  })}
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item
+              name="bbg_account_number"
+              label="Account Numbers"
+            >
+            <Select
+              mode="multiple"
+              placeholder="Please select Account Nrs"
+              filterOption={(input, option) =>
+                option.key.toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
+                option.key.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              }
+            >
+                {BBGAccountQuery.data?.map((account) => {
+                    return (
+                      <Select.Option value={account.id} key={account.account_number}>
+                        {account.account_number}
+                      </Select.Option>
+                    );
+                  })}
+              </Select>
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item
+              name="bbg_firm_number"
+              label="Firm Numbers"
+            >
+            <Select
+              mode="multiple"
+              placeholder="Please select Firm Nrs"
+              filterOption={(input, option) =>
+                option.key.toLowerCase().indexOf(input.toLowerCase()) >= 0 ||
+                option.key.toLowerCase().indexOf(input.toLowerCase()) >= 0
+              }
+            >
+                {BBGFirmsQuery.data?.map((firm) => {
+                    return (
+                      <Select.Option value={firm.id} key={firm.firm_number}>
+                        {firm.firm_number}
+                      </Select.Option>
+                    );
+                  })}
+              </Select>
+            </Form.Item>
+          </Col>
+        </Row>
         <Form.Item>
           <Button type="primary" htmlType="submit">
             Submit
