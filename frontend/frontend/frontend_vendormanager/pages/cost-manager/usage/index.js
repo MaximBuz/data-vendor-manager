@@ -17,6 +17,9 @@ import { FilterOutlined } from "@ant-design/icons";
 /* HOOKS */
 import { useState } from "react";
 
+/* DATA UTILS */
+import parse from "parse-duration";
+
 /* ------------------------------------------------------------------------- */
 /* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /* ------------------------------------------------------------------------- */
@@ -161,13 +164,13 @@ export default function Home() {
             <>
               <Statistic
                 title="Mean Usage Time (per Employee)"
-                value={usageStatistics.data[0].first_quartile}
+                value={Math.round(parse(usageStatistics.data[0].first_quartile, "h"))}
                 suffix="hours"
               />
               <Divider style={{ margin: 6 }} />
               <Statistic
                 title="Standart Deviation"
-                value={usageStatistics.data[0].std.split(".")[0]}
+                value={Math.round(parse(usageStatistics.data[0].std, "h"))}
                 suffix="hours"
               />
             </>

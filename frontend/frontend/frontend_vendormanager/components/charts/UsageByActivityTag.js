@@ -31,7 +31,7 @@ export default function UsageOverTimeChart({
     activity_tag_pk: entry.activity_tag_pk,
     activity_tag: entry.activity_tag,
     duration: parse(
-      `${entry.usage_time.split(":")[0]}h:${entry.usage_time.split(":")[0]}m`,
+      entry.usage_time,
       durationType
     ),
   }));

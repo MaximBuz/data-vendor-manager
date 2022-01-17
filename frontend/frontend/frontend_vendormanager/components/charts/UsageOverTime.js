@@ -30,10 +30,12 @@ export default function UsageOverTimeChart({
   const newUsageData = usageDataQuery.data?.map((entry) => ({
     date: entry.start_time,
     duration: parse(
-      `${entry.sum.split(":")[0]}h:${entry.sum.split(":")[0]}m`,
+      entry.sum,
       durationType
     ),
   }));
+  console.log(usageDataQuery.data);
+  console.log(newUsageData);
   /* -----~~~~~>>>USER CONTROLS<<<~~~~~----- */
   const onRadioChange = (e) => setDurationType(e.target.value);
 
