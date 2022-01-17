@@ -6,11 +6,13 @@
 import { dehydrate, useQuery, useQueryClient } from "react-query";
 import getAggregatedUsage from "../../../api_utils/api_fetchers/getAggregatedUsage";
 import getUsageStatisticsByDataConsumer from "../../../api_utils/api_fetchers/getUsageStatisticsByDataConsumer";
+import getUsageStatisticsByDataConsumerOverTime from "../../../api_utils/api_fetchers/getUsageStatisticsByDataConsumerOverTime";
 
 /* COMPONENTS */
 import UsageOverTimeChart from "../../../components/charts/UsageOverTime";
 import UsageByEntityChart from "../../../components/charts/UsageByEntity";
 import UsageByActivityTagChart from "../../../components/charts/UsageByActivityTag";
+import UsageBoxPlot from "../../../components/charts/UsageBoxPlot";
 import { Modal, Button, Statistic, Divider, Spin, Empty } from "antd";
 import { FilterOutlined } from "@ant-design/icons";
 
@@ -64,6 +66,15 @@ export default function Home() {
     ],
     getUsageStatisticsByDataConsumer
   );
+  const usageStatisticsOverTime = useQuery(
+    [
+      "usageStatisticsOverTime",
+      {
+        /* Filters */
+      },
+    ],
+    getUsageStatisticsByDataConsumerOverTime
+  );
 
   /* -----~~~~~>>>STYLING PARAMETERS<<<~~~~~----- */
   const smallChartContainerStyle = {
@@ -89,15 +100,20 @@ export default function Home() {
   const [usageByEntityModalVisibility, setUsageByEntityModalVisibility] =
     useState(false);
   const closeUsageByEntityModal = () => setUsageByEntityModalVisibility(false);
-
+  
   /* -----~~~~~>>>HANDLE USAGE BY ACTIVITY TAG MODAL<<<~~~~~----- */
   const [
     usageByActivityTagModalVisibility,
     setUsageByActivityTagModalVisibility,
   ] = useState(false);
   const closeUsageByActivityTagModal = () =>
-    setUsageByActivityTagModalVisibility(false);
-
+  setUsageByActivityTagModalVisibility(false);
+  
+  /* -----~~~~~>>>HANDLE USAGE BOX PLOT MODAL<<<~~~~~----- */
+  const [usageBoxPlotModalVisibility, setUsageBoxPlotModalVisibility] =
+    useState(false);
+  const closeUsageBoxPlotModal = () => setUsageBoxPlotModalVisibility(false);
+  
   /* --------------------------------------------------------------------------- */
   /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
   /* --------------------------------------------------------------------------- */
@@ -185,6 +201,16 @@ export default function Home() {
             openModal={setUsageByActivityTagModalVisibility}
           />
         </div>
+        
+        {/* USAGE BOX PLOT OVER TIME */}
+        <div style={smallChartContainerStyle}>
+          <UsageBoxPlot
+            usageDataQuery={usageStatisticsOverTime}
+            size="small"
+            openModal={setUsageBoxPlotModalVisibility}
+          />
+        </div>
+
       </div>
 
       {/* USAGE OVER TIME LARGE MODAL */}
@@ -234,6 +260,25 @@ export default function Home() {
       >
         <UsageByActivityTagChart
           usageDataQuery={usageByActivityTag}
+          size="large"
+        />
+      </Modal>
+
+      {/* USAGE STATISTICS BOX PLOT MODAL */}
+      <Modal
+        visible={usageBoxPlotModalVisibility}
+        okText="Close"
+        closable={false}
+        footer={[
+          <Button type="secondary" onClick={closeUsageBoxPlotModal}>
+            Close
+          </Button>,
+        ]}
+        onOk={closeUsageBoxPlotModal}
+        width={850}
+      >
+        <UsageBoxPlot
+          usageDataQuery={usageStatisticsOverTime}
           size="large"
         />
       </Modal>
