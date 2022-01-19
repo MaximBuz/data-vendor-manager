@@ -16,6 +16,7 @@ import UsageByActivityTagChart from "../../../components/charts/UsageByActivityT
 import { Modal, Button, Statistic, Divider, Spin, Empty } from "antd";
 import { FilterOutlined } from "@ant-design/icons";
 import UsageFilter from "../../../components/drawers/UsageFilter";
+import UsageByDataConsumerDataTable from "../../../components/tables/UsageByDataConsumersDataTable";
 
 /* HOOKS */
 import { useState } from "react";
@@ -53,6 +54,14 @@ export default function Home() {
   }, [filters])
 
   /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
+  const usageByDataConsumer = useQuery(
+    [
+      "aggregatedUsage",
+      "data-consumer" /* ...group by */,
+      filters
+    ],
+    getAggregatedUsage
+  );
   const usageByTime = useQuery(
     [
       "aggregatedUsage",
@@ -120,12 +129,12 @@ export default function Home() {
   ] = useState(false);
   const closeUsageByActivityTagModal = () =>
   setUsageByActivityTagModalVisibility(false);
-
+  
   
   /* --------------------------------------------------------------------------- */
   /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
   /* --------------------------------------------------------------------------- */
-
+  
   return (
     <>
       <h2>Usage Analysis</h2>
@@ -135,7 +144,7 @@ export default function Home() {
           flexDirection: "row",
           justifyContent: "space-between",
         }}
-      >
+        >
         <p style={{ maxWidth: "550px" }}>
           Here you can see a variety of statistics on the usage of Market Data
           Services across your organization. You can easily filter, group and
@@ -145,22 +154,24 @@ export default function Home() {
           Set Filters and Timeframes
         </Button>
       </div>
+
       <div
         style={{
           display: "flex",
           flexDirection: "row",
           gap: "10px",
           overflowX: "scroll",
-          padding: "0 0 10px 0",
+          padding: "0 0 5px 0",
+          margin: "0 0 20px 0"
         }}
-      >
+        >
         {/* USAGE OVER TIME CHART SMALL TILE */}
         <div style={smallChartContainerStyle}>
           <UsageOverTimeChart
             usageDataQuery={usageByTime}
             size="small"
             openModal={setUsageOverTimeModalVisibility}
-          />
+            />
         </div>
 
         {/* USAGE BY ENTITY CHART SMALL TILE */}
@@ -169,7 +180,7 @@ export default function Home() {
             usageDataQuery={usageByEntity}
             size="small"
             openModal={setUsageByEntityModalVisibility}
-          />
+            />
         </div>
 
         {/* USAGE STATISTICS SMALL TILE */}
@@ -179,24 +190,24 @@ export default function Home() {
             minWidth: "350px",
             minHeight: "150px",
           }}
-        >
+          >
           {usageStatistics.isLoading ? (
             <Spin />
-          ) : usageStatistics.isError ? (
-            <Empty />
-          ) : (
-            <>
+            ) : usageStatistics.isError ? (
+              <Empty />
+              ) : (
+                <>
               <Statistic
                 title="Mean Usage Time (per Employee)"
-                value={usageStatistics.data && Math.round(parse(usageStatistics.data[0].first_quartile, "h"))}
+                value={usageStatistics.data && parse(usageStatistics.data[0].mean, "h").toFixed(2)}
                 suffix="hours"
-              />
+                />
               <Divider style={{ margin: 6 }} />
               <Statistic
                 title="Standart Deviation"
-                value={usageStatistics.data && Math.round(parse(usageStatistics.data[0].std, "h"))}
+                value={usageStatistics.data && parse(usageStatistics.data[0].std, "h").toFixed(2)}
                 suffix="hours"
-              />
+                />
             </>
           )}
         </div>
@@ -207,10 +218,19 @@ export default function Home() {
             usageDataQuery={usageByActivityTag}
             size="small"
             openModal={setUsageByActivityTagModalVisibility}
-          />
+            />
         </div>
 
       </div>
+
+      {/* TABLE SHOWING USAGES BY DATACONSUMER WITH ALL METADATA */}
+      <UsageByDataConsumerDataTable
+        data={usageByDataConsumer.data}
+        isLoading={usageByDataConsumer.isLoading}
+        scrollView={{ x: 2000 }}
+      />
+
+      {/* -----~~~~~>>>OPENING LARGE MODALS OF CHARTS<<<~~~~~----- */}
 
       {/* USAGE OVER TIME LARGE MODAL */}
       <Modal
