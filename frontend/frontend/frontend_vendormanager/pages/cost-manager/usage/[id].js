@@ -5,6 +5,9 @@
 /* ROUTING */
 import { useRouter } from "next/router";
 
+/* CHARTS */
+import UsageOverTimeChart from "../../../components/charts/UsageOverTime";
+
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery, useQueryClient } from "react-query";
 import getDataConsumer from "../../../api_utils/api_fetchers/getDataConsumer";
@@ -12,16 +15,18 @@ import getOrganizationalEntityRootChildren from "../../../api_utils/api_fetchers
 import getActivityTags from "../../../api_utils/api_fetchers/getActivityTags";
 import getLocations from "../../../api_utils/api_fetchers/getLocations";
 import getJobs from "../../../api_utils/api_fetchers/getJobs";
+import getAggregatedUsage from "../../../api_utils/api_fetchers/getAggregatedUsage";
 
 /* API MUTATION */
 import deleteEmployee from "../../../api_utils/api_mutators/delete/deleteEmployee";
 
 /* COMPONENTS */
 import EmployeeForm from "../../../components/forms/EmployeeForm";
-import { Row, Col, Divider, Popover, Tree } from "antd";
+import { Row, Col, Divider, Popover, Tree, Modal, Button} from "antd";
 
 /* HOOKS */
 import useDeleteConfirmation from "../../../custom_hooks/useDeleteConfirmation";
+import { useState } from "react";
 
 /* --------------------------------------------------------------------------- */
 /* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -54,6 +59,38 @@ export default function Employee() {
     ["organizationalEntityRootChildren", 10],
     getOrganizationalEntityRootChildren
   );
+
+  const usageByTime = useQuery(
+    [
+      "aggregatedUsage",
+      "time" /* ...group by */,
+      {
+        data_consumer: [employeeId],
+        freq: "d"
+      },
+    ],
+    getAggregatedUsage
+  );
+
+  /* -----~~~~~>>>HANDLE USAGE OVER TIME MODAL<<<~~~~~----- */
+  const [usageOverTimeModalVisibility, setUsageOverTimeModalVisibility] =
+    useState(false);
+  const closeUsageOverTimeModal = () => setUsageOverTimeModalVisibility(false);
+
+  /* -----~~~~~>>>STYLING PARAMETERS<<<~~~~~----- */
+  const smallChartContainerStyle = {
+    width: "fit-content",
+    maxWidth: "400px",
+    height: "fit-content",
+    minHeight: "150px",
+    minWidth: "350px",
+    padding: "20px",
+    borderRadius: "2px",
+    borderStyle: "solid",
+    borderWidth: "1px",
+    borderColor: "rgb(217, 217, 217)",
+    backgroundColor: "white",
+  };
 
 
   /* --------------------------------------------------------------------------- */
@@ -159,8 +196,35 @@ export default function Employee() {
           
         </Col>
         <Divider type="vertical" style={{ height: "auto", minHeight: "70vh" }}></Divider>
-        <Col >Test</Col>
+        <Col >
+              {/* USAGE OVER TIME CHART SMALL TILE */}
+          <div style={smallChartContainerStyle}>
+            <UsageOverTimeChart
+              usageDataQuery={usageByTime}
+              size="small"
+              openModal={setUsageOverTimeModalVisibility}
+            />
+          </div>
+        </Col>
       </Row>
+
+      {/* -----~~~~~>>>OPENING LARGE MODALS OF CHARTS<<<~~~~~----- */}
+
+      {/* USAGE OVER TIME LARGE MODAL */}
+      <Modal
+        visible={usageOverTimeModalVisibility}
+        okText="Close"
+        closable={false}
+        footer={[
+          <Button type="secondary" onClick={closeUsageOverTimeModal}>
+            Close
+          </Button>,
+        ]}
+        onOk={closeUsageOverTimeModal}
+        width={850}
+      >
+        <UsageOverTimeChart usageDataQuery={usageByTime} size="large" />
+      </Modal>
     </>
   );
 }
