@@ -49,10 +49,6 @@ export default function Home() {
     bbg_uuid: [],
   });
 
-  useEffect(() => {
-    console.log(filters);
-  }, [filters])
-
   /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const usageByDataConsumer = useQuery(
     [

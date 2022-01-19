@@ -102,7 +102,6 @@ export default function EntityForm({
 
   /* -----~~~~~>>>SUBMITTING<<<~~~~~----- */
   const onFinish = (values) => {
-    console.log(values);
     employeeId
       ? patchMutation.mutate({ values: values, id: initialValues.id })
       : postMutation.mutate({ values: values });
