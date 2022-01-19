@@ -280,15 +280,6 @@ export default function Employee() {
                 openModal={setUsageOverTimeModalVisibility}
               />
             </div>
-            
-            {/* USAGE OVER TIME CHART SMALL TILE */}
-            <div style={smallChartContainerStyle}>
-              <UsageOverTimeChart
-                usageDataQuery={usageByTime}
-                size="small"
-                openModal={setUsageOverTimeModalVisibility}
-              />
-            </div>
 
             {/* USAGE STATISTICS SMALL TILE */}
             <div
