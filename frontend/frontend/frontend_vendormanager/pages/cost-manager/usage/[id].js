@@ -22,7 +22,17 @@ import deleteEmployee from "../../../api_utils/api_mutators/delete/deleteEmploye
 
 /* COMPONENTS */
 import EmployeeForm from "../../../components/forms/EmployeeForm";
-import { Row, Col, Divider, Popover, Tree, Modal, Button} from "antd";
+import {
+  Row,
+  Col,
+  Divider,
+  Popover,
+  Tree,
+  Modal,
+  Button,
+  Spin,
+  Empty,
+} from "antd";
 
 /* HOOKS */
 import useDeleteConfirmation from "../../../custom_hooks/useDeleteConfirmation";
@@ -66,7 +76,7 @@ export default function Employee() {
       "time" /* ...group by */,
       {
         data_consumer: [employeeId],
-        freq: "d"
+        freq: "d",
       },
     ],
     getAggregatedUsage
@@ -92,7 +102,6 @@ export default function Employee() {
     backgroundColor: "white",
   };
 
-
   /* --------------------------------------------------------------------------- */
   /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
   /* --------------------------------------------------------------------------- */
@@ -106,62 +115,109 @@ export default function Employee() {
 
   return (
     <>
-      <Row gutter={[16, 16]}>
+      <Row>
         <Col span={6}>
           <Row justify="center">
-            <img src="http://127.0.0.1:8000/api/random-default-avatar/" width={180}></img>
+            <img
+              src="http://127.0.0.1:8000/api/random-default-avatar/"
+              width={180}
+            ></img>
           </Row>
-          <Row justify="center" style={{marginBottom: "30px"}}>
-            <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-              <p style={{margin: "0", fontSize: "2em"}}>{dataConsumer?.first_name + " " + dataConsumer?.last_name}</p> 
-              <p style={{margin: "0"}}>{dataConsumer?.email}</p>
+          <Row justify="center" style={{ marginBottom: "30px" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+            >
+              <p style={{ margin: "0", fontSize: "2em" }}>
+                {dataConsumer?.first_name + " " + dataConsumer?.last_name}
+              </p>
+              <p style={{ margin: "0" }}>{dataConsumer?.email}</p>
             </div>
           </Row>
 
-          <Divider orientation="middle" plain style={{color: "grey",  fontWeight: "lighter", marginBottom: "0px"}}>Job Title</Divider>
-          <Row justify="center" style={{marginBottom: "30px"}}>
+          <Divider
+            orientation="middle"
+            plain
+            style={{
+              color: "grey",
+              fontWeight: "lighter",
+              marginBottom: "0px",
+            }}
+          >
+            Job Title
+          </Divider>
+          <Row justify="center" style={{ marginBottom: "30px" }}>
             {dataConsumer?.job_title?.title}
           </Row>
 
-          <Divider orientation="middle" plain style={{color: "grey",  fontWeight: "lighter", marginBottom: "0px"}}>Activities</Divider>
-          <Row justify="center" style={{marginBottom: "30px"}}>
+          <Divider
+            orientation="middle"
+            plain
+            style={{
+              color: "grey",
+              fontWeight: "lighter",
+              marginBottom: "0px",
+            }}
+          >
+            Activities
+          </Divider>
+          <Row justify="center" style={{ marginBottom: "30px" }}>
             <Popover
               title="Activities of this Employee"
               trigger="hover"
-              content={
-                dataConsumer?.activity?.map((tag) => {
-                  return (
-                    <Row justify="center">
-                      {tag.name}
-                    </Row>
-                  )
-                })
-              }
+              content={dataConsumer?.activity?.map((tag) => {
+                return <Row justify="center">{tag.name}</Row>;
+              })}
             >
               {dataConsumer?.activity?.map((tag) => tag.name).join(", ")}
             </Popover>
           </Row>
 
-          <Divider orientation="middle" plain style={{color: "grey",  fontWeight: "lighter", marginBottom: "0px"}}>Business Affiliation</Divider>
-          <Row justify="center" style={{marginBottom: "30px"}}>
+          <Divider
+            orientation="middle"
+            plain
+            style={{
+              color: "grey",
+              fontWeight: "lighter",
+              marginBottom: "0px",
+            }}
+          >
+            Business Affiliation
+          </Divider>
+          <Row justify="center" style={{ marginBottom: "30px" }}>
             <Popover
-                title="Position in Organizational Hierarchy"
-                trigger="hover"
-                content={
-                  <Tree 
-                    showLine={{ showLeafIcon: false }}
-                    defaultSelectedKeys={[dataConsumer?.organizational_entity?.id]}
-                    treeData={treeQuery?.data}
-                    defaultExpandAll = {true}
-                  />
-                }
-              >
+              title="Position in Organizational Hierarchy"
+              trigger="hover"
+              content={
+                <Tree
+                  showLine={{ showLeafIcon: false }}
+                  defaultSelectedKeys={[
+                    dataConsumer?.organizational_entity?.id,
+                  ]}
+                  treeData={treeQuery?.data}
+                  defaultExpandAll={true}
+                />
+              }
+            >
               {dataConsumer?.organizational_entity?.name}
             </Popover>
           </Row>
 
-          <Divider orientation="middle" plain style={{color: "grey",  fontWeight: "lighter", marginBottom: "0px"}}>Location</Divider>
-          <Row justify="center" style={{marginBottom: "30px"}}>
+          <Divider
+            orientation="middle"
+            plain
+            style={{
+              color: "grey",
+              fontWeight: "lighter",
+              marginBottom: "0px",
+            }}
+          >
+            Location
+          </Divider>
+          <Row justify="center" style={{ marginBottom: "30px" }}>
             <Popover
               title="Location of Employee"
               trigger="hover"
@@ -171,39 +227,91 @@ export default function Employee() {
                     {dataConsumer.building.building_name}
                   </Row>
                   <Row justify="center">
-                    {"Floor: " + dataConsumer.floor + ", Seat: " + dataConsumer.seat}
+                    {"Floor: " +
+                      dataConsumer.floor +
+                      ", Seat: " +
+                      dataConsumer.seat}
                   </Row>
-                  <Divider style={{margin: "10px"}}></Divider>
+                  <Divider style={{ margin: "10px" }}></Divider>
                   <Row justify="center">
-                    {dataConsumer.location.street + " " + dataConsumer.location.street_nr}
-                  </Row>
-                  <Row justify="center">
-                    {dataConsumer.location.zip_code + " " + dataConsumer.location.city}
-                  </Row>
-                  <Divider style={{margin: "10px"}}></Divider>
-                  <Row justify="center">
-                    {dataConsumer.location.state}
+                    {dataConsumer.location.street +
+                      " " +
+                      dataConsumer.location.street_nr}
                   </Row>
                   <Row justify="center">
-                    {dataConsumer.location.country}
+                    {dataConsumer.location.zip_code +
+                      " " +
+                      dataConsumer.location.city}
                   </Row>
+                  <Divider style={{ margin: "10px" }}></Divider>
+                  <Row justify="center">{dataConsumer.location.state}</Row>
+                  <Row justify="center">{dataConsumer.location.country}</Row>
                 </>
               }
             >
-              {`${dataConsumer.location.city + ", " + dataConsumer.location.country}`}
+              {`${
+                dataConsumer.location.city +
+                ", " +
+                dataConsumer.location.country
+              }`}
             </Popover>
           </Row>
-          
         </Col>
-        <Divider type="vertical" style={{ height: "auto", minHeight: "70vh" }}></Divider>
-        <Col >
-              {/* USAGE OVER TIME CHART SMALL TILE */}
-          <div style={smallChartContainerStyle}>
-            <UsageOverTimeChart
-              usageDataQuery={usageByTime}
-              size="small"
-              openModal={setUsageOverTimeModalVisibility}
-            />
+        <Divider
+          type="vertical"
+          style={{ height: "auto", minHeight: "70vh" }}
+        ></Divider>
+        <Col span={17}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              gap: "10px",
+              overflowX: "scroll",
+              padding: "0 0 5px 0",
+              margin: "0 0 20px 0",
+            }}
+          >
+            {/* USAGE OVER TIME CHART SMALL TILE */}
+            <div style={smallChartContainerStyle}>
+              <UsageOverTimeChart
+                usageDataQuery={usageByTime}
+                size="small"
+                openModal={setUsageOverTimeModalVisibility}
+              />
+            </div>
+            
+            {/* USAGE OVER TIME CHART SMALL TILE */}
+            <div style={smallChartContainerStyle}>
+              <UsageOverTimeChart
+                usageDataQuery={usageByTime}
+                size="small"
+                openModal={setUsageOverTimeModalVisibility}
+              />
+            </div>
+
+            {/* USAGE STATISTICS SMALL TILE */}
+            <div
+              style={{
+                ...smallChartContainerStyle,
+                minWidth: "350px",
+                minHeight: "150px",
+              }}
+            >
+              {true ? (
+                <Spin />
+              ) : true ? (
+                <Empty />
+              ) : (
+                <>
+                  <Statistic
+                    title="Total Usage Time"
+                    /* value={usageStatistics.data && parse(usageStatistics.data[0].mean, "h").toFixed(2)} */
+                    suffix="hours"
+                  />
+                </>
+              )}
+            </div>
           </div>
         </Col>
       </Row>
