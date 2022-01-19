@@ -128,8 +128,32 @@ export default function Employee() {
             <Popover
               title="Location of Employee"
               trigger="hover"
+              content={
+                <>
+                  <Row justify="center">
+                    {dataConsumer.building.building_name}
+                  </Row>
+                  <Row justify="center">
+                    {"Floor: " + dataConsumer.floor + ", Seat: " + dataConsumer.seat}
+                  </Row>
+                  <Divider style={{margin: "10px"}}></Divider>
+                  <Row justify="center">
+                    {dataConsumer.location.street + " " + dataConsumer.location.street_nr}
+                  </Row>
+                  <Row justify="center">
+                    {dataConsumer.location.zip_code + " " + dataConsumer.location.city}
+                  </Row>
+                  <Divider style={{margin: "10px"}}></Divider>
+                  <Row justify="center">
+                    {dataConsumer.location.state}
+                  </Row>
+                  <Row justify="center">
+                    {dataConsumer.location.country}
+                  </Row>
+                </>
+              }
             >
-            {`${dataConsumer.location.city + ", " + dataConsumer.location.country}`}
+              {`${dataConsumer.location.city + ", " + dataConsumer.location.country}`}
             </Popover>
           </Row>
           
