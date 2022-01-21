@@ -17,12 +17,12 @@ import getLocations from "../../../api_utils/api_fetchers/getLocations";
 import getJobs from "../../../api_utils/api_fetchers/getJobs";
 import getAggregatedUsage from "../../../api_utils/api_fetchers/getAggregatedUsage";
 import getUsageRawDataconsumer from "../../../api_utils/api_fetchers/getUsageRawDataConsumer";
+import getUsageStatisticsByDataConsumer from "../../../api_utils/api_fetchers/getUsageStatisticsByDataConsumer";
 
 /* API MUTATION */
 import deleteEmployee from "../../../api_utils/api_mutators/delete/deleteEmployee";
 
 /* COMPONENTS */
-import EmployeeForm from "../../../components/forms/EmployeeForm";
 import { FilterOutlined } from "@ant-design/icons";
 import {
   Row,
@@ -36,6 +36,7 @@ import {
   Empty,
   Form,
   DatePicker,
+  Statistic
 } from "antd";
 import UsageRawDataconsumerDataTable from "../../../components/tables/UsageRawDataconsumerDataTable";
 
@@ -45,6 +46,7 @@ import { useState } from "react";
 
 /* DATA UTILS */
 import moment from "moment";
+import parse from "parse-duration";
 
 /* --------------------------------------------------------------------------- */
 /* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -87,6 +89,14 @@ export default function Employee() {
   const usageByTime = useQuery(
     ["aggregatedUsage", "time" /* ...group by */, filters],
     getAggregatedUsage
+  );
+
+  const usageStatistics = useQuery(
+    [
+      "usageStatistics",
+      filters
+    ],
+    getUsageStatisticsByDataConsumer
   );
 
   const rawUsage = useQuery(["rawUsage", filters], getUsageRawDataconsumer);
@@ -270,7 +280,7 @@ export default function Employee() {
           type="vertical"
           style={{ height: "auto", minHeight: "70vh" }}
         ></Divider>
-        <Col span={17}>
+        <Col span={17} style={{maxHeight: "80vh", overflowY: "scroll"}}>
           <Row>
             <Col span={24}>
               <Form
@@ -320,22 +330,29 @@ export default function Employee() {
                 minWidth: "350px",
                 minHeight: "150px",
               }}
-            >
-              {true ? (
+              >
+              {usageStatistics.isLoading ? (
                 <Spin />
-              ) : true ? (
-                <Empty />
-              ) : (
-                <>
+                ) : usageStatistics.isError ? (
+                  <Empty />
+                  ) : (
+                    <>
                   <Statistic
-                    title="Total Usage Time"
-                    /* value={usageStatistics.data && parse(usageStatistics.data[0].mean, "h").toFixed(2)} */
+                    title="Mean Usage Time (per Employee)"
+                    value={usageStatistics.data && parse(usageStatistics.data[0].mean, "h").toFixed(2)}
                     suffix="hours"
-                  />
+                    />
+                  <Divider style={{ margin: 6 }} />
+                  <Statistic
+                    title="Standart Deviation"
+                    value={usageStatistics.data && parse(usageStatistics.data[0].std, "h").toFixed(2)}
+                    suffix="hours"
+                    />
                 </>
               )}
             </div>
           </div>
+          <Divider type="horizontal"></Divider>
           <div>
             <h2 style={{ marginBottom: "20px", lineHeight: "1em" }}>
               All Usage Entries
