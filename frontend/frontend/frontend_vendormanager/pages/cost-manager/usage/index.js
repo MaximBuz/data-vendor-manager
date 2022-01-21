@@ -5,7 +5,7 @@
 /* API FETCHING */
 import { dehydrate, useQuery, useQueryClient } from "react-query";
 import getAggregatedUsage from "../../../api_utils/api_fetchers/getAggregatedUsage";
-import getUsageStatisticsByDataConsumer from "../../../api_utils/api_fetchers/getUsageStatisticsByDataConsumer";
+import getUsageStatisticsByDataConsumers from "../../../api_utils/api_fetchers/getUsageStatisticsByDataConsumers";
 
 /* CHARTS */
 import UsageOverTimeChart from "../../../components/charts/UsageOverTime";
@@ -90,7 +90,7 @@ export default function Home() {
       "usageStatistics",
       filters
     ],
-    getUsageStatisticsByDataConsumer
+    getUsageStatisticsByDataConsumers
   );
 
   /* -----~~~~~>>>STYLING PARAMETERS<<<~~~~~----- */

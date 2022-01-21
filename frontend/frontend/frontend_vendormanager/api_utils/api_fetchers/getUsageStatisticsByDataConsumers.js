@@ -1,11 +1,11 @@
 import apiClient from "../http-common";
 
-export default async function getUsageStatisticsByDataConsumerOverTime({ queryKey }) {
-    const [_, group_by, params] = queryKey;
+export default async function getUsageStatisticsByDataConsumers({ queryKey }) {
+    const [_, params] = queryKey;
 
     // Getting the aggregated statistics from backend
     const { data } = await apiClient.get(
-      `usage/bloomberg/statistics/data-consumer-over-time/`,
+      `usage/bloomberg/statistics/data-consumers/`,
       {params: params}
     )
 

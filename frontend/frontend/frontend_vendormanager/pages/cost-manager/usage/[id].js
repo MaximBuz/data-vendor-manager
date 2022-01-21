@@ -91,9 +91,9 @@ export default function Employee() {
     getAggregatedUsage
   );
 
-  const usageStatistics = useQuery(
+  const usageStatistic = useQuery(
     [
-      "usageStatistics",
+      "usageStatistic",
       filters
     ],
     getUsageStatisticsByDataConsumer
@@ -327,28 +327,58 @@ export default function Employee() {
             <div
               style={{
                 ...smallChartContainerStyle,
-                minWidth: "350px",
+                minWidth: "650px",
                 minHeight: "150px",
               }}
               >
-              {usageStatistics.isLoading ? (
+              {usageStatistic.isLoading ? (
                 <Spin />
-                ) : usageStatistics.isError ? (
+                ) : usageStatistic.isError ? (
                   <Empty />
                   ) : (
                     <>
-                  <Statistic
-                    title="Mean Usage Time (per Employee)"
-                    value={usageStatistics.data && parse(usageStatistics.data[0].mean, "h").toFixed(2)}
-                    suffix="hours"
-                    />
-                  <Divider style={{ margin: 6 }} />
-                  <Statistic
-                    title="Standart Deviation"
-                    value={usageStatistics.data && parse(usageStatistics.data[0].std, "h").toFixed(2)}
-                    suffix="hours"
-                    />
-                </>
+                      <Row gutter={[30,0]}>
+                        <Col span={8}>
+                          <Statistic
+                            title="Count of entries"
+                            value={usageStatistic.data && usageStatistic.data[0].count}
+                            suffix="entries"
+                            />
+                          <Divider style={{ margin: "6px 0 6px 0"}} />
+                          <Statistic
+                            title="Total time"
+                            value={usageStatistic.data && parse(usageStatistic.data[0].sum, "h")?.toFixed(2)}
+                            suffix="hours"
+                            />
+                        </Col>
+                        <Col span={8}>
+                          <Statistic
+                            title="Average usage time"
+                            value={usageStatistic.data && parse(usageStatistic.data[0].mean, "h")?.toFixed(2)}
+                            suffix="hours"
+                            />
+                          <Divider style={{ margin: "6px 0 6px 0"}} />
+                          <Statistic
+                            title="Standart deviation"
+                            value={usageStatistic.data && parse(usageStatistic.data[0].std, "h")?.toFixed(2)}
+                            suffix="hours"
+                            />
+                        </Col>
+                        <Col span={8}>
+                          <Statistic
+                            title="First quartile (25%)"
+                            value={usageStatistic.data && parse(usageStatistic.data[0].first_quartile, "h")?.toFixed(2)}
+                            suffix="hours"
+                            />
+                          <Divider style={{ margin: "6px 0 6px 0"}} />
+                          <Statistic
+                            title="Third quartile (75%)"
+                            value={usageStatistic.data && parse(usageStatistic.data[0].third_quartile, "h")?.toFixed(2)}
+                            suffix="hours"
+                            />
+                        </Col>
+                      </Row>
+                    </>
               )}
             </div>
           </div>

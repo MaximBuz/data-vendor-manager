@@ -3,9 +3,9 @@ import apiClient from "../http-common";
 export default async function getUsageStatisticsByDataConsumer({ queryKey }) {
     const [_, params] = queryKey;
 
-    // Getting the aggregated statistics from backend
+    // Getting the statistics for a single user from backend
     const { data } = await apiClient.get(
-      `usage/bloomberg/statistics/data-consumers/`,
+      `usage/bloomberg/statistics/data-consumer/`,
       {params: params}
     )
 
