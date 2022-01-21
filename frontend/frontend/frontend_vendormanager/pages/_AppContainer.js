@@ -10,13 +10,13 @@ import getCurrentUser from '../api_utils/auth/getCurrentUser';
 export default function _AppContainer({children}) {
 
   /* Here use a query to get current user */
-  const currentUser = useQuery(["currentUser"], getCurrentUser);
+  const currentUser = useQuery(["currentUser"], getCurrentUser, {retry: false});
   /* If Django returns a serialized user, show all children */
   /* Else, show login page */
 
-  if (currentUser.failureCount > 0) {
-    return <LoginPage/>
-  } else {
+  if (currentUser.data) {
     return <>{children}</>
+  } else {
+    return <LoginPage/>
   } 
 }

@@ -1,17 +1,13 @@
-import { endpoint } from "../http-common";
-import axios from "axios";
+import apiClient from "../http-common";
 
 export default async function login(formData) {
     
     // Get authentication token from backend
-    const { data, success } = await axios({
-      method: "post",
-      baseURL: endpoint + "/auth/login/",
-      data: formData
-    })
+    const { data, success } = await apiClient.post(`auth/login/`, formData)
 
     // Save Token in local storage
-    success && localStorage.setItem('authenticationToken', JSON.stringify(data));
+    localStorage.setItem('authenticationToken', data.key);
+    console.log(localStorage);
 
     return data;
 }

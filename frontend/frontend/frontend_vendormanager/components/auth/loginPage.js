@@ -1,12 +1,26 @@
 import { Form, Input, Button, Checkbox } from 'antd';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { UserOutlined, LockOutlined, Loading3QuartersOutlined } from '@ant-design/icons';
+
+/* API MUTATIONS */
 import { useMutation } from 'react-query';
+import login from '../../api_utils/auth/login';
+
+/* NOTIFICATIONS */
+import { toast } from "react-toastify";
 
 export default function LoginPage() {
-
+/* -----~~~~~>>>DATA MUTATION<<<~~~~~----- */
+  const loginMutation = useMutation(login, {
+    onSuccess: () => {
+      toast.success("Successfully logged in");
+    },
+    onError: (error) => {
+      toast.error(String(error));
+    },
+  });
 
   const onFinish = (values) => {
-    console.log(values);
+    loginMutation.mutate(values)
   };
 
   return (
