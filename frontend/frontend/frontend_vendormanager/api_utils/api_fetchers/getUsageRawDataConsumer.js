@@ -1,11 +1,12 @@
 import apiClient from "../http-common";
 
 export default async function getUsageRawDataconsumer({ queryKey }) {
-    const [_, id] = queryKey;
+    const [_, params] = queryKey;
 
     // Getting the aggregated statistics from backend
     const { data } = await apiClient.get(
-      `usage/bloomberg/raw/dataconsumer/${id}/`,
+      `usage/bloomberg/raw/dataconsumer/`,
+      {params: params}
     )
 
     // Returning the data

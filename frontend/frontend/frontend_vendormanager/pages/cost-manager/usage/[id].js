@@ -83,7 +83,7 @@ export default function Employee() {
     getAggregatedUsage
   );
 
-  const rawUsage = useQuery(["rawUsage", employeeId], getUsageRawDataconsumer);
+  const rawUsage = useQuery(["rawUsage", {data_consumer: [employeeId]}], getUsageRawDataconsumer);
 
   /* -----~~~~~>>>HANDLE USAGE OVER TIME MODAL<<<~~~~~----- */
   const [usageOverTimeModalVisibility, setUsageOverTimeModalVisibility] =
