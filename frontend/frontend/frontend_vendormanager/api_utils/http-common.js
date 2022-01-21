@@ -11,7 +11,7 @@ const httpCommon =  axios.create({
 
 // intercept every request with authentication
 httpCommon.interceptors.request.use((config) => {
-  // Read token for anywhere, in this case directly from localStorage
+  // Read token from localStorage
   const token = JSON.parse(localStorage.getItem("authenticationToken"));
   if (token) {
     config.headers.Authorization = `Token ${token}`;
