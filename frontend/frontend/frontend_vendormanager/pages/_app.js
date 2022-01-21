@@ -19,7 +19,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 // Authentication
-
+import _AppContainer from "./_AppContainer";
 
 function MyApp({ Component, pageProps }) {
   // Instantiate a query client for React Query
@@ -29,15 +29,17 @@ function MyApp({ Component, pageProps }) {
   const router = useRouter();
 
   return (
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <_AppContainer>
         <Hydrate state={pageProps.dehydratedState}>
-            <SiderMenuLayout activeRoute={router.route}>
-              <Component {...pageProps} />
-              <ToastContainer />
-            </SiderMenuLayout>
+          <SiderMenuLayout activeRoute={router.route}>
+            <Component {...pageProps} />
+            <ToastContainer />
+          </SiderMenuLayout>
         </Hydrate>
-        <ReactQueryDevtools initialIsOpen={false} position={"bottom-right"} />
-      </QueryClientProvider>
+      </_AppContainer>
+      <ReactQueryDevtools initialIsOpen={false} position={"bottom-right"} />
+    </QueryClientProvider>
   );
 }
 

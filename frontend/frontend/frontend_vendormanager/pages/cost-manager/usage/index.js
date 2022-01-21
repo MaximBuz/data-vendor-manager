@@ -160,7 +160,7 @@ export default function Home() {
           paddingBottom: "5px",
           marginBottom: "20px",
         }}
-        class="masked-overflow-horizontal"
+        className="masked-overflow-horizontal"
         >
         {/* USAGE OVER TIME CHART SMALL TILE */}
         <div style={smallChartContainerStyle}>

@@ -278,7 +278,7 @@ export default function Employee() {
           style={{ height: "auto", minHeight: "70vh" }}
         ></Divider>
         <Col span={17}>
-          <div style={{ maxHeight: "80vh", overflowY: "scroll" }} class="masked-overflow-vertical">
+          <div style={{ maxHeight: "80vh", overflowY: "scroll" }} className="masked-overflow-vertical">
             <Row>
               <Col span={24}>
                 <Form
@@ -315,7 +315,7 @@ export default function Employee() {
                 paddingBottom: "5px",
                 marginBottom: "20px",
               }}
-              class="masked-overflow-horizontal"
+              className="masked-overflow-horizontal"
             >
               {/* USAGE OVER TIME CHART SMALL TILE */}
               <div style={smallChartContainerStyle}>

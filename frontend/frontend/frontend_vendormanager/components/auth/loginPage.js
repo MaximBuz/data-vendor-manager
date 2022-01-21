@@ -1,16 +1,12 @@
 import { Form, Input, Button, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import { useAuth } from '../../api_utils/auth/auth';
 import { useMutation } from 'react-query';
 
 export default function LoginPage() {
-  const { login } = useAuth();
 
-  const mutation = useMutation(login, {});
 
   const onFinish = (values) => {
     console.log(values);
-    mutation.mutate(values)
   };
 
   return (
