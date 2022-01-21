@@ -16,13 +16,14 @@ import getActivityTags from "../../../api_utils/api_fetchers/getActivityTags";
 import getLocations from "../../../api_utils/api_fetchers/getLocations";
 import getJobs from "../../../api_utils/api_fetchers/getJobs";
 import getAggregatedUsage from "../../../api_utils/api_fetchers/getAggregatedUsage";
-import getUsageRawDataconsumer from "../../../api_utils/api_fetchers/getUsageRawDataConsumer"
+import getUsageRawDataconsumer from "../../../api_utils/api_fetchers/getUsageRawDataConsumer";
 
 /* API MUTATION */
 import deleteEmployee from "../../../api_utils/api_mutators/delete/deleteEmployee";
 
 /* COMPONENTS */
 import EmployeeForm from "../../../components/forms/EmployeeForm";
+import { FilterOutlined } from "@ant-design/icons";
 import {
   Row,
   Col,
@@ -33,11 +34,17 @@ import {
   Button,
   Spin,
   Empty,
+  Form,
+  DatePicker,
 } from "antd";
+import UsageRawDataconsumerDataTable from "../../../components/tables/UsageRawDataconsumerDataTable";
 
 /* HOOKS */
 import useDeleteConfirmation from "../../../custom_hooks/useDeleteConfirmation";
 import { useState } from "react";
+
+/* DATA UTILS */
+import moment from "moment";
 
 /* --------------------------------------------------------------------------- */
 /* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -47,17 +54,23 @@ export default function Employee() {
   const router = useRouter();
   const { id: employeeId } = router.query;
 
-  const queryClient = useQueryClient();
+  /* -----~~~~~>>>HANDLE FILTER<<<~~~~~----- */
+  const [filterDrawerVisibility, setFilterDrawerVisibility] = useState(false);
+  const [filters, setFilters] = useState({
+    start_date: moment().subtract(1, "months").format("YYYY-MM-DD"),
+    end_date: moment().format("YYYY-MM-DD"),
+    data_consumer: [router.query.id],
+    freq: "d",
+  });
 
-  /* -----~~~~~>>>DELETION<<<~~~~~----- */
-  const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
-    deleteEmployee, // Api call
-    "Deleted employee successfully", // Success Notification Text
-    "dataConsumers", // Query to invalidate on success
-    employeeId, // Id to delete
-    "Are you sure you want to delete this employee?", // Confirmation Text
-    "/master-data-manager/employees" // Next Link
-  );
+  const onFinish = (values) => {
+    setFilters({
+      ...filters,
+      ...values,
+      start_date: values.timeframe[0].format("YYYY-MM-DD"),
+      end_date: values.timeframe[1].format("YYYY-MM-DD"),
+    });
+  };
 
   /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const dataConsumerQuery = useQuery(
@@ -72,18 +85,11 @@ export default function Employee() {
   );
 
   const usageByTime = useQuery(
-    [
-      "aggregatedUsage",
-      "time" /* ...group by */,
-      {
-        data_consumer: [employeeId],
-        freq: "d",
-      },
-    ],
+    ["aggregatedUsage", "time" /* ...group by */, filters],
     getAggregatedUsage
   );
 
-  const rawUsage = useQuery(["rawUsage", {data_consumer: [employeeId]}], getUsageRawDataconsumer);
+  const rawUsage = useQuery(["rawUsage", filters], getUsageRawDataconsumer);
 
   /* -----~~~~~>>>HANDLE USAGE OVER TIME MODAL<<<~~~~~----- */
   const [usageOverTimeModalVisibility, setUsageOverTimeModalVisibility] =
@@ -118,7 +124,7 @@ export default function Employee() {
 
   return (
     <>
-      <Row>
+      <Row gutter={[20, 20]}>
         <Col span={6}>
           <Row justify="center">
             <img
@@ -265,6 +271,29 @@ export default function Employee() {
           style={{ height: "auto", minHeight: "70vh" }}
         ></Divider>
         <Col span={17}>
+          <Row>
+            <Col span={24}>
+              <Form
+                layout="inline"
+                onFinish={onFinish}
+                initialValues={{
+                  timeframe: [moment().subtract(1, "months"), moment()],
+                }}
+              >
+                <Form.Item name="timeframe">
+                  <DatePicker.RangePicker
+                    getPopupContainer={(trigger) => trigger.parentElement}
+                  />
+                </Form.Item>
+                <Form.Item>
+                  <Button icon={<FilterOutlined />} type="secondary" htmlType="submit">
+                    Filter
+                  </Button>
+                </Form.Item>
+              </Form>
+            </Col>
+          </Row>
+          <Divider type="horizontal"></Divider>
           <div
             style={{
               display: "flex",
@@ -306,6 +335,15 @@ export default function Employee() {
                 </>
               )}
             </div>
+          </div>
+          <div>
+            <h2 style={{ marginBottom: "20px", lineHeight: "1em" }}>
+              All Usage Entries
+            </h2>
+            <UsageRawDataconsumerDataTable
+              data={rawUsage.data}
+              isLoading={rawUsage.isLoading}
+            />
           </div>
         </Col>
       </Row>
