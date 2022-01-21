@@ -157,9 +157,10 @@ export default function Home() {
           flexDirection: "row",
           gap: "10px",
           overflowX: "scroll",
-          padding: "0 0 5px 0",
-          margin: "0 0 20px 0"
+          paddingBottom: "5px",
+          marginBottom: "20px",
         }}
+        class="masked-overflow-horizontal"
         >
         {/* USAGE OVER TIME CHART SMALL TILE */}
         <div style={smallChartContainerStyle}>

@@ -36,7 +36,7 @@ import {
   Empty,
   Form,
   DatePicker,
-  Statistic
+  Statistic,
 } from "antd";
 import UsageRawDataconsumerDataTable from "../../../components/tables/UsageRawDataconsumerDataTable";
 
@@ -92,10 +92,7 @@ export default function Employee() {
   );
 
   const usageStatistic = useQuery(
-    [
-      "usageStatistic",
-      filters
-    ],
+    ["usageStatistic", filters],
     getUsageStatisticsByDataConsumer
   );
 
@@ -280,117 +277,147 @@ export default function Employee() {
           type="vertical"
           style={{ height: "auto", minHeight: "70vh" }}
         ></Divider>
-        <Col span={17} style={{maxHeight: "80vh", overflowY: "scroll"}}>
-          <Row>
-            <Col span={24}>
-              <Form
-                layout="inline"
-                onFinish={onFinish}
-                initialValues={{
-                  timeframe: [moment().subtract(1, "months"), moment()],
-                }}
-              >
-                <Form.Item name="timeframe">
-                  <DatePicker.RangePicker
-                    getPopupContainer={(trigger) => trigger.parentElement}
-                  />
-                </Form.Item>
-                <Form.Item>
-                  <Button icon={<FilterOutlined />} type="secondary" htmlType="submit">
-                    Filter
-                  </Button>
-                </Form.Item>
-              </Form>
-            </Col>
-          </Row>
-          <Divider type="horizontal"></Divider>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              gap: "10px",
-              overflowX: "scroll",
-              padding: "0 0 5px 0",
-              margin: "0 0 20px 0",
-            }}
-          >
-            {/* USAGE OVER TIME CHART SMALL TILE */}
-            <div style={smallChartContainerStyle}>
-              <UsageOverTimeChart
-                usageDataQuery={usageByTime}
-                size="small"
-                openModal={setUsageOverTimeModalVisibility}
-              />
-            </div>
-
-            {/* USAGE STATISTICS SMALL TILE */}
+        <Col span={17}>
+          <div style={{ maxHeight: "80vh", overflowY: "scroll" }} class="masked-overflow-vertical">
+            <Row>
+              <Col span={24}>
+                <Form
+                  layout="inline"
+                  onFinish={onFinish}
+                  initialValues={{
+                    timeframe: [moment().subtract(1, "months"), moment()],
+                  }}
+                >
+                  <Form.Item name="timeframe">
+                    <DatePicker.RangePicker
+                      getPopupContainer={(trigger) => trigger.parentElement}
+                    />
+                  </Form.Item>
+                  <Form.Item>
+                    <Button
+                      icon={<FilterOutlined />}
+                      type="secondary"
+                      htmlType="submit"
+                    >
+                      Filter
+                    </Button>
+                  </Form.Item>
+                </Form>
+              </Col>
+            </Row>
+            <Divider type="horizontal"></Divider>
             <div
               style={{
-                ...smallChartContainerStyle,
-                minWidth: "650px",
-                minHeight: "150px",
+                display: "flex",
+                flexDirection: "row",
+                gap: "10px",
+                overflowX: "scroll",
+                paddingBottom: "5px",
+                marginBottom: "20px",
               }}
+              class="masked-overflow-horizontal"
+            >
+              {/* USAGE OVER TIME CHART SMALL TILE */}
+              <div style={smallChartContainerStyle}>
+                <UsageOverTimeChart
+                  usageDataQuery={usageByTime}
+                  size="small"
+                  openModal={setUsageOverTimeModalVisibility}
+                />
+              </div>
+
+              {/* USAGE STATISTICS SMALL TILE */}
+              <div
+                style={{
+                  ...smallChartContainerStyle,
+                  minWidth: "650px",
+                  minHeight: "150px",
+                }}
               >
-              {usageStatistic.isLoading ? (
-                <Spin />
+                {usageStatistic.isLoading ? (
+                  <Spin />
                 ) : usageStatistic.isError ? (
                   <Empty />
-                  ) : (
-                    <>
-                      <Row gutter={[30,0]}>
-                        <Col span={8}>
-                          <Statistic
-                            title="Count of entries"
-                            value={usageStatistic.data && usageStatistic.data[0].count}
-                            suffix="entries"
-                            />
-                          <Divider style={{ margin: "6px 0 6px 0"}} />
-                          <Statistic
-                            title="Total time"
-                            value={usageStatistic.data && parse(usageStatistic.data[0].sum, "h")?.toFixed(2)}
-                            suffix="hours"
-                            />
-                        </Col>
-                        <Col span={8}>
-                          <Statistic
-                            title="Average usage time"
-                            value={usageStatistic.data && parse(usageStatistic.data[0].mean, "h")?.toFixed(2)}
-                            suffix="hours"
-                            />
-                          <Divider style={{ margin: "6px 0 6px 0"}} />
-                          <Statistic
-                            title="Standart deviation"
-                            value={usageStatistic.data && parse(usageStatistic.data[0].std, "h")?.toFixed(2)}
-                            suffix="hours"
-                            />
-                        </Col>
-                        <Col span={8}>
-                          <Statistic
-                            title="First quartile (25%)"
-                            value={usageStatistic.data && parse(usageStatistic.data[0].first_quartile, "h")?.toFixed(2)}
-                            suffix="hours"
-                            />
-                          <Divider style={{ margin: "6px 0 6px 0"}} />
-                          <Statistic
-                            title="Third quartile (75%)"
-                            value={usageStatistic.data && parse(usageStatistic.data[0].third_quartile, "h")?.toFixed(2)}
-                            suffix="hours"
-                            />
-                        </Col>
-                      </Row>
-                    </>
-              )}
+                ) : (
+                  <>
+                    <Row gutter={[30, 0]}>
+                      <Col span={8}>
+                        <Statistic
+                          title="Count of entries"
+                          value={
+                            usageStatistic.data && usageStatistic.data[0].count
+                          }
+                          suffix="entries"
+                        />
+                        <Divider style={{ margin: "6px 0 6px 0" }} />
+                        <Statistic
+                          title="Total time"
+                          value={
+                            usageStatistic.data &&
+                            parse(usageStatistic.data[0].sum, "h")?.toFixed(2)
+                          }
+                          suffix="hours"
+                        />
+                      </Col>
+                      <Col span={8}>
+                        <Statistic
+                          title="Average usage time"
+                          value={
+                            usageStatistic.data &&
+                            parse(usageStatistic.data[0].mean, "h")?.toFixed(2)
+                          }
+                          suffix="hours"
+                        />
+                        <Divider style={{ margin: "6px 0 6px 0" }} />
+                        <Statistic
+                          title="Standart deviation"
+                          value={
+                            usageStatistic.data &&
+                            parse(usageStatistic.data[0].std, "h")?.toFixed(2)
+                          }
+                          suffix="hours"
+                        />
+                      </Col>
+                      <Col span={8}>
+                        <Statistic
+                          title="First quartile (25%)"
+                          value={
+                            usageStatistic.data &&
+                            parse(
+                              usageStatistic.data[0].first_quartile,
+                              "h"
+                            )?.toFixed(2)
+                          }
+                          suffix="hours"
+                        />
+                        <Divider style={{ margin: "6px 0 6px 0" }} />
+                        <Statistic
+                          title="Third quartile (75%)"
+                          value={
+                            usageStatistic.data &&
+                            parse(
+                              usageStatistic.data[0].third_quartile,
+                              "h"
+                            )?.toFixed(2)
+                          }
+                          suffix="hours"
+                        />
+                      </Col>
+                    </Row>
+                  </>
+                )}
+              </div>
             </div>
-          </div>
-          <Divider type="horizontal"></Divider>
-          <div>
-            <h2 style={{ marginBottom: "20px", lineHeight: "1em" }}>
-              All Usage Entries
-            </h2>
-            <UsageRawDataconsumerDataTable
-              data={rawUsage.data}
-              isLoading={rawUsage.isLoading}
-            />
+            <Divider type="horizontal"></Divider>
+            <div>
+              <h2 style={{ marginBottom: "20px", lineHeight: "1em" }}>
+                All Usage Entries
+              </h2>
+              <UsageRawDataconsumerDataTable
+                data={rawUsage.data}
+                isLoading={rawUsage.isLoading}
+              />
+            </div>
           </div>
         </Col>
       </Row>
