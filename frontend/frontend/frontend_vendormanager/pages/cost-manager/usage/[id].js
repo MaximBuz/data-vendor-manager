@@ -447,31 +447,31 @@ export default function Employee() {
 /* ~~~~~~SERVERSIDE RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /* --------------------------------------------------------------------------- */
 
-export async function getServerSideProps(context) {
-  /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
-  const queryClient = new QueryClient();
-  const employeeId = context.params.id;
+// export async function getServerSideProps(context) {
+//   /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
+//   const queryClient = new QueryClient();
+//   const employeeId = context.params.id;
 
-  /* -----~~~~~>>>DATA FETCHING<<<~~~~~----- */
-  await queryClient.prefetchQuery(
-    ["organizationalEntityRootChildren", 10 /* Depth */],
-    getOrganizationalEntityRootChildren
-  );
-  await queryClient.prefetchQuery(
-    ["dataConsumer", employeeId, 2 /* Depth */],
-    getDataConsumer
-  );
-  await queryClient.prefetchQuery(
-    ["activityTags", 0 /* Depth */],
-    getActivityTags
-  );
-  await queryClient.prefetchQuery(["locations"], getLocations);
-  await queryClient.prefetchQuery(["jobs"], getJobs);
+//   /* -----~~~~~>>>DATA FETCHING<<<~~~~~----- */
+//   await queryClient.prefetchQuery(
+//     ["organizationalEntityRootChildren", 10 /* Depth */],
+//     getOrganizationalEntityRootChildren
+//   );
+//   await queryClient.prefetchQuery(
+//     ["dataConsumer", employeeId, 2 /* Depth */],
+//     getDataConsumer
+//   );
+//   await queryClient.prefetchQuery(
+//     ["activityTags", 0 /* Depth */],
+//     getActivityTags
+//   );
+//   await queryClient.prefetchQuery(["locations"], getLocations);
+//   await queryClient.prefetchQuery(["jobs"], getJobs);
 
-  /* -----~~~~~>>>PASSING PROPS<<<~~~~~----- */
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-}
+//   /* -----~~~~~>>>PASSING PROPS<<<~~~~~----- */
+//   return {
+//     props: {
+//       dehydratedState: dehydrate(queryClient),
+//     },
+//   };
+// }

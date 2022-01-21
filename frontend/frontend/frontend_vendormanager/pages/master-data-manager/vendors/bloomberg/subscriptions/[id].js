@@ -89,17 +89,17 @@ export default function BBGSubscription() {
 /* ~~~~~~SERVERSIDE RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /* --------------------------------------------------------------------------- */
 
-export async function getServerSideProps(context) {
-  /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
-  const queryClient = new QueryClient();
+// export async function getServerSideProps(context) {
+//   /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
+//   const queryClient = new QueryClient();
 
-  /* -----~~~~~>>>DATA FETCHING<<<~~~~~----- */
-  const subscriptionId = context.params.id;
+//   /* -----~~~~~>>>DATA FETCHING<<<~~~~~----- */
+//   const subscriptionId = context.params.id;
 
-  /* -----~~~~~>>>PASSING PROPS<<<~~~~~----- */
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-}
+//   /* -----~~~~~>>>PASSING PROPS<<<~~~~~----- */
+//   return {
+//     props: {
+//       dehydratedState: dehydrate(queryClient),
+//     },
+//   };
+// }

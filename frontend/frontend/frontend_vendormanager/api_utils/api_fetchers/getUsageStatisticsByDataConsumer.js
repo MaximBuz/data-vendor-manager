@@ -5,7 +5,7 @@ export default async function getUsageStatisticsByDataConsumer({ queryKey }) {
 
     // Getting the statistics for a single user from backend
     const { data } = await apiClient.get(
-      `usage/bloomberg/statistics/data-consumer/`,
+      `api/usage/bloomberg/statistics/data-consumer/`,
       {params: params}
     )
 

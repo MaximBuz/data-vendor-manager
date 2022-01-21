@@ -89,17 +89,17 @@ export default function BBGFirmNr() {
 /* ~~~~~~SERVERSIDE RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /* --------------------------------------------------------------------------- */
 
-export async function getServerSideProps(context) {
-  /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
-  const queryClient = new QueryClient();
+// export async function getServerSideProps(context) {
+//   /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
+//   const queryClient = new QueryClient();
 
-  /* -----~~~~~>>>DATA FETCHING<<<~~~~~----- */
-  const firmNrId = context.params.id;
+//   /* -----~~~~~>>>DATA FETCHING<<<~~~~~----- */
+//   const firmNrId = context.params.id;
 
-  /* -----~~~~~>>>PASSING PROPS<<<~~~~~----- */
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-}
+//   /* -----~~~~~>>>PASSING PROPS<<<~~~~~----- */
+//   return {
+//     props: {
+//       dehydratedState: dehydrate(queryClient),
+//     },
+//   };
+// }

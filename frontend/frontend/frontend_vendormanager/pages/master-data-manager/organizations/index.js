@@ -101,20 +101,20 @@ export default function Organizations() {
 /* ~~~~~~SERVERSIDE RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /* --------------------------------------------------------------------------- */
 
-export async function getServerSideProps() {
-  /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
-  const queryClient = new QueryClient();
+// export async function getServerSideProps() {
+//   /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
+//   const queryClient = new QueryClient();
 
-  /* -----~~~~~>>>DATA FETCHING<<<~~~~~----- */
-  await queryClient.prefetchQuery(
-    ["organizationalEntityRootChildren", 10],
-    getOrganizationalEntityRootChildren
-  );
+//   /* -----~~~~~>>>DATA FETCHING<<<~~~~~----- */
+//   await queryClient.prefetchQuery(
+//     ["organizationalEntityRootChildren", 10],
+//     getOrganizationalEntityRootChildren
+//   );
 
-  /* -----~~~~~>>>PASSING PROPS<<<~~~~~----- */
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-}
+//   /* -----~~~~~>>>PASSING PROPS<<<~~~~~----- */
+//   return {
+//     props: {
+//       dehydratedState: dehydrate(queryClient),
+//     },
+//   };
+// }

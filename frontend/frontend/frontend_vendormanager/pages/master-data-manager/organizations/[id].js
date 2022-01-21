@@ -127,33 +127,33 @@ export default function Organization() {
 /* ~~~~~~SERVERSIDE RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /* --------------------------------------------------------------------------- */
 
-export async function getServerSideProps(context) {
-  /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
-  const queryClient = new QueryClient();
+// export async function getServerSideProps(context) {
+//   /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
+//   const queryClient = new QueryClient();
 
-  /* -----~~~~~>>>DATA FETCHING<<<~~~~~----- */
-  const entityId = context.params.id;
+//   /* -----~~~~~>>>DATA FETCHING<<<~~~~~----- */
+//   const entityId = context.params.id;
 
-  await queryClient.prefetchQuery(
-    ["organizationalEntity", entityId, 10 /* depth */],
-    getOrganizationalEntity
-  );
+//   await queryClient.prefetchQuery(
+//     ["organizationalEntity", entityId, 10 /* depth */],
+//     getOrganizationalEntity
+//   );
 
-  await queryClient.prefetchQuery(
-    ["entityTypes", 2 /* depth */],
-    getEntityTypes
-  );
+//   await queryClient.prefetchQuery(
+//     ["entityTypes", 2 /* depth */],
+//     getEntityTypes
+//   );
 
-  await queryClient.prefetchQuery(
-    ["organizationalEntities", 1 /* depth */],
-    getOrganizationalEntities
-  );
-  await queryClient.prefetchQuery(["locations"], getLocations);
+//   await queryClient.prefetchQuery(
+//     ["organizationalEntities", 1 /* depth */],
+//     getOrganizationalEntities
+//   );
+//   await queryClient.prefetchQuery(["locations"], getLocations);
 
-  /* -----~~~~~>>>PASSING PROPS<<<~~~~~----- */
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-}
+//   /* -----~~~~~>>>PASSING PROPS<<<~~~~~----- */
+//   return {
+//     props: {
+//       dehydratedState: dehydrate(queryClient),
+//     },
+//   };
+// }

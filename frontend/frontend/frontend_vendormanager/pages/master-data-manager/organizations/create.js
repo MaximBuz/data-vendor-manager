@@ -51,22 +51,22 @@ export default function create() {
 /* ~~~~~~SERVERSIDE RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /* --------------------------------------------------------------------------- */
 
-export async function getServerSideProps(context) {
-  /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
-  const queryClient = new QueryClient();
+// export async function getServerSideProps(context) {
+//   /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
+//   const queryClient = new QueryClient();
 
-  /* -----~~~~~>>>DATA FETCHING<<<~~~~~----- */
-  await queryClient.prefetchQuery(
-    ["entityTypes", 2 /* depth */],
-    getEntityTypes
-  );
+//   /* -----~~~~~>>>DATA FETCHING<<<~~~~~----- */
+//   await queryClient.prefetchQuery(
+//     ["entityTypes", 2 /* depth */],
+//     getEntityTypes
+//   );
 
-  await queryClient.prefetchQuery(["locations"], getLocations);
+//   await queryClient.prefetchQuery(["locations"], getLocations);
 
-  /* -----~~~~~>>>PASSING PROPS<<<~~~~~----- */
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-}
+//   /* -----~~~~~>>>PASSING PROPS<<<~~~~~----- */
+//   return {
+//     props: {
+//       dehydratedState: dehydrate(queryClient),
+//     },
+//   };
+// }

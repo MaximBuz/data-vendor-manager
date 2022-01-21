@@ -5,7 +5,7 @@ export default async function getAggregatedUsage({ queryKey }) {
 
     // Getting the aggregated data from backend
     const { data } = await apiClient.get(
-      `usage/bloomberg/aggregated/${group_by}/`,
+      `api/usage/bloomberg/aggregated/${group_by}/`,
       {params: params}
     )
 

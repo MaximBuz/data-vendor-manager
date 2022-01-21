@@ -182,25 +182,25 @@ export default function Organization() {
 /* ~~~~~~SERVERSIDE RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /* --------------------------------------------------------------------------- */
 
-export async function getServerSideProps(context) {
-  /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
-  const queryClient = new QueryClient();
-  const locationId = context.params.id;
+// export async function getServerSideProps(context) {
+//   /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
+//   const queryClient = new QueryClient();
+//   const locationId = context.params.id;
 
-  /* -----~~~~~>>>DATA FETCHING<<<~~~~~----- */
-  await queryClient.prefetchQuery(
-    ["locationWithBuildings", locationId],
-    getLocationWithBuildings
-  );
+//   /* -----~~~~~>>>DATA FETCHING<<<~~~~~----- */
+//   await queryClient.prefetchQuery(
+//     ["locationWithBuildings", locationId],
+//     getLocationWithBuildings
+//   );
 
-  await queryClient.prefetchQuery(
-    ["dataConsumers", 0 /* JSON depth */, locationId],
-    getDataConsumers
-  );
-  /* -----~~~~~>>>PASSING PROPS<<<~~~~~----- */
-  return {
-    props: {
-      dehydratedState: dehydrate(queryClient),
-    },
-  };
-}
+//   await queryClient.prefetchQuery(
+//     ["dataConsumers", 0 /* JSON depth */, locationId],
+//     getDataConsumers
+//   );
+//   /* -----~~~~~>>>PASSING PROPS<<<~~~~~----- */
+//   return {
+//     props: {
+//       dehydratedState: dehydrate(queryClient),
+//     },
+//   };
+// }

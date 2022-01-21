@@ -5,7 +5,7 @@ export default async function getUsageRawDataconsumer({ queryKey }) {
 
     // Getting the aggregated statistics from backend
     const { data } = await apiClient.get(
-      `usage/bloomberg/raw/dataconsumer/`,
+      `api/usage/bloomberg/raw/dataconsumer/`,
       {params: params}
     )
 
