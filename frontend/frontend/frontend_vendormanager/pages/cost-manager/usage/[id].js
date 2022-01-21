@@ -16,6 +16,7 @@ import getActivityTags from "../../../api_utils/api_fetchers/getActivityTags";
 import getLocations from "../../../api_utils/api_fetchers/getLocations";
 import getJobs from "../../../api_utils/api_fetchers/getJobs";
 import getAggregatedUsage from "../../../api_utils/api_fetchers/getAggregatedUsage";
+import getUsageRawDataconsumer from "../../../api_utils/api_fetchers/getUsageRawDataConsumer"
 
 /* API MUTATION */
 import deleteEmployee from "../../../api_utils/api_mutators/delete/deleteEmployee";
@@ -81,6 +82,8 @@ export default function Employee() {
     ],
     getAggregatedUsage
   );
+
+  const rawUsage = useQuery(["rawUsage", employeeId], getUsageRawDataconsumer);
 
   /* -----~~~~~>>>HANDLE USAGE OVER TIME MODAL<<<~~~~~----- */
   const [usageOverTimeModalVisibility, setUsageOverTimeModalVisibility] =
