@@ -1,65 +1,105 @@
 // Routing
 import Link from "next/link";
 
-// state management
-import { useState } from "react";
-import { Menu } from "antd";
+/* COMPONENTS */
+import { Menu, Button} from "antd";
+
+/* API MUTATIONS */
+import {useMutation} from "react-query";
+import { useQueryClient } from "react-query";
+
+/* AUTHENTICATION */
+import logout from "../api_utils/auth/logout";
+import {useRouter} from "next/router";
 
 // Styling
 import {
-    BarChartOutlined,
-    AppstoreOutlined,
-    UserSwitchOutlined,
-    ApartmentOutlined,
-    BankOutlined,
-    GlobalOutlined,
-    FieldTimeOutlined
-  } from "@ant-design/icons";
-import { UilSitemap } from '@iconscout/react-unicons'
+  BarChartOutlined,
+  AppstoreOutlined,
+  UserSwitchOutlined,
+  ApartmentOutlined,
+  BankOutlined,
+  GlobalOutlined,
+  FieldTimeOutlined,
+  LogoutOutlined
+} from "@ant-design/icons";
+import { UilSitemap } from "@iconscout/react-unicons";
+
+export default function TopMenuItems({ activeModule, activeRoute }) {
+
+  const router = useRouter()
+  const queryClient = useQueryClient();
+
+  const logoutMutation = useMutation(logout, {
+    onSuccess: () => {
+      // toast.success("Updated Bloomberg Account Number successfully");
+      queryClient.invalidateQueries("currentUser");
+    },
+    onError: (error) => {
+      // toast.error(String(error));
+    },
+  });
+
+  const handleLogout = () => {
+    logoutMutation.mutate();
+    router.reload()
+  }
 
 
-export default function TopMenuItems({activeModule, activeRoute}) {
-  if(activeModule === "cost-manager") {return (
+  return (
     <>
       <Menu theme="dark" defaultSelectedKeys={[activeRoute]} mode="horizontal">
-        <Menu.Item key="/cost-manager/usage" icon={<FieldTimeOutlined />}>
-          <Link href="/cost-manager/usage">Usage Analysis</Link>
-        </Menu.Item>
+        {activeModule === "cost-manager" ? (
+          <>
+            <Menu.Item key="/cost-manager/usage" icon={<FieldTimeOutlined />}>
+              <Link href="/cost-manager/usage">Usage Analysis</Link>
+            </Menu.Item>
+          </>
+        ) : activeModule === "dashboard" ? (
+          <>
+            <Menu.Item
+              key="/dashboard/* Here put in route */"
+              icon={<AppstoreOutlined />}
+            >
+              <Link href="/cost-manager">Dashboard</Link>
+            </Menu.Item>
+          </>
+        ) : activeModule === "master-data-manager" ? (
+          <>
+            <Menu.Item
+              key="/master-data-manager/organizations"
+              icon={<ApartmentOutlined />}
+            >
+              <Link href="/master-data-manager/organizations">
+                Organizations
+              </Link>
+            </Menu.Item>
+            <Menu.Item
+              key="/master-data-manager/geography"
+              icon={<GlobalOutlined />}
+            >
+              <Link href="/master-data-manager/geographies">Geographies</Link>
+            </Menu.Item>
+            <Menu.Item
+              key="/master-data-manager/employees"
+              icon={<UserSwitchOutlined />}
+            >
+              <Link href="/master-data-manager/employees">Employees</Link>
+            </Menu.Item>
+            <Menu.Item
+              key="/master-data-manager/vendors"
+              icon={<BankOutlined />}
+            >
+              <Link href="/master-data-manager/vendors">Vendors</Link>
+            </Menu.Item>
+          </>
+        ) : (
+          <></>
+        )}
+        <div style={{position: "absolute", top: "0", right: "20px"}}>
+          <Button onClick={handleLogout} type="primary" shape="round" icon={<LogoutOutlined />}>Logout</Button>
+        </div>
       </Menu>
     </>
-  );}
-
-  if(activeModule === "dashboard") {return (
-    <>
-      <Menu theme="dark" defaultSelectedKeys={[activeRoute]} mode="horizontal">
-        <Menu.Item key="/dashboard/* Here put in route */" icon={<AppstoreOutlined />}>
-          <Link href="/cost-manager">Dashboard</Link>
-        </Menu.Item>
-      </Menu>
-    </>
-  );}
-
-  if(activeModule === "master-data-manager") {return (
-    <>
-      <Menu theme="dark" defaultSelectedKeys={[activeRoute]} mode="horizontal">
-        <Menu.Item key="/master-data-manager/organizations" icon={<ApartmentOutlined />}>
-          <Link href="/master-data-manager/organizations">Organizations</Link>
-        </Menu.Item>
-        <Menu.Item key="/master-data-manager/geography" icon={<GlobalOutlined />}>
-          <Link href="/master-data-manager/geographies">Geographies</Link>
-        </Menu.Item>
-        <Menu.Item key="/master-data-manager/employees" icon={<UserSwitchOutlined />}>
-          <Link href="/master-data-manager/employees">Employees</Link>
-        </Menu.Item>
-        <Menu.Item key="/master-data-manager/vendors" icon={<BankOutlined />}>
-          <Link href="/master-data-manager/vendors">Vendors</Link>
-        </Menu.Item>
-      </Menu>
-    </>
-  );}
-
-  return(
-    <>
-    </>
-  )
+  );
 }

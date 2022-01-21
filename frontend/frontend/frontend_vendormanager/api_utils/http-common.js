@@ -12,7 +12,7 @@ const httpCommon =  axios.create({
 // intercept every request with authentication
 httpCommon.interceptors.request.use((config) => {
   // Read token from localStorage
-  const token = JSON.parse(localStorage.getItem("authenticationToken"));
+  const token = localStorage.getItem("authenticationToken");
   if (token) {
     config.headers.Authorization = `Token ${token}`;
   }
