@@ -240,7 +240,7 @@ export default function Employee() {
               content={
                 <>
                   <Row justify="center">
-                    {dataConsumer.building.building_name}
+                    {dataConsumer?.building?.building_name}
                   </Row>
                   <Row justify="center">
                     {"Floor: " +
@@ -250,25 +250,25 @@ export default function Employee() {
                   </Row>
                   <Divider style={{ margin: "10px" }}></Divider>
                   <Row justify="center">
-                    {dataConsumer.location.street +
+                    {dataConsumer?.location?.street +
                       " " +
-                      dataConsumer.location.street_nr}
+                      dataConsumer?.location?.street_nr}
                   </Row>
                   <Row justify="center">
-                    {dataConsumer.location.zip_code +
+                    {dataConsumer?.location?.zip_code +
                       " " +
-                      dataConsumer.location.city}
+                      dataConsumer?.location?.city}
                   </Row>
                   <Divider style={{ margin: "10px" }}></Divider>
-                  <Row justify="center">{dataConsumer.location.state}</Row>
-                  <Row justify="center">{dataConsumer.location.country}</Row>
+                  <Row justify="center">{dataConsumer?.location?.state}</Row>
+                  <Row justify="center">{dataConsumer?.location?.country}</Row>
                 </>
               }
             >
               {`${
-                dataConsumer.location.city +
+                dataConsumer?.location?.city +
                 ", " +
-                dataConsumer.location.country
+                dataConsumer?.location?.country
               }`}
             </Popover>
           </Row>
