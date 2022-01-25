@@ -16,10 +16,13 @@ import deleteBBGuuid from "../../../../../api_utils/api_mutators/delete/deleteBB
 
 /* COMPONENTS */
 import BBGuuidForm from "../../../../../components/forms/BBGuuidForm";
+import TrackerCard from "../../../../../components/cards/TrackerCard";
 import { Row, Col, Divider, Button } from "antd";
+import { MailOutlined } from "@ant-design/icons";
 
 /* HOOKS */
 import useDeleteConfirmation from "../../../../../custom_hooks/useDeleteConfirmation";
+import useAddItemModal from "../../../../../custom_hooks/useAddItemModal";
 
 /* --------------------------------------------------------------------------- */
 /* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -44,6 +47,16 @@ export default function BBGSubscription() {
     ["dataConsumers",0 /* Depth */],
     getDataConsumers
   )
+
+  /* -----~~~~~>>>INSTALLING TRACKERS<<<~~~~~----- */
+  const [_, installTrackerModal, showInstallTrackerModal] = useAddItemModal(
+    "sendTrackerInstallEmail", //replace
+    "building_name",
+    "Successfully added new building!",
+    "locationWithBuildings",
+    "Add new building",
+    { uuid: uuidId } // Additional values
+  );
 
   /* -----~~~~~>>>DELETION<<<~~~~~----- */
   const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
@@ -77,6 +90,45 @@ export default function BBGSubscription() {
             subscriptions={BBGSubscriptionsQuery?.data}
             employees={DataConsumersQuery?.data}
           />
+        </Col>
+        <Col flex={1}>
+          <div
+            style={{
+              height: "70vh",
+              /* overflowY: "scroll",
+            scrollbarWidth: "none", */
+            }}
+          >
+            <h2>Installed Trackers</h2>
+            {/* {buildings.map((building) => {
+              return <TrackerCard building={building} />;
+            })} */}
+            <TrackerCard tracker={{name: "Bloomberg Anywhere Tracker", id: "test"}} />
+            {/* Install new tracker button */}
+            {/* ------------------------------------------ */}
+            <div
+              onClick={showInstallTrackerModal}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "0px",
+                padding: "10px",
+                borderRadius: "2px",
+                borderStyle: "dashed",
+                borderWidth: "1px",
+                borderColor: "#d9d9d9",
+                margin: "20px",
+                color: "grey",
+                cursor: "pointer",
+              }}
+            >
+              <MailOutlined style={{ fontSize: '18px' }}/>
+              Install new Tracker
+            </div>
+            {/* ------------------------------------------ */}
+          </div>
         </Col>
       </Row>
       <Divider></Divider>
