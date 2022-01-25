@@ -10,6 +10,7 @@ import { dehydrate, QueryClient, useQuery } from "react-query";
 import getBBGuuid from "../../../../../api_utils/api_fetchers/getBBGuuid";
 import getBBGSubscriptions from "../../../../../api_utils/api_fetchers/getBBGSubscriptions";
 import getDataConsumers from "../../../../../api_utils/api_fetchers/getDataConsumers";
+import getInstalledTrackers from "../../../../../api_utils/api_fetchers/getInstalledTrackers";
 
 /* API MUTATION */
 import deleteBBGuuid from "../../../../../api_utils/api_mutators/delete/deleteBBGuuid";
@@ -27,7 +28,7 @@ import useAddItemModal from "../../../../../custom_hooks/useAddItemModal";
 /* --------------------------------------------------------------------------- */
 /* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /* --------------------------------------------------------------------------- */
-export default function BBGSubscription() {
+export default function BBGUuid() {
   /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
   const router = useRouter();
   const { id: uuidId } = router.query;
@@ -46,6 +47,11 @@ export default function BBGSubscription() {
   const DataConsumersQuery = useQuery(
     ["dataConsumers",0 /* Depth */],
     getDataConsumers
+  )
+
+  const InstalledTrackersQuery = useQuery(
+    ["installedTrackers", uuidId, 1 /* depth param */],
+    getInstalledTrackers
   )
 
   /* -----~~~~~>>>INSTALLING TRACKERS<<<~~~~~----- */
@@ -100,10 +106,9 @@ export default function BBGSubscription() {
             }}
           >
             <h2>Installed Trackers</h2>
-            {/* {buildings.map((building) => {
-              return <TrackerCard building={building} />;
-            })} */}
-            <TrackerCard tracker={{name: "Bloomberg Anywhere Tracker", id: "test"}} />
+            {InstalledTrackersQuery.data?.map((tracker) => {
+              return <TrackerCard tracker={tracker} />;
+            })}
             {/* Install new tracker button */}
             {/* ------------------------------------------ */}
             <div
