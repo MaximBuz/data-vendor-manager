@@ -6,7 +6,7 @@
 import { useRouter } from "next/router";
 
 /* API FETCHING */
-import { dehydrate, QueryClient, useQuery } from "react-query";
+import { useQueryClient, useMutation, useQuery } from "react-query";
 import getBBGuuid from "../../../../../api_utils/api_fetchers/getBBGuuid";
 import getBBGSubscriptions from "../../../../../api_utils/api_fetchers/getBBGSubscriptions";
 import getDataConsumers from "../../../../../api_utils/api_fetchers/getDataConsumers";
@@ -15,11 +15,18 @@ import getInstalledTrackers from "../../../../../api_utils/api_fetchers/getInsta
 /* API MUTATION */
 import deleteBBGuuid from "../../../../../api_utils/api_mutators/delete/deleteBBGuuid";
 
+/* SENDING MAIL */
+import sendTrackerInstallationRequest from "../../../../../api_utils/misc/sendTrackerInstallationRequest";
+
+
 /* COMPONENTS */
 import BBGuuidForm from "../../../../../components/forms/BBGuuidForm";
 import TrackerCard from "../../../../../components/cards/TrackerCard";
 import { Row, Col, Divider, Button } from "antd";
 import { MailOutlined } from "@ant-design/icons";
+
+/* NOTIFICATIONS */
+import { toast } from "react-toastify";
 
 /* HOOKS */
 import useDeleteConfirmation from "../../../../../custom_hooks/useDeleteConfirmation";
@@ -32,6 +39,7 @@ export default function BBGUuid() {
   /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
   const router = useRouter();
   const { id: uuidId } = router.query;
+  const queryClient = useQueryClient();
 
   /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const BBGuuidQuery = useQuery(
@@ -54,15 +62,21 @@ export default function BBGUuid() {
     getInstalledTrackers
   )
 
+
+
   /* -----~~~~~>>>INSTALLING TRACKERS<<<~~~~~----- */
-  const [_, installTrackerModal, showInstallTrackerModal] = useAddItemModal(
-    "sendTrackerInstallEmail", //replace
-    "building_name",
-    "Successfully added new building!",
-    "locationWithBuildings",
-    "Add new building",
-    { uuid: uuidId } // Additional values
-  );
+  const sendRequestMutation = useMutation(sendTrackerInstallationRequest, {
+    onSuccess: () => {
+      toast.success(`Send Installation Request to ${BBGuuidQuery.data?.data_consumer.email}`);
+      queryClient.refetchQueries(
+        ["installedTrackers", uuidId, 1 /* depth param */],
+      );
+    },
+    onError: (error) => {
+      toast.error(String(error));
+    },
+  }
+    )
 
   /* -----~~~~~>>>DELETION<<<~~~~~----- */
   const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
@@ -105,14 +119,14 @@ export default function BBGUuid() {
             scrollbarWidth: "none", */
             }}
           >
-            <h2>Installed Trackers</h2>
+            <h2>Tracker installation requests</h2>
             {InstalledTrackersQuery.data?.map((tracker) => {
               return <TrackerCard tracker={tracker} />;
             })}
             {/* Install new tracker button */}
             {/* ------------------------------------------ */}
             <div
-              onClick={showInstallTrackerModal}
+              onClick={() => sendRequestMutation.mutate({uuidId: uuidId})}
               style={{
                 display: "flex",
                 flexDirection: "column",
@@ -130,7 +144,7 @@ export default function BBGUuid() {
               }}
             >
               <MailOutlined style={{ fontSize: '18px' }}/>
-              Install new Tracker
+              Send installation request
             </div>
             {/* ------------------------------------------ */}
           </div>

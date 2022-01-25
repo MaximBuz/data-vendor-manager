@@ -53,7 +53,7 @@ export default function TrackerCard({ tracker }) {
       >
         {tracker.name}
       </h1>
-      <div
+      {/* <div
         style={{
           marginLeft: "auto",
           display: "flex",
@@ -73,7 +73,7 @@ export default function TrackerCard({ tracker }) {
           }}
           onClick={showDeleteModal}
         />
-      </div>
+      </div> */}
       {DeleteModal}
     </div>
   );

@@ -31,8 +31,6 @@ export default function Employee() {
   const router = useRouter();
   const { id: employeeId } = router.query;
 
-  const queryClient = useQueryClient();
-
   /* -----~~~~~>>>DELETION<<<~~~~~----- */
   const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
     deleteEmployee, // Api call
