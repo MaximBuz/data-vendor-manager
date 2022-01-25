@@ -6,7 +6,10 @@
 import deleteBuilding from "../../api_utils/api_mutators/delete/deleteBuilding";
 
 /* STYLING */
-import { EditOutlined, DeleteOutlined, FieldTimeOutlined } from "@ant-design/icons";
+import { FieldTimeOutlined } from "@ant-design/icons";
+
+/* COMPONENTS */
+import { Popover } from "antd";
 
 /* HOOKS */
 import useDeleteConfirmation from "../../custom_hooks/useDeleteConfirmation";
@@ -53,6 +56,21 @@ export default function TrackerCard({ tracker }) {
       >
         {tracker.name}
       </h1>
+      <div
+        style={{
+          marginLeft: "auto",
+          display: "flex",
+          gap: "10px",
+        }}
+      >
+        <Popover
+          title='Email Request sent at'
+          trigger='hover'
+          content={tracker.created_at.split("T")[0] + " at " + tracker.created_at.split("T")[1].split(".")[0]}
+        >
+          {tracker.created_at.split("T")[0]}
+        </Popover>
+      </div>
       {/* <div
         style={{
           marginLeft: "auto",
