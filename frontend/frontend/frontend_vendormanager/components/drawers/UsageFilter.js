@@ -66,6 +66,7 @@ export default function UsageFilter(props) {
 
   /* -----~~~~~>>>HANDLE FORM SUBMITTING<<<~~~~~----- */
   const onFinish = (values) => {
+    console.log(values);
     props.setFilters({
       ...props.filters,
       ...values,
@@ -87,6 +88,8 @@ export default function UsageFilter(props) {
         onFinish={onFinish}
         initialValues={{
           timeframe: [moment().subtract(1, 'months'), moment()],
+          entry_count_direction: ">",
+          percentile_direction: "bottom",
         }}
       >
         <Row gutter={16}>
@@ -308,10 +311,12 @@ export default function UsageFilter(props) {
                 <InputNumber
                   style={{ width: '100%' }}
                   addonBefore={
-                    <Select defaultValue='>'>
-                      <Select.Option value='>'>Above</Select.Option>
-                      <Select.Option value='<'>Below</Select.Option>
-                    </Select>
+                    <Form.Item name="entry_count_direction" style={{maxHeight: "30px", margin: 0}}>
+                      <Select>
+                        <Select.Option value='>'>Above</Select.Option>
+                        <Select.Option value='<'>Below</Select.Option>
+                      </Select>
+                    </Form.Item>
                   }
                   min={0}
                   defaultValue={null}
@@ -327,10 +332,12 @@ export default function UsageFilter(props) {
                   style={{ width: '100%' }}
                   formatter={(value) => value + " %"}
                   addonBefore={
-                    <Select defaultValue='>' style={{minWidth: "70px"}}>
-                      <Select.Option value='>'>Top</Select.Option>
-                      <Select.Option value='<'>Bottom</Select.Option>
-                    </Select>
+                    <Form.Item name="percentile_direction" style={{maxHeight: "30px", margin: 0}}>
+                      <Select style={{minWidth: "70px"}}>
+                        <Select.Option value='top'>Top</Select.Option>
+                        <Select.Option value='bottom'>Bottom</Select.Option>
+                      </Select>
+                    </Form.Item>
                   }
                   addonAfter={
                     "Percentile"
@@ -403,6 +410,7 @@ export default function UsageFilter(props) {
               </Form.Item>
             </Col>
           </Row>
+
         </Drawer>
       </Form>
     </Drawer>
