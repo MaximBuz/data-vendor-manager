@@ -302,23 +302,11 @@ export default function UsageFilter(props) {
           bodyStyle={{ paddingBottom: 80 }}
         >
           <Row gutter={16}>
-            <Col span={12}>
-              <Form.Item name='entry_count' label='Number of entries'>
+            <Col span={24}>
+              <p style={{ marginBottom: '8px' }}>Number of usage entries</p>
+              <Form.Item name='entry_count'>
                 <InputNumber
-                  addonBefore={
-                    <Select defaultValue='>'>
-                      <Select.Option value='>'>Above</Select.Option>
-                      <Select.Option value='<'>Below</Select.Option>
-                    </Select>
-                  }
-                  min={0}
-                  defaultValue={null}
-                />
-              </Form.Item>
-            </Col>
-            <Col span={12}>
-              <Form.Item name='entry_count' label='Number of entries'>
-                <InputNumber
+                  style={{ width: '100%' }}
                   addonBefore={
                     <Select defaultValue='>'>
                       <Select.Option value='>'>Above</Select.Option>
@@ -331,6 +319,68 @@ export default function UsageFilter(props) {
               </Form.Item>
             </Col>
           </Row>
+          <Divider></Divider>
+          <Row gutter={16}>
+            <Col span={24}>
+            <p style={{ marginBottom: '8px' }}>Exclude Organizational Entities</p>
+              <Form.Item name='entity_exclude'>
+                <TreeSelect
+                  showSearch
+                  treeNodeFilterProp='title'
+                  treeLine={{ showLeafIcon: false }}
+                  treeData={treeQuery.data}
+                  treeDefaultExpandAll
+                  multiple
+                  placeholder='Please select entities to exclude'
+                />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={16}>
+            <Col span={24}>
+            <p style={{ marginBottom: '8px' }}>Exclude Job Titles</p>
+              <Form.Item name='job_title_Exclude'>
+                <Select
+                  mode='multiple'
+                  placeholder='Please select job titles'
+                  filterOption={(input, option) =>
+                    option.key.toLowerCase().indexOf(input.toLowerCase()) >=
+                      0 ||
+                    option.key.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                  }
+                >
+                  {jobsQuery.data?.map((job) => (
+                    <Select.Option key={job.title} value={job.id}>
+                      {job.title}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row gutter={16}>
+            <Col span={24}>
+            <p style={{ marginBottom: '8px' }}>Exclude Activity Tags</p>
+              <Form.Item name='activity_tag_exclude'>
+                <Select
+                  mode='multiple'
+                  placeholder='Please select activity tags'
+                  filterOption={(input, option) =>
+                    option.key.toLowerCase().indexOf(input.toLowerCase()) >=
+                      0 ||
+                    option.key.toLowerCase().indexOf(input.toLowerCase()) >= 0
+                  }
+                >
+                  {activityTagsQuery.data?.map((tag) => (
+                    <Select.Option key={tag.name} value={tag.id}>
+                      {tag.name}
+                    </Select.Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+          </Row>
+          <Divider></Divider>
         </Drawer>
       </Form>
     </Drawer>
