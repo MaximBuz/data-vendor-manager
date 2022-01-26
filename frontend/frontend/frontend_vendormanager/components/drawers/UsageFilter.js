@@ -319,6 +319,29 @@ export default function UsageFilter(props) {
               </Form.Item>
             </Col>
           </Row>
+          <Row gutter={16}>
+            <Col span={24}>
+              <p style={{ marginBottom: '8px' }}>Usage time percentiles</p>
+              <Form.Item name='percentile'>
+                <InputNumber
+                  style={{ width: '100%' }}
+                  formatter={(value) => value + " %"}
+                  addonBefore={
+                    <Select defaultValue='>' style={{minWidth: "70px"}}>
+                      <Select.Option value='>'>Top</Select.Option>
+                      <Select.Option value='<'>Bottom</Select.Option>
+                    </Select>
+                  }
+                  addonAfter={
+                    "Percentile"
+                  }
+                  min={0}
+                  max={99}
+                  defaultValue={null}
+                />
+              </Form.Item>
+            </Col>
+          </Row>
           <Divider></Divider>
           <Row gutter={16}>
             <Col span={24}>
@@ -380,7 +403,6 @@ export default function UsageFilter(props) {
               </Form.Item>
             </Col>
           </Row>
-          <Divider></Divider>
         </Drawer>
       </Form>
     </Drawer>
