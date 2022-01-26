@@ -38,7 +38,6 @@ import moment from "moment";
 /* ------------------------------------------------------------------------- */
 export default function UsageFilter(props) {
   /* -----~~~~~>>>INITIALIZE<<<~~~~~----- */
-  const { Option } = Select;
 
   /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const activityTagsQuery = useQuery(["activityTags", 0 /* Depth */],getActivityTags);
@@ -48,6 +47,9 @@ export default function UsageFilter(props) {
   const BBGSubscriptionsQuery = useQuery(["bbgSubscriptions", 1 /* Depth */],getBBGSubscriptions);
   const BBGAccountQuery = useQuery(["bbgAccountNrs", 1 /* Depth */],getBBGAccountNrs);
   const BBGFirmsQuery = useQuery(["bbgFirmNrs", 1], getBBGFirmNrs);
+  
+  /* -----~~~~~>>>HANDLE CHILD DRAWER<<<~~~~~----- */
+  const [childDrawerVisible, setChildDrawerVisible] = useState(false)
 
   /* -----~~~~~>>>HANDLE FORM SUBMITTING<<<~~~~~----- */
   const onFinish = (values) => {
@@ -255,10 +257,24 @@ export default function UsageFilter(props) {
           </Col>
         </Row>
         <Form.Item>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
+          <Space>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+            <Button type="secondary" onClick={()=> setChildDrawerVisible(true)}>
+              Advanced Filtering
+            </Button>
+          </Space>
         </Form.Item>
+        <Drawer
+          visible={childDrawerVisible}
+          title="Advanced Filtering"
+          width={560}
+          onClose={() => setChildDrawerVisible(false)}
+          bodyStyle={{ paddingBottom: 80 }}
+        >
+
+        </Drawer>
       </Form>
     </Drawer>
   );
