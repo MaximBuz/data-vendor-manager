@@ -369,7 +369,7 @@ export default function UsageFilter(props) {
           <Row gutter={16}>
             <Col span={24}>
             <p style={{ marginBottom: '8px' }}>Exclude Job Titles</p>
-              <Form.Item name='job_title_Exclude'>
+              <Form.Item name='job_title_exclude'>
                 <Select
                   mode='multiple'
                   placeholder='Please select job titles'
