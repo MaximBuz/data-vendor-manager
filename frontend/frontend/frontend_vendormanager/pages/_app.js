@@ -38,7 +38,7 @@ function MyApp({ Component, pageProps }) {
           </SiderMenuLayout>
         </Hydrate>
       </_AppContainer>
-      <ReactQueryDevtools initialIsOpen={false} position={"bottom-right"} />
+      {/* <ReactQueryDevtools initialIsOpen={false} position={"bottom-right"} /> */}
     </QueryClientProvider>
   );
 }
