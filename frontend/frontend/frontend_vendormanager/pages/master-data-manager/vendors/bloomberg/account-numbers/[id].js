@@ -79,7 +79,7 @@ export default function BBGAccountNr() {
       <Divider></Divider>
       <Row justify="center">
         <Button onClick={showDeleteModal} type="primary" danger>
-          Delete Location
+          Delete Account
         </Button>
       </Row>
       {DeleteModal}

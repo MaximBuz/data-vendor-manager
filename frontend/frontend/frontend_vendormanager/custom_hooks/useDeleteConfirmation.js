@@ -5,6 +5,9 @@
 /* API MUTATION */
 import { useMutation, useQueryClient } from "react-query";
 
+/* ROUTING */
+import { useRouter } from "next/router";
+
 /* COMPONENTS */
 import DeleteModal from "../components/modals/DeleteModal";
 
@@ -27,6 +30,7 @@ export default function useDeleteConfirmation(
 ) {
   /* -----~~~~~>>>INITIALIZING<<<~~~~~----- */
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   /* -----~~~~~>>>OPEN/CLOSE<<<~~~~~----- */
   const [deleteConfirmationVisible, setDeleteConfirmationVisible] =
@@ -38,6 +42,7 @@ export default function useDeleteConfirmation(
     onSuccess: () => {
       toastText && toast.success(toastText);
       queryToInvalidate && queryClient.invalidateQueries(queryToInvalidate);
+      nextLink && router.push(nextLink);
     },
     onError: error => {
       toast.error(String(error))
@@ -54,7 +59,6 @@ export default function useDeleteConfirmation(
       mutator={deletionMutation}
       idToDelete={idToDelete}
       text={confirmationText}
-      nextLink={nextLink}
     ></DeleteModal>,
     showDeleteModal,
   ];
