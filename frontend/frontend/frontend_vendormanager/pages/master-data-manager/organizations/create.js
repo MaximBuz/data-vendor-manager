@@ -28,9 +28,9 @@ export default function create() {
 
   const locationsQuery = useQuery(["locations"], getLocations);
 
-  const entityTypes = entityTypesQuery?.data;
-  const parentEntities = parentEntitiesQuery?.data;
-  const locations = locationsQuery?.data;
+  const entityTypes = entityTypesQuery.isSuccess && entityTypesQuery.data;
+  const parentEntities = parentEntitiesQuery.isSuccess && parentEntitiesQuery.data;
+  const locations = locationsQuery.isSuccess && locationsQuery.data;
 
   /* --------------------------------------------------------------------------- */
   /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */

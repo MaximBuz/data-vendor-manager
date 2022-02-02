@@ -46,13 +46,13 @@ export default function Employee() {
     ["dataConsumer", employeeId, 2 /* Depth */],
     getDataConsumer
   );
-  const dataConsumer = dataConsumerQuery?.data;
+  const dataConsumer = dataConsumerQuery.isSuccess && dataConsumerQuery.data;
 
   const activityTagsQuery = useQuery(
     ["activityTags", 0 /* Depth */],
     getActivityTags
   );
-  const activityTags = activityTagsQuery?.data;
+  const activityTags = activityTagsQuery.isSuccess && activityTagsQuery.data;
 
   const treeQuery = useQuery(
     ["organizationalEntityRootChildren", 10],

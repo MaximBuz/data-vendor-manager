@@ -68,7 +68,7 @@ export default function Organization() {
     ["locationWithBuildings", locationId],
     getLocationWithBuildings
   );
-  const location = locationQuery?.data;
+  const location = locationQuery.isSuccess && locationQuery.data;
   const buildings = location?.buildings;
 
   const dataConsumersQuery = useQuery(

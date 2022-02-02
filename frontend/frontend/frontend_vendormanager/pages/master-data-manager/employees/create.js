@@ -26,7 +26,7 @@ export default function Employee() {
     ["activityTags", 0 /* Depth */],
     getActivityTags
   );
-  const activityTags = activityTagsQuery?.data;
+  const activityTags = activityTagsQuery.isSuccess && activityTagsQuery.data;
 
   const treeQuery = useQuery(
     ["organizationalEntityRootChildren", 10],
