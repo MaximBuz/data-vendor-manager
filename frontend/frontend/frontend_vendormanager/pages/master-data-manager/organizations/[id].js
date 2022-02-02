@@ -11,7 +11,6 @@ import getOrganizationalEntity from "../../../api_utils/api_fetchers/getOrganiza
 import getEntityTypes from "../../../api_utils/api_fetchers/getEntityTypes";
 import getOrganizationalEntities from "../../../api_utils/api_fetchers/getOrganizationalEntities";
 import getOrganizationalEntityRootChildren from "../../../api_utils/api_fetchers/getOrganizationalEntityRootChildren";
-import getLocations from "../../../api_utils/api_fetchers/getLocations";
 
 /* API MUTATION */
 import deleteEntity from "../../../api_utils/api_mutators/delete/deleteEntity";
@@ -51,10 +50,10 @@ export default function Organization() {
     ["organizationalEntityRootChildren", 10],
     getOrganizationalEntityRootChildren
   );
-
-  const entity = entityQuery.data[0];
-  const entityTypes = entityTypesQuery?.data;
-  const parentEntities = parentEntitiesQuery?.data;
+  
+  const entity = entityQuery.isSuccess && entityQuery.data[0];
+  const entityTypes = entityTypesQuery.isSuccess && entityTypesQuery.data;
+  const parentEntities = parentEntitiesQuery.isSuccess && parentEntitiesQuery.data;
 
   /* -----~~~~~>>>DELETION<<<~~~~~----- */
   const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
