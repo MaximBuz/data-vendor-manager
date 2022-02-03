@@ -12,7 +12,7 @@ import { useRouter } from 'next/router';
 
 /* API MUTATIONS */
 import { useMutation, useQueryClient } from 'react-query';
-import login from '../../api_utils/auth/login';
+import login from '../../queries/auth/login';
 
 /* NOTIFICATIONS */
 import { toast } from 'react-toastify';

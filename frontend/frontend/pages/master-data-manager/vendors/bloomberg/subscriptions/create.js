@@ -4,7 +4,7 @@
 
 /* API FETCHING */
 import { useQuery } from "react-query";
-import getBBGAccountNrs from "../../../../../api_utils/api_fetchers/getBBGAccountNrs";
+import getBBGAccountNrs from "../../../../../utils/fetchers/getBBGAccountNrs";
 
 /* COMPONENTS */
 import BBGSubscriptionForm from "../../../../../components/forms/BBGSubscriptionForm";

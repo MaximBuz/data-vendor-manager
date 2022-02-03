@@ -4,8 +4,8 @@
 
 /* API FETCHING */
 import { useQuery } from "react-query";
-import getLocations from "../../../../../api_utils/api_fetchers/getLocations";
-import getBBGFirmNrs from "../../../../../api_utils/api_fetchers/getBBGFirmNrs";
+import getLocations from "../../../../../utils/fetchers/getLocations";
+import getBBGFirmNrs from "../../../../../utils/fetchers/getBBGFirmNrs";
 
 /* COMPONENTS */
 import BBGAccountNrForm from "../../../../../components/forms/BBGAccountNrForm";

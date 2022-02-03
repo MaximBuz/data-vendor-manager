@@ -11,9 +11,9 @@ import { InfoCircleOutlined, PlusOutlined } from "@ant-design/icons";
 
 /* API MUTATION */
 import { useQueryClient, useMutation, useQueries } from "react-query";
-import postEntityType from "../../api_utils/api_mutators/post/postEntityType";
-import postEntity from "../../api_utils/api_mutators/post/postEntity";
-import patchEntity from "../../api_utils/api_mutators/patch/patchEntity";
+import postEntityType from "../../utils/mutators/post/postEntityType";
+import postEntity from "../../utils/mutators/post/postEntity";
+import patchEntity from "../../utils/mutators/patch/patchEntity";
 
 /* NOTIFICATIONS */
 import { toast } from "react-toastify";

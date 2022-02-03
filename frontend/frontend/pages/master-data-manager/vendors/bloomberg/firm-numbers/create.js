@@ -4,7 +4,7 @@
 
 /* API FETCHING */
 import { useQuery } from "react-query";
-import getOrganizationalEntityRootChildren from "../../../../../api_utils/api_fetchers/getOrganizationalEntityRootChildren";
+import getOrganizationalEntityRootChildren from "../../../../../utils/fetchers/getOrganizationalEntityRootChildren";
 
 /* COMPONENTS */
 import BBGFirmNrForm from "../../../../../components/forms/BBGFirmNrForm";

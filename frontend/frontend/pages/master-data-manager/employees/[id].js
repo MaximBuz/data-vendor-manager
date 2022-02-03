@@ -7,14 +7,14 @@ import { useRouter } from "next/router";
 
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery, useQueryClient } from "react-query";
-import getDataConsumer from "../../../api_utils/api_fetchers/getDataConsumer";
-import getOrganizationalEntityRootChildren from "../../../api_utils/api_fetchers/getOrganizationalEntityRootChildren";
-import getActivityTags from "../../../api_utils/api_fetchers/getActivityTags";
-import getLocations from "../../../api_utils/api_fetchers/getLocations";
-import getJobs from "../../../api_utils/api_fetchers/getJobs";
+import getDataConsumer from "../../../utils/fetchers/getDataConsumer";
+import getOrganizationalEntityRootChildren from "../../../utils/fetchers/getOrganizationalEntityRootChildren";
+import getActivityTags from "../../../utils/fetchers/getActivityTags";
+import getLocations from "../../../utils/fetchers/getLocations";
+import getJobs from "../../../utils/fetchers/getJobs";
 
 /* API MUTATION */
-import deleteEmployee from "../../../api_utils/api_mutators/delete/deleteEmployee";
+import deleteEmployee from "../../../utils/mutators/delete/deleteEmployee";
 
 /* COMPONENTS */
 import EmployeeForm from "../../../components/forms/EmployeeForm";

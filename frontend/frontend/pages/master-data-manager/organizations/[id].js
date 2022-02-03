@@ -7,13 +7,13 @@ import { useRouter } from "next/router";
 
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery } from "react-query";
-import getOrganizationalEntity from "../../../api_utils/api_fetchers/getOrganizationalEntity";
-import getEntityTypes from "../../../api_utils/api_fetchers/getEntityTypes";
-import getOrganizationalEntities from "../../../api_utils/api_fetchers/getOrganizationalEntities";
-import getOrganizationalEntityRootChildren from "../../../api_utils/api_fetchers/getOrganizationalEntityRootChildren";
+import getOrganizationalEntity from "../../../utils/fetchers/getOrganizationalEntity";
+import getEntityTypes from "../../../utils/fetchers/getEntityTypes";
+import getOrganizationalEntities from "../../../utils/fetchers/getOrganizationalEntities";
+import getOrganizationalEntityRootChildren from "../../../utils/fetchers/getOrganizationalEntityRootChildren";
 
 /* API MUTATION */
-import deleteEntity from "../../../api_utils/api_mutators/delete/deleteEntity";
+import deleteEntity from "../../../utils/mutators/delete/deleteEntity";
 
 /* COMPONENTS */
 import EntityForm from "../../../components/forms/EntityForm";

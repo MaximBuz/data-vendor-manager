@@ -16,8 +16,8 @@ import {
 
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery, useQueryClient } from "react-query";
-import getLocations from "../../../api_utils/api_fetchers/getLocations";
-import getLocationCsvTemplate from "../../../api_utils/api_fetchers/getLocationCsvTemplate";
+import getLocations from "../../../utils/fetchers/getLocations";
+import getLocationCsvTemplate from "../../../utils/fetchers/getLocationCsvTemplate";
 
 /* NOTIFICATIONS */
 import { toast } from "react-toastify";

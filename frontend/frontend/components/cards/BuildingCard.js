@@ -3,7 +3,7 @@
 /* ------------------------------------------------------------------------- */
 
 /* API MUTATION */
-import deleteBuilding from "../../api_utils/api_mutators/delete/deleteBuilding";
+import deleteBuilding from "../../utils/mutators/delete/deleteBuilding";
 
 /* STYLING */
 import { UilBuilding } from "@iconscout/react-unicons";

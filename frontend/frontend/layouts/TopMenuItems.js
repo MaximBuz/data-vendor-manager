@@ -9,7 +9,7 @@ import {useMutation} from "react-query";
 import { useQueryClient } from "react-query";
 
 /* AUTHENTICATION */
-import logout from "../api_utils/auth/logout";
+import logout from "../utils/auth/logout";
 import {useRouter} from "next/router";
 
 // Styling

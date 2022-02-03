@@ -7,11 +7,11 @@ import { useRouter } from "next/router";
 
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery } from "react-query";
-import getBBGSubscription from "../../../../../api_utils/api_fetchers/getBBGSubscription";
-import getBBGAccountNrs from "../../../../../api_utils/api_fetchers/getBBGAccountNrs";
+import getBBGSubscription from "../../../../../utils/fetchers/getBBGSubscription";
+import getBBGAccountNrs from "../../../../../utils/fetchers/getBBGAccountNrs";
 
 /* API MUTATION */
-import deleteBBGSubscription from "../../../../../api_utils/api_mutators/delete/deleteBBGSubscription";
+import deleteBBGSubscription from "../../../../../utils/mutators/delete/deleteBBGSubscription";
 
 /* COMPONENTS */
 import BBGSubscriptionForm from "../../../../../components/forms/BBGSubscriptionForm";

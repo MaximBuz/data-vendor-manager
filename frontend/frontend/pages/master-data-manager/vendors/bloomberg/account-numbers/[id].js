@@ -7,12 +7,12 @@ import { useRouter } from "next/router";
 
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery } from "react-query";
-import getBBGAccountNr from "../../../../../api_utils/api_fetchers/getBBGAccountNr";
-import getBBGFirmNrs from "../../../../../api_utils/api_fetchers/getBBGFirmNrs";
-import getLocations from "../../../../../api_utils/api_fetchers/getLocations";
+import getBBGAccountNr from "../../../../../utils/fetchers/getBBGAccountNr";
+import getBBGFirmNrs from "../../../../../utils/fetchers/getBBGFirmNrs";
+import getLocations from "../../../../../utils/fetchers/getLocations";
 
 /* API MUTATION */
-import deleteBBGAccountNr from "../../../../../api_utils/api_mutators/delete/deleteBBGAccountNr";
+import deleteBBGAccountNr from "../../../../../utils/mutators/delete/deleteBBGAccountNr";
 
 /* COMPONENTS */
 import BBGAccountNrForm from "../../../../../components/forms/BBGAccountNrForm";

@@ -14,12 +14,12 @@ import {
   useMutation,
   useQueryClient,
 } from "react-query";
-import getLocationWithBuildings from "../../../api_utils/api_fetchers/getLocationWithBuildings";
-import getDataConsumers from "../../../api_utils/api_fetchers/getDataConsumers";
+import getLocationWithBuildings from "../../../utils/fetchers/getLocationWithBuildings";
+import getDataConsumers from "../../../utils/fetchers/getDataConsumers";
 
 /* API MUTATION */
-import postBuilding from "../../../api_utils/api_mutators/post/postBuilding";
-import deleteLocation from "../../../api_utils/api_mutators/delete/deleteLocation";
+import postBuilding from "../../../utils/mutators/post/postBuilding";
+import deleteLocation from "../../../utils/mutators/delete/deleteLocation";
 
 /* COMPONENTS */
 import LocationForm from "../../../components/forms/LocationForm";

@@ -8,10 +8,10 @@ import { useRouter } from "next/router";
 /* API FETCHING */
 import { useQuery } from "react-query";
 
-import getOrganizationalEntityRootChildren from "../../../api_utils/api_fetchers/getOrganizationalEntityRootChildren";
-import getActivityTags from "../../../api_utils/api_fetchers/getActivityTags";
-import getLocations from "../../../api_utils/api_fetchers/getLocations";
-import getJobs from "../../../api_utils/api_fetchers/getJobs";
+import getOrganizationalEntityRootChildren from "../../../utils/fetchers/getOrganizationalEntityRootChildren";
+import getActivityTags from "../../../utils/fetchers/getActivityTags";
+import getLocations from "../../../utils/fetchers/getLocations";
+import getJobs from "../../../utils/fetchers/getJobs";
 
 /* COMPONENTS */
 import EmployeeForm from "../../../components/forms/EmployeeForm";

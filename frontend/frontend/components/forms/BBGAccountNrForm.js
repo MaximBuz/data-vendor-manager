@@ -11,8 +11,8 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 
 /* API MUTATION */
 import { useQueryClient, useMutation } from "react-query";
-import patchBBGAccountNr from "../../api_utils/api_mutators/patch/patchBBGAccountNr";
-import postBBGAccountNr from "../../api_utils/api_mutators/post/postBBGAccountNr";
+import patchBBGAccountNr from "../../utils/mutators/patch/patchBBGAccountNr";
+import postBBGAccountNr from "../../utils/mutators/post/postBBGAccountNr";
 
 /* NOTIFICATIONS */
 import { toast } from "react-toastify";

@@ -7,8 +7,8 @@ import { Form, Input, Button } from "antd";
 
 /* API MUTATION */
 import { useQueryClient, useMutation } from "react-query";
-import patchLocation from "../../api_utils/api_mutators/patch/patchLocation";
-import postLocation from "../../api_utils/api_mutators/post/postLocation";
+import patchLocation from "../../utils/mutators/patch/patchLocation";
+import postLocation from "../../utils/mutators/post/postLocation";
 
 /* NOTIFICATIONS */
 import { toast } from "react-toastify";

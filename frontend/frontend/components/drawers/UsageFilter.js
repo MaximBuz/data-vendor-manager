@@ -3,13 +3,13 @@
 /* ------------------------------------------------------------------------- */
 
 /* API FETCHING */
-import getOrganizationalEntityRootChildren from '../../api_utils/api_fetchers/getOrganizationalEntityRootChildren';
-import getActivityTags from '../../api_utils/api_fetchers/getActivityTags';
-import getLocations from '../../api_utils/api_fetchers/getLocations';
-import getJobs from '../../api_utils/api_fetchers/getJobs';
-import getBBGSubscriptions from '../../api_utils/api_fetchers/getBBGSubscriptions';
-import getBBGAccountNrs from '../../api_utils/api_fetchers/getBBGAccountNrs';
-import getBBGFirmNrs from '../../api_utils/api_fetchers/getBBGFirmNrs';
+import getOrganizationalEntityRootChildren from '../../utils/fetchers/getOrganizationalEntityRootChildren';
+import getActivityTags from '../../utils/fetchers/getActivityTags';
+import getLocations from '../../utils/fetchers/getLocations';
+import getJobs from '../../utils/fetchers/getJobs';
+import getBBGSubscriptions from '../../utils/fetchers/getBBGSubscriptions';
+import getBBGAccountNrs from '../../utils/fetchers/getBBGAccountNrs';
+import getBBGFirmNrs from '../../utils/fetchers/getBBGFirmNrs';
 
 /* COMPONENTS */
 import {

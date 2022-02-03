@@ -7,10 +7,10 @@ import Link from "next/link";
 
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery, useQueryClient } from "react-query";
-import getBBGAccountNrs from "../../api_utils/api_fetchers/getBBGAccountNrs";
+import getBBGAccountNrs from "../../utils/fetchers/getBBGAccountNrs";
 
 /* API MUTATION */
-import deleteBBGAccountNr from "../../api_utils/api_mutators/delete/deleteBBGAccountNr";
+import deleteBBGAccountNr from "../../utils/mutators/delete/deleteBBGAccountNr";
 
 /* COMPONENTS */
 import { Table, Empty, Tooltip, Input, Space, Button } from "antd";

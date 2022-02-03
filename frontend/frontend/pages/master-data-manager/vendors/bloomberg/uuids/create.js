@@ -4,8 +4,8 @@
 
 /* API FETCHING */
 import { useQuery } from "react-query";
-import getBBGSubscriptions from "../../../../../api_utils/api_fetchers/getBBGSubscriptions";
-import getDataConsumers from "../../../../../api_utils/api_fetchers/getDataConsumers";
+import getBBGSubscriptions from "../../../../../utils/fetchers/getBBGSubscriptions";
+import getDataConsumers from "../../../../../utils/fetchers/getDataConsumers";
 
 /* COMPONENTS */
 import BBGuuidForm from "../../../../../components/forms/BBGuuidForm";

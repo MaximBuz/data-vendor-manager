@@ -4,8 +4,8 @@
 
 /* API FETCHING */
 import { dehydrate, useQuery, useQueryClient } from "react-query";
-import getAggregatedUsage from "../../../api_utils/api_fetchers/getAggregatedUsage";
-import getUsageStatisticsByDataConsumers from "../../../api_utils/api_fetchers/getUsageStatisticsByDataConsumers";
+import getAggregatedUsage from "../../../utils/fetchers/getAggregatedUsage";
+import getUsageStatisticsByDataConsumers from "../../../utils/fetchers/getUsageStatisticsByDataConsumers";
 
 /* CHARTS */
 import UsageOverTimeChart from "../../../components/charts/UsageOverTime";

@@ -6,7 +6,7 @@
 import Link from "next/link";
 
 /* API MUTATION */
-import deleteLocation from "../../api_utils/api_mutators/delete/deleteLocation";
+import deleteLocation from "../../utils/mutators/delete/deleteLocation";
 
 /* COMPONENTS */
 import { Table, Empty, Tooltip, Input, Space, Button, Typography } from "antd";

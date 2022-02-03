@@ -7,7 +7,7 @@ import Link from "next/link";
 
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery, useQueryClient } from "react-query";
-import getBBGLicenseTree from "../../api_utils/api_fetchers/getBBGLicenseTree";
+import getBBGLicenseTree from "../../utils/fetchers/getBBGLicenseTree";
 
 /* COMPONENTS */
 import { Table, Empty } from "antd";

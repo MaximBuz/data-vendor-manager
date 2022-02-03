@@ -7,10 +7,10 @@ import Link from "next/link";
 
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery, useQueryClient } from "react-query";
-import getBBGSubscriptions from "../../api_utils/api_fetchers/getBBGSubscriptions";
+import getBBGSubscriptions from "../../utils/fetchers/getBBGSubscriptions";
 
 /* API MUTATION */
-import deleteBBGSubscription from "../../api_utils/api_mutators/delete/deleteBBGSubscription";
+import deleteBBGSubscription from "../../utils/mutators/delete/deleteBBGSubscription";
 
 /* COMPONENTS */
 import { Table, Empty, Tooltip, Input, Space, Button } from "antd";

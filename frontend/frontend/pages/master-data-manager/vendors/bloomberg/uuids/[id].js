@@ -7,16 +7,16 @@ import { useRouter } from "next/router";
 
 /* API FETCHING */
 import { useQueryClient, useMutation, useQuery } from "react-query";
-import getBBGuuid from "../../../../../api_utils/api_fetchers/getBBGuuid";
-import getBBGSubscriptions from "../../../../../api_utils/api_fetchers/getBBGSubscriptions";
-import getDataConsumers from "../../../../../api_utils/api_fetchers/getDataConsumers";
-import getInstalledTrackers from "../../../../../api_utils/api_fetchers/getInstalledTrackers";
+import getBBGuuid from "../../../../../utils/fetchers/getBBGuuid";
+import getBBGSubscriptions from "../../../../../utils/fetchers/getBBGSubscriptions";
+import getDataConsumers from "../../../../../utils/fetchers/getDataConsumers";
+import getInstalledTrackers from "../../../../../utils/fetchers/getInstalledTrackers";
 
 /* API MUTATION */
-import deleteBBGuuid from "../../../../../api_utils/api_mutators/delete/deleteBBGuuid";
+import deleteBBGuuid from "../../../../../utils/mutators/delete/deleteBBGuuid";
 
 /* SENDING MAIL */
-import sendTrackerInstallationRequest from "../../../../../api_utils/misc/sendTrackerInstallationRequest";
+import sendTrackerInstallationRequest from "../../../../../utils/misc/sendTrackerInstallationRequest";
 
 
 /* COMPONENTS */

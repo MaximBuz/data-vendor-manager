@@ -8,10 +8,10 @@ import { useRouter } from "next/router";
 
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery, useQueryClient } from "react-query";
-import getBBGFirmNrs from "../../api_utils/api_fetchers/getBBGFirmNrs";
+import getBBGFirmNrs from "../../utils/fetchers/getBBGFirmNrs";
 
 /* API MUTATION */
-import deleteBBGFirmNr from "../../api_utils/api_mutators/delete/deleteBBGFirmNr";
+import deleteBBGFirmNr from "../../utils/mutators/delete/deleteBBGFirmNr";
 
 /* COMPONENTS */
 import { Table, Empty, Tooltip, Input, Space, Button } from "antd";

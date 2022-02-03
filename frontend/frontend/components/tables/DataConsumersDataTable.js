@@ -6,7 +6,7 @@
 import Link from "next/link";
 
 /* API MUTATION */
-import deleteEmployee from "../../api_utils/api_mutators/delete/deleteEmployee";
+import deleteEmployee from "../../utils/mutators/delete/deleteEmployee";
 
 /* COMPONENTS */
 import { Table, Input, Button, Space, Empty, Tooltip } from "antd";

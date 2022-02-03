@@ -7,9 +7,9 @@ import EntityForm from "../../../components/forms/EntityForm";
 
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery } from "react-query";
-import getEntityTypes from "../../../api_utils/api_fetchers/getEntityTypes";
-import getOrganizationalEntities from "../../../api_utils/api_fetchers/getOrganizationalEntities";
-import getLocations from "../../../api_utils/api_fetchers/getLocations";
+import getEntityTypes from "../../../utils/fetchers/getEntityTypes";
+import getOrganizationalEntities from "../../../utils/fetchers/getOrganizationalEntities";
+import getLocations from "../../../utils/fetchers/getLocations";
 
 /* --------------------------------------------------------------------------- */
 /* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */

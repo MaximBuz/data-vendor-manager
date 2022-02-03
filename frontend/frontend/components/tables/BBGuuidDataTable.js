@@ -7,10 +7,10 @@ import Link from "next/link";
 
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery, useQueryClient } from "react-query";
-import getBBGuuids from "../../api_utils/api_fetchers/getBBGuuids";
+import getBBGuuids from "../../utils/fetchers/getBBGuuids";
 
 /* API MUTATION */
-import deleteBBGuuid from "../../api_utils/api_mutators/delete/deleteBBGuuid";
+import deleteBBGuuid from "../../utils/mutators/delete/deleteBBGuuid";
 
 /* COMPONENTS */
 import { Table, Empty, Tooltip, Input, Space, Button } from "antd";

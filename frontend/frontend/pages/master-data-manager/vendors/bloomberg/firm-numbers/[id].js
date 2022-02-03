@@ -7,12 +7,12 @@ import { useRouter } from "next/router";
 
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery } from "react-query";
-import getBBGFirmNr from "../../../../../api_utils/api_fetchers/getBBGFirmNr";
-import getOrganizationalEntityRootChildren from "../../../../../api_utils/api_fetchers/getOrganizationalEntityRootChildren";
+import getBBGFirmNr from "../../../../../utils/fetchers/getBBGFirmNr";
+import getOrganizationalEntityRootChildren from "../../../../../utils/fetchers/getOrganizationalEntityRootChildren";
 
 
 /* API MUTATION */
-import deleteBBGFirmNr from "../../../../../api_utils/api_mutators/delete/deleteBBGFirmNr";
+import deleteBBGFirmNr from "../../../../../utils/mutators/delete/deleteBBGFirmNr";
 
 /* COMPONENTS */
 import BBGFirmNrForm from "../../../../../components/forms/BBGFirmNrForm";

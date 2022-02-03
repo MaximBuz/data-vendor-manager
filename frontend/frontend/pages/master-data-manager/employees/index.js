@@ -11,7 +11,7 @@ import DataConsumersDataTable from "../../../components/tables/DataConsumersData
 
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery } from "react-query";
-import getDataConsumers from "../../../api_utils/api_fetchers/getDataConsumers";
+import getDataConsumers from "../../../utils/fetchers/getDataConsumers";
 
 /* --------------------------------------------------------------------------- */
 /* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */

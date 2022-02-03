@@ -20,10 +20,10 @@ import { PlusOutlined } from "@ant-design/icons";
 
 /* API MUTATION */
 import { useQueryClient, useMutation } from "react-query";
-import postDataConsumer from "../../api_utils/api_mutators/post/postDataConsumer";
-import patchDataConsumer from "../../api_utils/api_mutators/patch/patchDataConsumer";
-import postJob from "../../api_utils/api_mutators/post/postJob";
-import postActivityTag from "../../api_utils/api_mutators/post/postActivityTag";
+import postDataConsumer from "../../utils/mutators/post/postDataConsumer";
+import patchDataConsumer from "../../utils/mutators/patch/patchDataConsumer";
+import postJob from "../../utils/mutators/post/postJob";
+import postActivityTag from "../../utils/mutators/post/postActivityTag";
 
 /* NOTIFICATIONS */
 import { toast } from "react-toastify";

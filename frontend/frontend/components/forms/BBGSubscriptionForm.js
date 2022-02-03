@@ -11,8 +11,8 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 
 /* API MUTATION */
 import { useQueryClient, useMutation } from "react-query";
-import patchBBGSubscription from "../../api_utils/api_mutators/patch/patchBBGSubscription";
-import postBBGSubscription from "../../api_utils/api_mutators/post/postBBGSubscription";
+import patchBBGSubscription from "../../utils/mutators/patch/patchBBGSubscription";
+import postBBGSubscription from "../../utils/mutators/post/postBBGSubscription";
 
 /* NOTIFICATIONS */
 import { toast } from "react-toastify";

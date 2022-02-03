@@ -10,11 +10,11 @@ import UsageOverTimeChart from '../../../components/charts/UsageOverTime';
 
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery, useQueryClient } from 'react-query';
-import getDataConsumer from '../../../api_utils/api_fetchers/getDataConsumer';
-import getOrganizationalEntityRootChildren from '../../../api_utils/api_fetchers/getOrganizationalEntityRootChildren';
-import getAggregatedUsage from '../../../api_utils/api_fetchers/getAggregatedUsage';
-import getUsageRawDataconsumer from '../../../api_utils/api_fetchers/getUsageRawDataConsumer';
-import getUsageStatisticsByDataConsumer from '../../../api_utils/api_fetchers/getUsageStatisticsByDataConsumer';
+import getDataConsumer from '../../../utils/fetchers/getDataConsumer';
+import getOrganizationalEntityRootChildren from '../../../utils/fetchers/getOrganizationalEntityRootChildren';
+import getAggregatedUsage from '../../../utils/fetchers/getAggregatedUsage';
+import getUsageRawDataconsumer from '../../../utils/fetchers/getUsageRawDataConsumer';
+import getUsageStatisticsByDataConsumer from '../../../utils/fetchers/getUsageStatisticsByDataConsumer';
 
 /* COMPONENTS */
 import { FilterOutlined } from '@ant-design/icons';
