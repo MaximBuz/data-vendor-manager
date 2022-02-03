@@ -7,7 +7,7 @@ import Link from "next/link";
 
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery, useQueryClient } from "react-query";
-import getBBGLicenseTree from "../../utils/fetchers/getBBGLicenseTree";
+import getBbgLicenseTree from "../../utils/fetchers/getBbgLicenseTree";
 
 /* COMPONENTS */
 import { Table, Empty } from "antd";
@@ -23,7 +23,7 @@ export default function BBGLicenseTreeDataTable({
   /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const { isLoading, isError, data, error } = useQuery(
     ["bbgLicenseTree", 0 /* Depth */],
-    getBBGLicenseTree
+    getBbgLicenseTree
   );
 
   /* -----~~~~~>>>COLUMN DEFINITION<<<~~~~~----- */

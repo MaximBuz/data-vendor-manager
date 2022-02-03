@@ -7,12 +7,12 @@ import { useRouter } from "next/router";
 
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery } from "react-query";
-import getBBGFirmNr from "../../../../../utils/fetchers/getBBGFirmNr";
+import getBbgFirmNr from "../../../../../utils/fetchers/getBbgFirmNr";
 import getOrganizationalEntityRootChildren from "../../../../../utils/fetchers/getOrganizationalEntityRootChildren";
 
 
 /* API MUTATION */
-import deleteBBGFirmNr from "../../../../../utils/mutators/delete/deleteBBGFirmNr";
+import deleteBbgFirmNr from "../../../../../utils/mutators/delete/deleteBbgFirmNr";
 
 /* COMPONENTS */
 import BBGFirmNrForm from "../../../../../components/forms/BBGFirmNrForm";
@@ -32,7 +32,7 @@ export default function BBGFirmNr() {
   /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const BBGFirmNrQuery = useQuery(
     ["bbgFirmNr", firmNrId, 2 /* depth param */],
-    getBBGFirmNr
+    getBbgFirmNr
   );
   const treeQuery = useQuery(
     ["organizationalEntityRootChildren", 10],
@@ -41,7 +41,7 @@ export default function BBGFirmNr() {
 
   /* -----~~~~~>>>DELETION<<<~~~~~----- */
   const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
-    deleteBBGFirmNr , // Api call
+    deleteBbgFirmNr , // Api call
     "Deleted Bloomberg Firm Nr successfully", // Success Notification Text
     ["bbgFirms", 1 /* Depth */], // Query to invalidate on success
     firmNrId, // Id to delete

@@ -7,9 +7,9 @@ import getOrganizationalEntityRootChildren from '../../utils/fetchers/getOrganiz
 import getActivityTags from '../../utils/fetchers/getActivityTags';
 import getLocations from '../../utils/fetchers/getLocations';
 import getJobs from '../../utils/fetchers/getJobs';
-import getBBGSubscriptions from '../../utils/fetchers/getBBGSubscriptions';
-import getBBGAccountNrs from '../../utils/fetchers/getBBGAccountNrs';
-import getBBGFirmNrs from '../../utils/fetchers/getBBGFirmNrs';
+import getBbgSubscriptions from '../../utils/fetchers/getBbgSubscriptions';
+import getBbgAccountNrs from '../../utils/fetchers/getBbgAccountNrs';
+import getBbgFirmNrs from '../../utils/fetchers/getBbgFirmNrs';
 
 /* COMPONENTS */
 import {
@@ -53,13 +53,13 @@ export default function UsageFilter(props) {
   const jobsQuery = useQuery(['jobs'], getJobs);
   const BBGSubscriptionsQuery = useQuery(
     ['bbgSubscriptions', 1 /* Depth */],
-    getBBGSubscriptions
+    getBbgSubscriptions
   );
   const BBGAccountQuery = useQuery(
     ['bbgAccountNrs', 1 /* Depth */],
-    getBBGAccountNrs
+    getBbgAccountNrs
   );
-  const BBGFirmsQuery = useQuery(['bbgFirmNrs', 1], getBBGFirmNrs);
+  const BBGFirmsQuery = useQuery(['bbgFirmNrs', 1], getBbgFirmNrs);
 
   /* -----~~~~~>>>HANDLE CHILD DRAWER<<<~~~~~----- */
   const [childDrawerVisible, setChildDrawerVisible] = useState(false);

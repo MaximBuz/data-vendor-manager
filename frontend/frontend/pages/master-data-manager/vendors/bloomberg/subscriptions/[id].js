@@ -7,11 +7,11 @@ import { useRouter } from "next/router";
 
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery } from "react-query";
-import getBBGSubscription from "../../../../../utils/fetchers/getBBGSubscription";
-import getBBGAccountNrs from "../../../../../utils/fetchers/getBBGAccountNrs";
+import getBbgSubscription from "../../../../../utils/fetchers/getBbgSubscription";
+import getBbgAccountNrs from "../../../../../utils/fetchers/getBbgAccountNrs";
 
 /* API MUTATION */
-import deleteBBGSubscription from "../../../../../utils/mutators/delete/deleteBBGSubscription";
+import deleteBbgSubscription from "../../../../../utils/mutators/delete/deleteBbgSubscription";
 
 /* COMPONENTS */
 import BBGSubscriptionForm from "../../../../../components/forms/BBGSubscriptionForm";
@@ -31,17 +31,17 @@ export default function BBGSubscription() {
   /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const BBGSubscriptionQuery = useQuery(
     ["bbgSubscription", subscriptionId, 1 /* depth param */],
-    getBBGSubscription
+    getBbgSubscription
   );
 
   const BBGAccountQuery = useQuery(
     ["bbgAccountNrs", 1 /* Depth */],
-    getBBGAccountNrs
+    getBbgAccountNrs
   );
 
   /* -----~~~~~>>>DELETION<<<~~~~~----- */
   const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
-    deleteBBGSubscription, // Api call
+    deleteBbgSubscription, // Api call
     "Deleted Bloomberg Subscription successfully", // Success Notification Text
     ["bbgSubscriptions", 1 /* Depth */], // Query to invalidate on success
     subscriptionId, // Id to delete

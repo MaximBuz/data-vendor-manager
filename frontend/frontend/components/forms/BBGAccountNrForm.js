@@ -11,8 +11,8 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 
 /* API MUTATION */
 import { useQueryClient, useMutation } from "react-query";
-import patchBBGAccountNr from "../../utils/mutators/patch/patchBBGAccountNr";
-import postBBGAccountNr from "../../utils/mutators/post/postBBGAccountNr";
+import patchBbgAccountNr from "../../utils/mutators/patch/patchBbgAccountNr";
+import postBbgAccountNr from "../../utils/mutators/post/postBbgAccountNr";
 
 /* NOTIFICATIONS */
 import { toast } from "react-toastify";
@@ -32,7 +32,7 @@ export default function BBGAccountNumberForm({
   const router = useRouter();
 
   /* -----~~~~~>>>DATA MUTATION<<<~~~~~----- */
-  const patchMutation = useMutation(patchBBGAccountNr, {
+  const patchMutation = useMutation(patchBbgAccountNr, {
     onSuccess: () => {
       toast.success("Updated Bloomberg Account Number successfully");
       queryClient.invalidateQueries([
@@ -45,7 +45,7 @@ export default function BBGAccountNumberForm({
     },
   });
 
-  const postMutation = useMutation(postBBGAccountNr, {
+  const postMutation = useMutation(postBbgAccountNr, {
     onSuccess: () => {
       toast.success("Added Bloomberg Account Number successfully");
       queryClient.invalidateQueries(["bbgAccountNrs", 1 /* depth param */]);

@@ -5,7 +5,7 @@
 /* API FETCHING */
 import { useQuery } from "react-query";
 import getLocations from "../../../../../utils/fetchers/getLocations";
-import getBBGFirmNrs from "../../../../../utils/fetchers/getBBGFirmNrs";
+import getBbgFirmNrs from "../../../../../utils/fetchers/getBbgFirmNrs";
 
 /* COMPONENTS */
 import BBGAccountNrForm from "../../../../../components/forms/BBGAccountNrForm";
@@ -17,7 +17,7 @@ import { Row, Col } from "antd";
 export default function BBGFirmNr() {
   /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const locations = useQuery(["locations", 2], getLocations);
-  const firmNrsQuery = useQuery(["bbgFirmNrs", 1], getBBGFirmNrs);
+  const firmNrsQuery = useQuery(["bbgFirmNrs", 1], getBbgFirmNrs);
 
   /* --------------------------------------------------------------------------- */
   /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */

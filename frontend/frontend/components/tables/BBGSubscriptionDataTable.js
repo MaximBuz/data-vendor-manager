@@ -7,10 +7,10 @@ import Link from "next/link";
 
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery, useQueryClient } from "react-query";
-import getBBGSubscriptions from "../../utils/fetchers/getBBGSubscriptions";
+import getBbgSubscriptions from "../../utils/fetchers/getBbgSubscriptions";
 
 /* API MUTATION */
-import deleteBBGSubscription from "../../utils/mutators/delete/deleteBBGSubscription";
+import deleteBbgSubscription from "../../utils/mutators/delete/deleteBbgSubscription";
 
 /* COMPONENTS */
 import { Table, Empty, Tooltip, Input, Space, Button } from "antd";
@@ -35,7 +35,7 @@ export default function BBGSubscriptionDataTable({
   /* -----~~~~~>>>DELETION<<<~~~~~----- */
   const [idToDelete, setIdToDelete] = useState("");
   const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
-    deleteBBGSubscription, // Api call
+    deleteBbgSubscription, // Api call
     "Deleted Bloomberg Subscription successfully", // Success Notification Text
     ["bbgSubscriptions", 1 /* Depth */], // Query to invalidate on success
     idToDelete, // Id to delete
@@ -45,7 +45,7 @@ export default function BBGSubscriptionDataTable({
   /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const { isLoading, isError, data, error } = useQuery(
     ["bbgSubscriptions", 1 /* Depth */],
-    getBBGSubscriptions
+    getBbgSubscriptions
   );
 
   /* -----~~~~~>>>COLUMN DEFINITION<<<~~~~~----- */

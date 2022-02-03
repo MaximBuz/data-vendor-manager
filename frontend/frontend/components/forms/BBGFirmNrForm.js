@@ -11,8 +11,8 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 
 /* API MUTATION */
 import { useQueryClient, useMutation } from "react-query";
-import patchBBGFirmNr from "../../utils/mutators/patch/patchBBGFirmNr";
-import postBBGFirmNr from "../../utils/mutators/post/postBBGFirmNr";
+import patchBbgFirmNr from "../../utils/mutators/patch/patchBbgFirmNr";
+import postBbgFirmNr from "../../utils/mutators/post/postBbgFirmNr";
 
 /* NOTIFICATIONS */
 import { toast } from "react-toastify";
@@ -31,7 +31,7 @@ export default function BBGFirmNumberForm({
   const router = useRouter();
 
   /* -----~~~~~>>>DATA MUTATION<<<~~~~~----- */
-  const patchMutation = useMutation(patchBBGFirmNr, {
+  const patchMutation = useMutation(patchBbgFirmNr, {
     onSuccess: () => {
       toast.success("Updated Bloomberg Firm Number successfully");
       queryClient.invalidateQueries([
@@ -44,7 +44,7 @@ export default function BBGFirmNumberForm({
     },
   });
 
-  const postMutation = useMutation(postBBGFirmNr, {
+  const postMutation = useMutation(postBbgFirmNr, {
     onSuccess: () => {
       toast.success("Added Bloomberg Firm Number successfully");
       queryClient.invalidateQueries(["bbgFirmNrs", 1 /* depth param */]);

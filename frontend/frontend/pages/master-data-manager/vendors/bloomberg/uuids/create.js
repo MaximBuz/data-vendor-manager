@@ -4,7 +4,7 @@
 
 /* API FETCHING */
 import { useQuery } from "react-query";
-import getBBGSubscriptions from "../../../../../utils/fetchers/getBBGSubscriptions";
+import getBbgSubscriptions from "../../../../../utils/fetchers/getBbgSubscriptions";
 import getDataConsumers from "../../../../../utils/fetchers/getDataConsumers";
 
 /* COMPONENTS */
@@ -18,7 +18,7 @@ export default function BBGFirmNr() {
   /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const BBGSubscriptionsQuery = useQuery(
     ["bbgSubscriptions", 1 /* Depth */],
-    getBBGSubscriptions
+    getBbgSubscriptions
   );
 
   const DataConsumersQuery = useQuery(

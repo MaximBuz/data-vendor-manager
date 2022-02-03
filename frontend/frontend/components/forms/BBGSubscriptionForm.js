@@ -11,8 +11,8 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 
 /* API MUTATION */
 import { useQueryClient, useMutation } from "react-query";
-import patchBBGSubscription from "../../utils/mutators/patch/patchBBGSubscription";
-import postBBGSubscription from "../../utils/mutators/post/postBBGSubscription";
+import patchBbgSubscription from "../../utils/mutators/patch/patchBbgSubscription";
+import postBbgSubscription from "../../utils/mutators/post/postBbgSubscription";
 
 /* NOTIFICATIONS */
 import { toast } from "react-toastify";
@@ -31,7 +31,7 @@ export default function BBGSubscriptionForm({
   const router = useRouter();
 
   /* -----~~~~~>>>DATA MUTATION<<<~~~~~----- */
-  const patchMutation = useMutation(patchBBGSubscription, {
+  const patchMutation = useMutation(patchBbgSubscription, {
     onSuccess: () => {
       toast.success("Updated Bloomberg Subscription successfully");
       queryClient.invalidateQueries([
@@ -44,7 +44,7 @@ export default function BBGSubscriptionForm({
     },
   });
 
-  const postMutation = useMutation(postBBGSubscription, {
+  const postMutation = useMutation(postBbgSubscription, {
     onSuccess: () => {
       toast.success("Added Bloomberg Subscription successfully");
       queryClient.invalidateQueries(["bbgSubscriptions", 1 /* depth param */]);

@@ -7,13 +7,13 @@ import { useRouter } from "next/router";
 
 /* API FETCHING */
 import { useQueryClient, useMutation, useQuery } from "react-query";
-import getBBGuuid from "../../../../../utils/fetchers/getBBGuuid";
-import getBBGSubscriptions from "../../../../../utils/fetchers/getBBGSubscriptions";
+import getBbguuid from "../../../../../utils/fetchers/getBbguuid";
+import getBbgSubscriptions from "../../../../../utils/fetchers/getBbgSubscriptions";
 import getDataConsumers from "../../../../../utils/fetchers/getDataConsumers";
 import getInstalledTrackers from "../../../../../utils/fetchers/getInstalledTrackers";
 
 /* API MUTATION */
-import deleteBBGuuid from "../../../../../utils/mutators/delete/deleteBBGuuid";
+import deleteBbguuid from "../../../../../utils/mutators/delete/deleteBbguuid";
 
 /* SENDING MAIL */
 import sendTrackerInstallationRequest from "../../../../../utils/misc/sendTrackerInstallationRequest";
@@ -44,12 +44,12 @@ export default function BBGUuid() {
   /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const BBGuuidQuery = useQuery(
     ["bbgUuid", uuidId, 1 /* depth param */],
-    getBBGuuid
+    getBbguuid
   );
 
   const BBGSubscriptionsQuery = useQuery(
     ["bbgSubscriptions", 1 /* Depth */],
-    getBBGSubscriptions
+    getBbgSubscriptions
   );
 
   const DataConsumersQuery = useQuery(
@@ -80,7 +80,7 @@ export default function BBGUuid() {
 
   /* -----~~~~~>>>DELETION<<<~~~~~----- */
   const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
-    deleteBBGuuid, // Api call
+    deleteBbguuid, // Api call
     "Deleted Bloomberg UUID successfully", // Success Notification Text
     ["bbgUuids", 1 /* Depth */], // Query to invalidate on success
     uuidId, // Id to delete

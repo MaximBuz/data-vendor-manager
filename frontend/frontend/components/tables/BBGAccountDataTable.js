@@ -7,10 +7,10 @@ import Link from "next/link";
 
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery, useQueryClient } from "react-query";
-import getBBGAccountNrs from "../../utils/fetchers/getBBGAccountNrs";
+import getBbgAccountNrs from "../../utils/fetchers/getBbgAccountNrs";
 
 /* API MUTATION */
-import deleteBBGAccountNr from "../../utils/mutators/delete/deleteBBGAccountNr";
+import deleteBbgAccountNr from "../../utils/mutators/delete/deleteBbgAccountNr";
 
 /* COMPONENTS */
 import { Table, Empty, Tooltip, Input, Space, Button } from "antd";
@@ -35,7 +35,7 @@ export default function BBGAccountDataTable({
   /* -----~~~~~>>>DELETION<<<~~~~~----- */
   const [idToDelete, setIdToDelete] = useState("");
   const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
-    deleteBBGAccountNr, // Api call
+    deleteBbgAccountNr, // Api call
     "Deleted Bloomberg Account Number successfully", // Success Notification Text
     ["bbgAccountNrs", 1 /* Depth */], // Query to invalidate on success
     idToDelete, // Id to delete
@@ -45,7 +45,7 @@ export default function BBGAccountDataTable({
   /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const { isLoading, isError, data, error } = useQuery(
     ["bbgAccountNrs", 1 /* Depth */],
-    getBBGAccountNrs
+    getBbgAccountNrs
   );
 
   /* -----~~~~~>>>COLUMN DEFINITION<<<~~~~~----- */

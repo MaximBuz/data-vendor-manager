@@ -7,12 +7,12 @@ import { useRouter } from "next/router";
 
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery } from "react-query";
-import getBBGAccountNr from "../../../../../utils/fetchers/getBBGAccountNr";
-import getBBGFirmNrs from "../../../../../utils/fetchers/getBBGFirmNrs";
+import getBbgAccountNr from "../../../../../utils/fetchers/getBbgAccountNr";
+import getBbgFirmNrs from "../../../../../utils/fetchers/getBbgFirmNrs";
 import getLocations from "../../../../../utils/fetchers/getLocations";
 
 /* API MUTATION */
-import deleteBBGAccountNr from "../../../../../utils/mutators/delete/deleteBBGAccountNr";
+import deleteBbgAccountNr from "../../../../../utils/mutators/delete/deleteBbgAccountNr";
 
 /* COMPONENTS */
 import BBGAccountNrForm from "../../../../../components/forms/BBGAccountNrForm";
@@ -32,14 +32,14 @@ export default function BBGAccountNr() {
   /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const BBGAccountNrQuery = useQuery(
     ["bbgAccountNr", accountNrId, 2 /* depth param */],
-    getBBGAccountNr
+    getBbgAccountNr
   );
   const locations = useQuery(["locations", 2], getLocations);
-  const BBGFirmsQuery = useQuery(["bbgFirmNrs", 1], getBBGFirmNrs);
+  const BBGFirmsQuery = useQuery(["bbgFirmNrs", 1], getBbgFirmNrs);
 
   /* -----~~~~~>>>DELETION<<<~~~~~----- */
   const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
-    deleteBBGAccountNr, // Api call
+    deleteBbgAccountNr, // Api call
     "Deleted Bloomberg Account Nr successfully", // Success Notification Text
     ["bbgAccountNrs", 1 /* Depth */], // Query to invalidate on success
     accountNrId, // Id to delete

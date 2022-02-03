@@ -8,10 +8,10 @@ import { useRouter } from "next/router";
 
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery, useQueryClient } from "react-query";
-import getBBGFirmNrs from "../../utils/fetchers/getBBGFirmNrs";
+import getBbgFirmNrs from "../../utils/fetchers/getBbgFirmNrs";
 
 /* API MUTATION */
-import deleteBBGFirmNr from "../../utils/mutators/delete/deleteBBGFirmNr";
+import deleteBbgFirmNr from "../../utils/mutators/delete/deleteBbgFirmNr";
 
 /* COMPONENTS */
 import { Table, Empty, Tooltip, Input, Space, Button } from "antd";
@@ -35,7 +35,7 @@ export default function LocationDataTable({
   /* -----~~~~~>>>DELETION<<<~~~~~----- */
   const [idToDelete, setIdToDelete] = useState("");
   const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
-    deleteBBGFirmNr, // Api call
+    deleteBbgFirmNr, // Api call
     "Deleted bloomberg firm number successfully", // Success Notification Text
     ["bbgFirmNrs",1], // Query to invalidate on success
     idToDelete, // Id to delete
@@ -45,7 +45,7 @@ export default function LocationDataTable({
   /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const { isLoading, isError, data, error } = useQuery(
     ["bbgFirmNrs",1],
-    getBBGFirmNrs
+    getBbgFirmNrs
   );
 
   /* -----~~~~~>>>COLUMN DEFINITION<<<~~~~~----- */

@@ -11,8 +11,8 @@ import { InfoCircleOutlined } from "@ant-design/icons";
 
 /* API MUTATION */
 import { useQueryClient, useMutation } from "react-query";
-import patchBBGuuid from "../../utils/mutators/patch/patchBBGuuid";
-import postBBGuuid from "../../utils/mutators/post/postBBGuuid";
+import patchBbguuid from "../../utils/mutators/patch/patchBbguuid";
+import postBbguuid from "../../utils/mutators/post/postBbguuid";
 
 /* NOTIFICATIONS */
 import { toast } from "react-toastify";
@@ -32,7 +32,7 @@ export default function BBGuuidForm({
   const router = useRouter();
 
   /* -----~~~~~>>>DATA MUTATION<<<~~~~~----- */
-  const patchMutation = useMutation(patchBBGuuid, {
+  const patchMutation = useMutation(patchBbguuid, {
     onSuccess: () => {
       toast.success("Updated Bloomberg UUID successfully");
       queryClient.invalidateQueries([
@@ -45,7 +45,7 @@ export default function BBGuuidForm({
     },
   });
 
-  const postMutation = useMutation(postBBGuuid, {
+  const postMutation = useMutation(postBbguuid, {
     onSuccess: () => {
       toast.success("Added Bloomberg UUID successfully");
       queryClient.invalidateQueries(["bbgUuids", 1 /* depth param */]);

@@ -7,10 +7,10 @@ import Link from "next/link";
 
 /* API FETCHING */
 import { dehydrate, QueryClient, useQuery, useQueryClient } from "react-query";
-import getBBGuuids from "../../utils/fetchers/getBBGuuids";
+import getBbguuids from "../../utils/fetchers/getBbguuids";
 
 /* API MUTATION */
-import deleteBBGuuid from "../../utils/mutators/delete/deleteBBGuuid";
+import deleteBbguuid from "../../utils/mutators/delete/deleteBbguuid";
 
 /* COMPONENTS */
 import { Table, Empty, Tooltip, Input, Space, Button } from "antd";
@@ -31,7 +31,7 @@ export default function BBGuuidDataTable({ scrollView, rowSelection }) {
   /* -----~~~~~>>>DELETION<<<~~~~~----- */
   const [idToDelete, setIdToDelete] = useState("");
   const [DeleteModal, showDeleteModal] = useDeleteConfirmation(
-    deleteBBGuuid, // Api call
+    deleteBbguuid, // Api call
     "Deleted Bloomberg UUID successfully", // Success Notification Text
     ["bbgUuids", 1 /* Depth */], // Query to invalidate on success
     idToDelete, // Id to delete
@@ -41,7 +41,7 @@ export default function BBGuuidDataTable({ scrollView, rowSelection }) {
   /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const { isLoading, isError, data, error } = useQuery(
     ["bbgUuids", 1 /* Depth */],
-    getBBGuuids
+    getBbguuids
   );
 
   /* -----~~~~~>>>COLUMN DEFINITION<<<~~~~~----- */
