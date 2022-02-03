@@ -90,6 +90,8 @@ export default function UsageFilter(props) {
           timeframe: [moment().subtract(1, 'months'), moment()],
           entry_count_direction: ">",
           percentile_direction: "bottom",
+          entry_count: null,
+          percentile: null
         }}
       >
         <Row gutter={16}>
@@ -319,7 +321,6 @@ export default function UsageFilter(props) {
                     </Form.Item>
                   }
                   min={0}
-                  defaultValue={null}
                 />
               </Form.Item>
             </Col>
@@ -344,7 +345,6 @@ export default function UsageFilter(props) {
                   }
                   min={0}
                   max={99}
-                  defaultValue={null}
                 />
               </Form.Item>
             </Col>

@@ -12,18 +12,13 @@ import UsageOverTimeChart from '../../../components/charts/UsageOverTime';
 import { dehydrate, QueryClient, useQuery, useQueryClient } from 'react-query';
 import getDataConsumer from '../../../api_utils/api_fetchers/getDataConsumer';
 import getOrganizationalEntityRootChildren from '../../../api_utils/api_fetchers/getOrganizationalEntityRootChildren';
-import getActivityTags from '../../../api_utils/api_fetchers/getActivityTags';
-import getLocations from '../../../api_utils/api_fetchers/getLocations';
-import getJobs from '../../../api_utils/api_fetchers/getJobs';
 import getAggregatedUsage from '../../../api_utils/api_fetchers/getAggregatedUsage';
 import getUsageRawDataconsumer from '../../../api_utils/api_fetchers/getUsageRawDataConsumer';
 import getUsageStatisticsByDataConsumer from '../../../api_utils/api_fetchers/getUsageStatisticsByDataConsumer';
 
-/* API MUTATION */
-import deleteEmployee from '../../../api_utils/api_mutators/delete/deleteEmployee';
-
 /* COMPONENTS */
 import { FilterOutlined } from '@ant-design/icons';
+import Image from 'next/image'
 import {
   Row,
   Col,
@@ -41,7 +36,6 @@ import {
 import UsageRawDataconsumerDataTable from '../../../components/tables/UsageRawDataconsumerDataTable';
 
 /* HOOKS */
-import useDeleteConfirmation from '../../../custom_hooks/useDeleteConfirmation';
 import { useState } from 'react';
 
 /* DATA UTILS */
@@ -57,13 +51,6 @@ export default function Employee() {
   const { id: employeeId } = router.query;
 
   /* -----~~~~~>>>HANDLE FILTER<<<~~~~~----- */
-  const [filterDrawerVisibility, setFilterDrawerVisibility] = useState(false);
-  const [filters, setFilters] = useState({
-    start_date: moment().subtract(1, 'months').format('YYYY-MM-DD'),
-    end_date: moment().format('YYYY-MM-DD'),
-    data_consumer: [router.query.id],
-    freq: 'd',
-  });
 
   const onFinish = (values) => {
     setFilters({
@@ -138,10 +125,11 @@ export default function Employee() {
             className='masked-overflow-vertical'
           >
             <Row justify='center'>
-              <img
+              <Image
                 src='http://127.0.0.1:8000/api/random-default-avatar/'
                 width={180}
-              ></img>
+                alt="data-consumer-avatar"
+              ></Image>
             </Row>
             <Row justify='center' style={{ marginBottom: '30px' }}>
               <div
