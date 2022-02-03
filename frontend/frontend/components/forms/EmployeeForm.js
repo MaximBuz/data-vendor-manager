@@ -6,6 +6,7 @@
 import { useRouter } from "next/router";
 
 /* COMPONENTS */
+import Link from "next/link";
 import {
   Form,
   Input,
@@ -218,7 +219,7 @@ export default function EntityForm({
             </Select>
           </Form.Item>
 
-          <a href="/master-data-manager/geographies/create" target="_blank">
+          <Link href="/master-data-manager/geographies/create" target="_blank" passHref>
             <Tooltip title="Add new Location" placement="right">
               <Button
                 style={{ position: "relative", top: "3px" }}
@@ -226,7 +227,7 @@ export default function EntityForm({
                 icon={<PlusOutlined />}
               />
             </Tooltip>
-          </a>
+          </Link>
         </div>
         <div
           style={{

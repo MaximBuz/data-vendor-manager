@@ -74,7 +74,7 @@ export default function Geographies() {
         savings and optimizations in market data spend are possible.
       </p>
       <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-        <Link href="geographies/create/">
+        <Link href="geographies/create/" passHref>
           <Button type="primary" style={{ marginBottom: "10px" }}>
             Add new Business Location
           </Button>

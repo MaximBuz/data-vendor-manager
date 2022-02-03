@@ -20,7 +20,6 @@ import UsageByDataConsumerDataTable from "../../../components/tables/UsageByData
 
 /* HOOKS */
 import { useState } from "react";
-import { useEffect } from "react";
 
 /* DATA UTILS */
 import parse from "parse-duration";
@@ -235,7 +234,7 @@ export default function Home() {
         okText="Close"
         closable={false}
         footer={[
-          <Button type="secondary" onClick={closeUsageOverTimeModal}>
+          <Button type="secondary" onClick={closeUsageOverTimeModal} key="1">
             Close
           </Button>,
         ]}
@@ -251,7 +250,7 @@ export default function Home() {
         okText="Close"
         closable={false}
         footer={[
-          <Button type="secondary" onClick={closeUsageByEntityModal}>
+          <Button type="secondary" onClick={closeUsageByEntityModal} key="1">
             Close
           </Button>,
         ]}
@@ -267,7 +266,7 @@ export default function Home() {
         okText="Close"
         closable={false}
         footer={[
-          <Button type="secondary" onClick={closeUsageByActivityTagModal}>
+          <Button type="secondary" onClick={closeUsageByActivityTagModal} key="1">
             Close
           </Button>,
         ]}

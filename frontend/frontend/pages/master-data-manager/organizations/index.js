@@ -26,7 +26,7 @@ const columns = [
     width: "35%",
     render: (text, record) => {
       return (
-        <Link href={`/master-data-manager/organizations/${record.key}`}>
+        <Link href={`/master-data-manager/organizations/${record.key}`} passHref>
           {text}
         </Link>
       );

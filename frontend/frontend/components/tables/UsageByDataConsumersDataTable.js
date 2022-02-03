@@ -584,7 +584,7 @@ export default function UsageByDataConsumerDataTable({
       render: (text, record) => {
         return (
           <>
-              <Link href={`usage/${record.data_consumer_pk}`}>
+              <Link href={`usage/${record.data_consumer_pk}`} passHref>
                 <Tooltip title="Details" placement="left">
                   <EyeOutlined />
                 </Tooltip>

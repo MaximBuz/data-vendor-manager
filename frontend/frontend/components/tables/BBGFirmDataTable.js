@@ -184,7 +184,7 @@ export default function LocationDataTable({
         return (
           <>
           <Space>
-            <Link href={`vendors/bloomberg/firm-numbers/${record.id}`}>
+            <Link href={`vendors/bloomberg/firm-numbers/${record.id}`} passHref>
               <Tooltip title="Edit" placement="left">
                 <EditOutlined />
               </Tooltip>

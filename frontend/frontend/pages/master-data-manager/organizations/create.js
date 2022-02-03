@@ -14,7 +14,7 @@ import getLocations from "../../../api_utils/api_fetchers/getLocations";
 /* --------------------------------------------------------------------------- */
 /* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 /* --------------------------------------------------------------------------- */
-export default function create() {
+export default function Create() {
   /* -----~~~~~>>>DATAFETCHING<<<~~~~~----- */
   const entityTypesQuery = useQuery(
     ["entityTypes", 2 /* depth */],

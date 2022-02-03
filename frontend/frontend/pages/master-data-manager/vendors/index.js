@@ -37,22 +37,22 @@ export default function Vendors() {
         Bloomberg
       </Divider>
       <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
-        <Link href="vendors/bloomberg/firm-numbers/create/">
+        <Link href="vendors/bloomberg/firm-numbers/create/" passHref>
           <Button type="primary" style={{ marginBottom: "10px" }}>
             Add Firm Nr
           </Button>
         </Link>
-        <Link href="vendors/bloomberg/account-numbers/create/">
+        <Link href="vendors/bloomberg/account-numbers/create/" passHref>
           <Button type="primary" style={{ marginBottom: "10px" }}>
             Add Account Nr
           </Button>
         </Link>
-        <Link href="vendors/bloomberg/subscriptions/create/">
+        <Link href="vendors/bloomberg/subscriptions/create/" passHref>
           <Button type="primary" style={{ marginBottom: "10px" }}>
             Add Subscription ID
           </Button>
         </Link>
-        <Link href="vendors/bloomberg/uuids/create/">
+        <Link href="vendors/bloomberg/uuids/create/" passHref>
           <Button type="primary" style={{ marginBottom: "10px" }}>
             Add User ID
           </Button>

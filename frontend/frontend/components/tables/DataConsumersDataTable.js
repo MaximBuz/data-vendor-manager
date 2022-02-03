@@ -283,7 +283,7 @@ export default function LocationDataTable({
         return (
           <>
             <Space>
-              <Link href={`employees/${record.key}`}>
+              <Link href={`employees/${record.key}`} passHref>
                 <Tooltip title="Edit" placement="left">
                   <EditOutlined />
                 </Tooltip>

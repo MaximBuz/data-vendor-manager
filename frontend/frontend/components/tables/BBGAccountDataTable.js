@@ -113,6 +113,7 @@ export default function BBGAccountDataTable({
         return (
           <Link
             href={`geographies/${record.location?.id}`}
+            passHref
           >
             {location}
           </Link>

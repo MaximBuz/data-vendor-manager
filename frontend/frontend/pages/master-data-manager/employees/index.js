@@ -34,7 +34,7 @@ export default function Geographies() {
         market data. There are the employees where market data usage will be
         tracked and analyzed.
       </p>
-      <Link href="employees/create/">
+      <Link href="employees/create/" passHref>
         <Button type="primary" style={{ marginBottom: "10px" }}>
           Add new Data Consumer
         </Button>

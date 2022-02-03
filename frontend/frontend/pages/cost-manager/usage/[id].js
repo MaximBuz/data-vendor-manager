@@ -442,7 +442,7 @@ export default function Employee() {
         okText='Close'
         closable={false}
         footer={[
-          <Button type='secondary' onClick={closeUsageOverTimeModal}>
+          <Button type='secondary' onClick={closeUsageOverTimeModal} key="1">
             Close
           </Button>,
         ]}

@@ -242,7 +242,7 @@ export default function BBGuuidDataTable({ scrollView, rowSelection }) {
         return (
           <>
             <Space>
-              <Link href={`vendors/bloomberg/uuids/${record.id}`}>
+              <Link href={`vendors/bloomberg/uuids/${record.id}`} passHref>
                 <Tooltip title="Edit" placement="left">
                   <EditOutlined />
                 </Tooltip>

@@ -20,6 +20,7 @@ import { toast } from "react-toastify";
 
 /* HOOKS */
 import useAddItemModal from "../../custom_hooks/useAddItemModal";
+import Link from "next/link";
 
 /* --------------------------------------------------------------------------- */
 /* ~~~~~~COMPONENT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -181,7 +182,7 @@ export default function EntityForm({
                 })}
             </Select>
           </Form.Item>
-          <a href="/master-data-manager/organizations/create" target="_blank">
+          <Link href="/master-data-manager/organizations/create" target="_blank" passHref>
             <Tooltip title="Add new Entity" placement="right">
               <Button
                 style={{ position: "relative", top: "3px" }}
@@ -189,7 +190,7 @@ export default function EntityForm({
                 icon={<PlusOutlined />}
               />
             </Tooltip>
-          </a>
+          </Link>
         </Space>
         <br />
 

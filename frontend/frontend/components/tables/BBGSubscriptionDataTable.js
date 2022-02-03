@@ -184,7 +184,7 @@ export default function BBGSubscriptionDataTable({
         return (
           <>
           <Space>
-            <Link href={`vendors/bloomberg/subscriptions/${record.id}`}>
+            <Link href={`vendors/bloomberg/subscriptions/${record.id}`} passHref>
               <Tooltip title="Edit" placement="left">
                 <EditOutlined />
               </Tooltip>

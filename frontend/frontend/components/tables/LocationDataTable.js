@@ -237,7 +237,7 @@ export default function LocationDataTable({
         return (
           <>
             <Space>
-              <Link href={`geographies/${record.key}`}>
+              <Link href={`geographies/${record.key}`} passHref>
                 <Tooltip
                   title="Edit this location or add buildings"
                   placement="left"
