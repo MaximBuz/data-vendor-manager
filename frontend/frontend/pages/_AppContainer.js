@@ -3,7 +3,7 @@ import LoginPage from "../components/auth/loginPage";
 
 /* API FETCHING */
 import { useQuery } from 'react-query';
-import getCurrentUser from '../queries/auth/getCurrentUser';
+import getCurrentUser from '../utils/auth/getCurrentUser';
 
 
 

@@ -1,8 +1,11 @@
 FROM node:14-alpine AS builder
+
 WORKDIR /opt/web
 COPY . ./
-RUN npm install
+RUN npm install --no-package-lock
+
 ENV PATH="./node_modules/.bin:$PATH"
+
 RUN npm run build
 
 FROM nginx:1.20.1-alpine
@@ -12,4 +15,4 @@ RUN curl -L https://github.com/a8m/envsubst/releases/download/v1.1.0/envsubst-`u
     mv envsubst /usr/local/bin
 COPY ./nginx.config /etc/nginx/nginx.template
 CMD ["/bin/sh", "-c", "envsubst < /etc/nginx/nginx.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
-COPY --from=builder /opt/web/build /usr/share/nginx/html
+COPY --from=builder /opt/web/.next /usr/share/nginx/html
