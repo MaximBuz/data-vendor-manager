@@ -121,7 +121,7 @@ export default function BBGUuid() {
           >
             <h2>Tracker installation requests</h2>
             {InstalledTrackersQuery.data?.map((tracker) => {
-              return <TrackerCard tracker={tracker} />;
+              return <TrackerCard tracker={tracker} key={tracker.id}/>;
             })}
             {/* Install new tracker button */}
             {/* ------------------------------------------ */}

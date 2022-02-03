@@ -115,7 +115,7 @@ export default function UsageFilter(props) {
               <Select>
                 {locationQuery.data?.map((location) => {
                   return (
-                    <Select.Option value={location.id}>
+                    <Select.Option value={location.id} key={location.id}>
                       {location.street +
                         ' ' +
                         location.street_nr +

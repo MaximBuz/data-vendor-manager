@@ -273,6 +273,7 @@ export default function BBGuuidDataTable({ scrollView, rowSelection }) {
           rowSelection={rowSelection}
           dataSource={data}
           scroll={scrollView}
+          rowKey="id"
         />
         {DeleteModal}
       </>

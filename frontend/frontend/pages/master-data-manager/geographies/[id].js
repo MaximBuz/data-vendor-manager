@@ -125,7 +125,7 @@ export default function Organization() {
           >
             <h2>Buildings associated with this location</h2>
             {buildings.map((building) => {
-              return <BuildingCard building={building} />;
+              return <BuildingCard building={building} key={building.id}/>;
             })}
             {/* Create new Building button */}
             {/* ------------------------------------------ */}

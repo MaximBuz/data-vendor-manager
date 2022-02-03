@@ -130,7 +130,7 @@ export default function EntityForm({
             >
               {entityTypes &&
                 entityTypes.map((type) => {
-                  return <Option value={type.id}>{type.name}</Option>;
+                  return <Option value={type.id} key={type.id}>{type.name}</Option>;
                 })}
             </Select>
           </Form.Item>
@@ -173,11 +173,11 @@ export default function EntityForm({
                 parentEntities.map((entity) => {
                   if (entityId && entity.id === initialValues.id)
                     return (
-                      <Option disabled value={entity.id}>
+                      <Option disabled value={entity.id} key={entity.id}>
                         {entity.name}
                       </Option>
                     );
-                  return <Option value={entity.id}>{entity.name}</Option>;
+                  return <Option value={entity.id} key={entity.id}>{entity.name}</Option>;
                 })}
             </Select>
           </Form.Item>

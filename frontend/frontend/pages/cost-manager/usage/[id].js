@@ -189,7 +189,7 @@ export default function Employee() {
                 title='Activities of this Employee'
                 trigger='hover'
                 content={dataConsumer?.activity?.map((tag) => {
-                  return <Row justify='center'>{tag.name}</Row>;
+                  return <Row justify='center' key={tag.id}>{tag.name}</Row>;
                 })}
               >
                 {dataConsumer?.activity?.map((tag) => tag.name).join(', ')}

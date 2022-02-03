@@ -121,7 +121,7 @@ export default function BBGSubscriptionForm({
             {accounts &&
               accounts.map((account) => {
                 return (
-                  <Select.Option value={account.id}>
+                  <Select.Option value={account.id} key={account.id}>
                     {account.account_number} ({account.location?.street} {account.location?.city} {account.location?.country})
                   </Select.Option>
                 );

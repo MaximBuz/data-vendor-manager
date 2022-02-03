@@ -123,7 +123,7 @@ export default function BBGAccountNumberForm({
             {firmNrs &&
               firmNrs.map((number) => {
                 return (
-                  <Select.Option value={number.id}>
+                  <Select.Option value={number.id} key={number.id}>
                     {number.firm_number} ({number.organizational_entity?.name})
                   </Select.Option>
                 );
@@ -146,7 +146,7 @@ export default function BBGAccountNumberForm({
             {locations &&
               locations.map((location) => {
                 return (
-                  <Select.Option value={location.id}>
+                  <Select.Option value={location.id} key={location.id}>
                     {location.street +
                       " " +
                       location.street_nr +

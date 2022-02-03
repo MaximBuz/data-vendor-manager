@@ -47,23 +47,18 @@ export default function TopMenuItems({ activeModule, activeRoute }) {
 
 
   return (
-    <>
       <Menu theme="dark" defaultSelectedKeys={[activeRoute]} mode="horizontal">
         {activeModule === "cost-manager" ? (
-          <>
             <Menu.Item key="/cost-manager/usage" icon={<FieldTimeOutlined />}>
               <Link href="/cost-manager/usage">Usage Analysis</Link>
             </Menu.Item>
-          </>
         ) : activeModule === "dashboard" ? (
-          <>
             <Menu.Item
               key="/dashboard/* Here put in route */"
               icon={<AppstoreOutlined />}
             >
               <Link href="/cost-manager">Dashboard</Link>
             </Menu.Item>
-          </>
         ) : activeModule === "master-data-manager" ? (
           <>
             <Menu.Item
@@ -100,6 +95,5 @@ export default function TopMenuItems({ activeModule, activeRoute }) {
           <Button onClick={handleLogout} type="primary" shape="round" icon={<LogoutOutlined />}>Logout</Button>
         </div>
       </Menu>
-    </>
   );
 }

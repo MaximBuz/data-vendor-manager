@@ -215,6 +215,7 @@ export default function BBGSubscriptionDataTable({
           rowSelection={rowSelection}
           dataSource={data}
           scroll={scrollView}
+          rowKey="id"
         />
         {DeleteModal}
       </>

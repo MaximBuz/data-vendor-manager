@@ -61,6 +61,7 @@ export default function UsageRawDataconsumerDataTable({
         <Table
           columns={columns}
           dataSource={data}
+          rowKey="start_time"
         />
       </>
     );

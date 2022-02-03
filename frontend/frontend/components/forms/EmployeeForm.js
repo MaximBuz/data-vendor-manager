@@ -204,7 +204,7 @@ export default function EntityForm({
               {locations &&
                 locations.map((location) => {
                   return (
-                    <Select.Option value={location.id}>
+                    <Select.Option value={location.id} key={location.id}>
                       {location.street +
                         " " +
                         location.street_nr +
@@ -242,7 +242,7 @@ export default function EntityForm({
                   ?.filter((location) => location.id === activeLocation)[0]
                   ?.buildings.map((building) => {
                     return (
-                      <Select.Option value={building.id}>
+                      <Select.Option value={building.id} key={building.id}>
                         {building.building_name}
                       </Select.Option>
                     );
@@ -277,7 +277,7 @@ export default function EntityForm({
               {jobs &&
                 jobs.map((job) => {
                   return (
-                    <Select.Option value={job.id}>{job.title}</Select.Option>
+                    <Select.Option value={job.id} key={job.id}>{job.title}</Select.Option>
                   );
                 })}
             </Select>

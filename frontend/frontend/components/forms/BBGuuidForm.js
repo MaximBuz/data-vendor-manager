@@ -122,7 +122,7 @@ export default function BBGuuidForm({
             {employees &&
               employees.map((employee) => {
                 return (
-                  <Select.Option value={employee.id}>
+                  <Select.Option value={employee.id} key={employee.id}>
                     {`${employee.email} (${employee.first_name} ${employee.last_name})`}
                   </Select.Option>
                 );
@@ -152,7 +152,7 @@ export default function BBGuuidForm({
             {subscriptions &&
               subscriptions.map((subscription) => {
                 return (
-                  <Select.Option value={subscription.id}>
+                  <Select.Option value={subscription.id} key={subscription.id}>
                     {subscription.subscription_id}
                   </Select.Option>
                 );

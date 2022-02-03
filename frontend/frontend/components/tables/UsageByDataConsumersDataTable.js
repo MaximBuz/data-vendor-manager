@@ -606,6 +606,7 @@ export default function UsageByDataConsumerDataTable({
           rowSelection={rowSelection}
           dataSource={data}
           scroll={scrollView}
+          rowKey="data_consumer_pk"
         />
       </>
     );

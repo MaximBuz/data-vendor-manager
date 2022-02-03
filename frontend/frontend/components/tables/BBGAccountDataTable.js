@@ -288,6 +288,7 @@ export default function BBGAccountDataTable({
           rowSelection={rowSelection}
           dataSource={data}
           scroll={scrollView}
+          rowKey="id"
         />
         {DeleteModal}
       </>
