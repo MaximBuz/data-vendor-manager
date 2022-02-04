@@ -1,0 +1,2 @@
+Dear {{first_name}} {{last_name}} {{id}},
+Here is the text version of the email from template
