@@ -240,8 +240,7 @@ export default function EntityForm({
           <Form.Item style={{ flexGrow: "1" }} label="Building" name="building">
             <Select placeholder="Select option">
               {locations && locations
-                  ?.filter((location) => location.id === activeLocation)[0]
-                  ?.buildings?.map((building) => {
+                  ?.filter((location) => location.id === activeLocation)[0].buildings?.map((building) => {
                     return (
                       <Select.Option value={building.id} key={building.id}>
                         {building.building_name}
