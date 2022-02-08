@@ -187,3 +187,8 @@ EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD")
 EMAIL_PORT = env("EMAIL_PORT")
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
+
+
+# heroku config
+import django_on_heroku
+django_on_heroku.settings(locals())
