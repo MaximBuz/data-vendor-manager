@@ -66,7 +66,6 @@ export default function UsageFilter(props) {
 
   /* -----~~~~~>>>HANDLE FORM SUBMITTING<<<~~~~~----- */
   const onFinish = (values) => {
-    console.log(values);
     props.setFilters({
       ...props.filters,
       ...values,
