@@ -28,7 +28,7 @@ function MyApp({ Component, pageProps }) {
    new QueryClient({
     defaultOptions: {
      queries: {
-      staleTime: 15,
+      staleTime: 15000,
      },
     },
    })
