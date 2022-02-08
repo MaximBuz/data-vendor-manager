@@ -74,6 +74,7 @@ export default function EntityForm({
   );
 
   const buildings = locations && locations.filter((location) => location.id === activeLocation)[0].buildings;
+  console.log(buildings);
 
   function handleLocationChange(value) {
     setActiveLocation(value);
