@@ -141,11 +141,11 @@ export default function Employee() {
             className='masked-overflow-vertical'
           >
             <Row justify='center'>
-              <img
+              <Image
                 src='https://vendor-backend-prod.herokuapp.com/api/random-default-avatar/'
                 width={180}
                 alt="data-consumer-avatar"
-              ></img>
+              ></Image>
             </Row>
             <Row justify='center' style={{ marginBottom: '30px' }}>
               <div
