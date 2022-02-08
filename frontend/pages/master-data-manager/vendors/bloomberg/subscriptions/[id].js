@@ -69,8 +69,8 @@ export default function BBGSubscription() {
           </h2>
           <BBGSubscriptionForm
             subscriptionId={subscriptionId}
-            initialValues={BBGSubscriptionQuery?.data}
-            accounts={BBGAccountQuery?.data}
+            initialValues={BBGSubscriptionQuery.isSuccess && BBGSubscriptionQuery.data}
+            accounts={BBGAccountQuery.isSuccess && BBGAccountQuery.data}
           />
         </Col>
       </Row>

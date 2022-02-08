@@ -90,9 +90,9 @@ export default function Employee() {
           <EmployeeForm
             initialValues={dataConsumer}
             activityTags={activityTags}
-            organizationalTree={treeQuery?.data}
-            locations={locationQuery?.data}
-            jobs={jobsQuery?.data}
+            organizationalTree={treeQuery.isSuccess && treeQuery.data}
+            locations={locationQuery.isSuccess && locationQuery.data}
+            jobs={jobsQuery.isSuccess && jobsQuery.data}
             employeeId={employeeId}
           />
         </Col>

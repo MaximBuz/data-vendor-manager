@@ -66,7 +66,7 @@ export default function Employee() {
     ['dataConsumer', employeeId, 2 /* Depth */],
     getDataConsumer
   );
-  const dataConsumer = dataConsumerQuery?.data;
+  const dataConsumer = dataConsumerQuery.isSuccess && dataConsumerQuery.data;
 
   const treeQuery = useQuery(
     ['organizationalEntityRootChildren', 10],
@@ -205,7 +205,7 @@ export default function Employee() {
                     defaultSelectedKeys={[
                       dataConsumer?.organizational_entity?.id,
                     ]}
-                    treeData={treeQuery?.data}
+                    treeData={treeQuery.isSuccess && treeQuery.data}
                     defaultExpandAll={true}
                   />
                 }

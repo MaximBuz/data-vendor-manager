@@ -30,7 +30,7 @@ export default function BBGFirmNr() {
         <Col flex={0.3}>
           <h2>Add new Bloomberg Account Number</h2>
           <BBGSubscriptionForm
-            accounts={BBGAccountQuery?.data}
+            accounts={BBGAccountQuery.isSuccess && BBGAccountQuery.data}
           />
         </Col>
       </Row>

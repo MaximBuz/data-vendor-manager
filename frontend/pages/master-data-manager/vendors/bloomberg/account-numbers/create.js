@@ -29,8 +29,8 @@ export default function BBGFirmNr() {
         <Col flex={0.3}>
           <h2>Add new Bloomberg Account Number</h2>
           <BBGAccountNrForm
-            locations={locations?.data}
-            firmNrs={firmNrsQuery?.data}
+            locations={locations.isSuccess && locations.data}
+            firmNrs={firmNrsQuery.isSuccess && firmNrsQuery.data}
           />
         </Col>
       </Row>

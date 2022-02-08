@@ -106,9 +106,9 @@ export default function BBGUuid() {
           <h2>Bloomberg Unique User ID: {BBGuuidQuery.data?.uuid}</h2>
           <BBGuuidForm
             uuidId={uuidId}
-            initialValues={BBGuuidQuery?.data}
-            subscriptions={BBGSubscriptionsQuery?.data}
-            employees={DataConsumersQuery?.data}
+            initialValues={BBGuuidQuery.isSuccess && BBGuuidQuery.data}
+            subscriptions={BBGSubscriptionsQuery.isSuccess && BBGSubscriptionsQuery.data}
+            employees={DataConsumersQuery.isSuccess && DataConsumersQuery.data}
           />
         </Col>
         <Col flex={1}>

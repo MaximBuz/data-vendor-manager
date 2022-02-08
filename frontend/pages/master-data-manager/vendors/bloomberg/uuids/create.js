@@ -36,8 +36,8 @@ export default function BBGFirmNr() {
         <Col flex={0.3}>
           <h2>Add new Bloomberg Unique User Identifier (UUID)</h2>
           <BBGuuidForm
-            subscriptions={BBGSubscriptionsQuery?.data}
-            employees={DataConsumersQuery?.data}
+            subscriptions={BBGSubscriptionsQuery.isSuccess && BBGSubscriptionsQuery.data}
+            employees={DataConsumersQuery.isSuccess && DataConsumersQuery.data}
           />
         </Col>
       </Row>

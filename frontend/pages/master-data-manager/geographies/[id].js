@@ -159,7 +159,7 @@ export default function Organization() {
           {/* Displaying Entities at that location */}
           {/* ------------------------------------------ */}
           <Table
-            dataSource={dataConsumersQuery?.data}
+            dataSource={dataConsumersQuery.isSuccess && dataConsumersColumns.data}
             columns={dataConsumersColumns}
           />
           {/* ------------------------------------------ */}

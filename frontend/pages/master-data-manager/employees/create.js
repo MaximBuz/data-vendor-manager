@@ -47,9 +47,9 @@ export default function Employee() {
           <h2>Add Employee (Data Consumer)</h2>
           <EmployeeForm
             activityTags={activityTags}
-            organizationalTree={treeQuery?.data}
-            locations={locationQuery?.data}
-            jobs={jobsQuery?.data}
+            organizationalTree={treeQuery.isSuccess && treeQuery.data}
+            locations={locationQuery.isSuccess && locationQuery.data}
+            jobs={jobsQuery.isSuccess && jobsQuery.data}
           />
         </Col>
       </Row>

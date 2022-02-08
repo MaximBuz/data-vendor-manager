@@ -70,9 +70,9 @@ export default function BBGAccountNr() {
           </h2>
           <BBGAccountNrForm
             accountNrId={accountNrId}
-            initialValues={BBGAccountNrQuery?.data}
-            locations={locations?.data}
-            firmNrs={BBGFirmsQuery?.data}
+            initialValues={BBGAccountNrQuery.isSuccess && BBGAccountNrQuery.data}
+            locations={locations.isSuccess && locations.data}
+            firmNrs={BBGFirmsQuery.isSuccess && BBGFirmsQuery.data}
           />
         </Col>
       </Row>

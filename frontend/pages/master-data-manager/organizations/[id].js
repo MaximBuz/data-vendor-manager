@@ -104,7 +104,7 @@ export default function Organization() {
             <Tree
               showLine={{ showLeafIcon: false }}
               defaultSelectedKeys={[entity.id]}
-              treeData={treeQuery?.data}
+              treeData={treeQuery.isSuccess && treeQuery.data}
               style={{ padding: "10px 0 0 10px", minHeigth: "100%" }}
               defaultExpandAll = {true}
             />
