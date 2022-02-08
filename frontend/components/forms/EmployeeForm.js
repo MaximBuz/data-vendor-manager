@@ -73,7 +73,7 @@ export default function EntityForm({
     initialValues?.location?.id || undefined
   );
 
-  const buildings = locations && locations.filter((location) => location.id === activeLocation)[0].buildings;
+  const buildings = locations && locations.filter((location) => location.id === activeLocation);
   console.log(buildings);
 
   function handleLocationChange(value) {
@@ -242,13 +242,13 @@ export default function EntityForm({
         >
           <Form.Item style={{ flexGrow: "1" }} label="Building" name="building">
             <Select placeholder="Select option">
-              {buildings && buildings.map((building) => {
+              {/* {buildings && buildings.map((building) => {
                     return (
                       <Select.Option value={building.id} key={building.id}>
                         {building.building_name}
                       </Select.Option>
                     );
-                  })}
+                  })} */}
             </Select>
           </Form.Item>
 
