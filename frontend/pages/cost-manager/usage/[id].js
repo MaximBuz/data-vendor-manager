@@ -51,6 +51,22 @@ export default function Employee() {
   const { id: employeeId } = router.query;
 
   /* -----~~~~~>>>HANDLE FILTER<<<~~~~~----- */
+  const [filters, setFilters] = useState({
+    start_date: moment().subtract(1, "months").format("YYYY-MM-DD"),
+    end_date: moment().format("YYYY-MM-DD"),
+    /* data_consumer: */
+    entity: [],
+    location: [],
+    country: null,
+    state: null,
+    city: null,
+    job_title: [],
+    activity_tag: [],
+    bbg_firm_number: [],
+    bbg_account_number: [],
+    bbg_subscription_id: [],
+    bbg_uuid: [],
+  });
 
   const onFinish = (values) => {
     setFilters({
