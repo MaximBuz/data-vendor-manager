@@ -57,7 +57,7 @@ export default function Employee() {
           <EmployeeForm
             activityTags={activityTags}
             organizationalTree={treeQuery.isSuccess && treeQuery.data}
-            locations={locationQuery.isSuccess && locationQuery.data}
+            locations={locationsQuery.isSuccess && locationQuery.data}
             jobs={jobsQuery.isSuccess && jobsQuery.data}
           />
         </Col>

@@ -61,10 +61,6 @@ export default function EntityForm({
  /* -----~~~~~>>>DYNAMIC BUILDINGS DROPDOWN<<<~~~~~----- */
  const [activeLocation, setActiveLocation] = useState(initialValues?.location?.id || undefined);
 
- console.log(locations);
- console.log(locations?.filter((location) => location.id === activeLocation));
- console.log(locations?.filter((location) => location.id === activeLocation)[0]);
-
  function handleLocationChange(value) {
   setActiveLocation(value);
   form.setFieldsValue({
@@ -215,7 +211,7 @@ export default function EntityForm({
     >
      <Form.Item style={{ flexGrow: '1' }} label='Building' name='building'>
       <Select placeholder='Select option'>
-       {/* {locations &&
+       {locations &&
         locations
          ?.filter((location) => location.id === activeLocation)[0]
          .buildings?.map((building) => {
@@ -224,7 +220,7 @@ export default function EntityForm({
             {building.building_name}
            </Select.Option>
           );
-         })} */}
+         })}
       </Select>
      </Form.Item>
 
