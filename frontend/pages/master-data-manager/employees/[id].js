@@ -59,7 +59,7 @@ export default function Employee() {
     getOrganizationalEntityRootChildren
   );
 
-  const locationQuery = useQuery(["locations"], getLocations);
+  const locationsQuery = useQuery(["locations"], getLocations);
 
   const jobsQuery = useQuery(["jobs"], getJobs);
 
@@ -71,6 +71,14 @@ export default function Employee() {
   }
 
   if (dataConsumerQuery.error) {
+    return <>Error...</>;
+  }
+
+  if (locationsQuery.isLoading) {
+    return <>Loading...</>;
+  }
+
+  if (locationsQuery.error) {
     return <>Error...</>;
   }
 
@@ -91,7 +99,7 @@ export default function Employee() {
             initialValues={dataConsumer}
             activityTags={activityTags}
             organizationalTree={treeQuery.isSuccess && treeQuery.data}
-            locations={locationQuery.isSuccess && locationQuery.data}
+            locations={locationsQuery.isSuccess && locationsQuery.data}
             jobs={jobsQuery.isSuccess && jobsQuery.data}
             employeeId={employeeId}
           />
