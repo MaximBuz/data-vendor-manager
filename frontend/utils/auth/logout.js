@@ -1,12 +1,11 @@
-import apiClient from "../http-common";
+import apiClient from '../http-common';
 
 export default async function logout() {
-    
-    // Get authentication token from backend
-    const { data } = await apiClient.post(`auth/logout/`)
+ // Delete token from local storage
+ localStorage.removeItem('authenticationToken');
 
-    // Save Token in local storage
-    localStorage.removeItem('authenticationToken');
+ // Get authentication token from backend
+ const { data } = await apiClient.post(`auth/logout/`);
 
-    return data;
+ return data;
 }

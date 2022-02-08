@@ -34,6 +34,7 @@ export default function TopMenuItems({ activeModule, activeRoute }) {
     onSuccess: () => {
       // toast.success("Updated Bloomberg Account Number successfully");
       queryClient.invalidateQueries("currentUser");
+      router.reload()
     },
     onError: (error) => {
       // toast.error(String(error));
@@ -42,7 +43,6 @@ export default function TopMenuItems({ activeModule, activeRoute }) {
 
   const handleLogout = () => {
     logoutMutation.mutate();
-    router.reload()
   }
 
 
