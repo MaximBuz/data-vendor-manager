@@ -239,7 +239,7 @@ export default function EntityForm({
         >
           <Form.Item style={{ flexGrow: "1" }} label="Building" name="building">
             <Select placeholder="Select option">
-              {locations
+              {locations && buildings && locations
                   ?.filter((location) => location.id === activeLocation)[0]
                   ?.buildings.map((building) => {
                     return (
