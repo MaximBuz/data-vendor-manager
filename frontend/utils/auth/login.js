@@ -1,6 +1,9 @@
 import apiClient from "../http-common";
 
 export default async function login(formData) {
+
+    // remove previous token
+    localStorage.removeItem('authenticationToken');
     
     // Get authentication token from backend
     const { data } = await apiClient.post(`auth/login/`, formData)
