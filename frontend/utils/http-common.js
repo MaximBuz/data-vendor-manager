@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const endpoint = "http://localhost:8000/";
+export const endpoint = "https://vendor-backend-prod.herokuapp.com/";
 
 const httpCommon =  axios.create({
   baseURL: endpoint,
