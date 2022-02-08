@@ -31,7 +31,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ["vendor-backend-prod.herokuapp.com"]
+ALLOWED_HOSTS = ["vendor-backend-prod.herokuapp.com", "http://localhost:3000"]
 
 
 # Application definition
