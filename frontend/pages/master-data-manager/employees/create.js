@@ -33,13 +33,22 @@ export default function Employee() {
     getOrganizationalEntityRootChildren
   );
 
-  const locationQuery = useQuery(["locations"], getLocations);
+  const locationsQuery = useQuery(["locations"], getLocations);
 
   const jobsQuery = useQuery(["jobs"], getJobs);
 
   /* --------------------------------------------------------------------------- */
   /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
   /* --------------------------------------------------------------------------- */
+
+  if (locationsQuery.isLoading) {
+    return <>Loading...</>;
+  }
+
+  if (locationsQuery.error) {
+    return <>Error...</>;
+  }
+
   return (
     <>
       <Row>
