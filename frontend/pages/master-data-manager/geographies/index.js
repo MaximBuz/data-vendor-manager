@@ -42,7 +42,7 @@ export default function Geographies() {
   /* -----~~~~~>>>UPLOADING<<<~~~~~----- */
   const uploadProps = {
     name: "file",
-    action: "http://localhost:8000/api/business-locations/upload/",
+    action: "https://vendor-backend-prod.herokuapp.com/api/business-locations/upload/",
     headers: {
       authorization: "authorization-text",
     },

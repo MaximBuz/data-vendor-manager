@@ -142,7 +142,7 @@ export default function Employee() {
           >
             <Row justify='center'>
               <Image
-                src='http://127.0.0.1:8000/api/random-default-avatar/'
+                src='https://vendor-backend-prod.herokuapp.com/api/random-default-avatar/'
                 width={180}
                 alt="data-consumer-avatar"
               ></Image>
