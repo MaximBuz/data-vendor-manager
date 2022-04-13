@@ -109,6 +109,8 @@ export default function Employee() {
   borderColor: 'rgb(217, 217, 217)',
   backgroundColor: 'white',
  };
+ const [randomSeed, setRandomSeed] = useState(Math.random()*10) // for random avatar
+ 
 
  /* --------------------------------------------------------------------------- */
  /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
@@ -128,7 +130,7 @@ export default function Employee() {
      <div style={{ maxHeight: '80vh', overflowY: 'scroll' }} className='masked-overflow-vertical'>
       <Row justify='center'>
        <img
-        src={`https://avatars.dicebear.com/api/miniavs/${Math.random()*10}.svg?b=%23d6ebff&r=50&size=400`}
+        src={`https://avatars.dicebear.com/api/miniavs/${randomSeed}.svg?b=%23d6ebff&r=50&size=400`}
         width={180}
         alt='data-consumer-avatar'
        ></img>
