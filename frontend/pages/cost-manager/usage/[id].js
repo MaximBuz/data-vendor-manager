@@ -54,8 +54,8 @@ export default function Employee() {
  const [filters, setFilters] = useState({
   // start_date: moment().subtract(1, 'months').format('YYYY-MM-DD'), // this is the correct one for production
   // end_date: moment().format('YYYY-MM-DD'), // this is the correct one for production
-  start_date: moment("2022-01-01").format('YYYY-MM-DD'), // this is only for demonstration (because of old data), // this is the correct one for production
-  end_date: moment("2022-03-01").format('YYYY-MM-DD'), // this is only for demonstration (because of old data), // this is the correct one for production
+  start_date: moment('2022-01-01').format('YYYY-MM-DD'), // this is only for demonstration (because of old data), // this is the correct one for production
+  end_date: moment('2022-03-01').format('YYYY-MM-DD'), // this is only for demonstration (because of old data), // this is the correct one for production
   /* data_consumer: */
   entity: [],
   location: [],
@@ -85,7 +85,17 @@ export default function Employee() {
 
  const treeQuery = useQuery(['organizationalEntityRootChildren', 10], getOrganizationalEntityRootChildren);
 
- const usageByTime = useQuery(['aggregatedUsage', 'time' /* ...group by */, filters], getAggregatedUsage);
+ const usageByTime = useQuery(
+  [
+   'aggregatedUsage',
+   'time' /* ...group by */,
+   {
+    ...filters,
+    freq: 'd',
+   },
+  ],
+  getAggregatedUsage
+ );
 
  const usageStatistic = useQuery(['usageStatistic', filters], getUsageStatisticsByDataConsumer);
 
@@ -109,8 +119,7 @@ export default function Employee() {
   borderColor: 'rgb(217, 217, 217)',
   backgroundColor: 'white',
  };
- const [randomSeed, setRandomSeed] = useState(Math.random()*10) // for random avatar
- 
+ const [randomSeed, setRandomSeed] = useState(Math.random() * 10); // for random avatar
 
  /* --------------------------------------------------------------------------- */
  /* ~~~~~~RENDERING~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
