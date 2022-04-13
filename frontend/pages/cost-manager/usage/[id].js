@@ -56,7 +56,7 @@ export default function Employee() {
   // end_date: moment().format('YYYY-MM-DD'), // this is the correct one for production
   start_date: moment('2022-01-01').format('YYYY-MM-DD'), // this is only for demonstration (because of old data), // this is the correct one for production
   end_date: moment('2022-03-01').format('YYYY-MM-DD'), // this is only for demonstration (because of old data), // this is the correct one for production
-  /* data_consumer: */
+  data_consumer: [employeeId],
   entity: [],
   location: [],
   country: null,
