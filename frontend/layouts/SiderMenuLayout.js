@@ -53,7 +53,7 @@ export default function SiderMenuLayout(props) {
           {/* <Logo className={classes.logo} fill="white" size={60}/> */}
         </div>
         <Menu theme="dark" defaultSelectedKeys={[activeModule]} mode="inline">
-          <Menu.Item key="dashboard" icon={<AppstoreOutlined />}>
+          <Menu.Item key="dashboard" disabled icon={<AppstoreOutlined />}>
             <Link href="/dashboard">Dashboard</Link>
           </Menu.Item>
           <Menu.Item key="cost-manager" icon={<BarChartOutlined />}>
