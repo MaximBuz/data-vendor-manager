@@ -3,6 +3,11 @@ module.exports = {
   async redirects() {
     return [
       {
+        source: '/',
+        destination: '/cost-manager/usage/',
+        permanent: true,
+      },
+      {
         source: '/master-data-manager',
         destination: '/master-data-manager/organizations/',
         permanent: true,

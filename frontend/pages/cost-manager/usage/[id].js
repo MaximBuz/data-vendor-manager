@@ -277,7 +277,7 @@ export default function Employee() {
          onFinish={onFinish}
          initialValues={{
           // timeframe: [moment().subtract(1, 'months'), moment()], // this is the correct one for production
-          timeframe: [moment('2022-01-01').format('YYYY-MM-DD'), moment('2022-03-01').format('YYYY-MM-DD')], // this is only for demonstration (because of old data)
+          timeframe: [moment('2022-01-01'), moment('2022-03-01')], // this is only for demonstration (because of old data)
          }}
         >
          <Form.Item name='timeframe'>
