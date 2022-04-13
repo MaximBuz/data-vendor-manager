@@ -128,7 +128,7 @@ export default function Employee() {
      <div style={{ maxHeight: '80vh', overflowY: 'scroll' }} className='masked-overflow-vertical'>
       <Row justify='center'>
        <img
-        src='https://vendor-backend-prod.herokuapp.com/api/random-default-avatar/'
+        src={`https://avatars.dicebear.com/api/miniavs/${Math.random()*10}.svg?b=%23d6ebff&r=50&size=400`}
         width={180}
         alt='data-consumer-avatar'
        ></img>
