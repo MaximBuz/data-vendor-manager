@@ -92,7 +92,7 @@ export default function SiderMenuLayout(props) {
                 )
               } else /* ,if its the last item */{
                 return (
-                  <Breadcrumb.Item key={index}><Link href={`/${routeComponents[index-1]?.concat("/") || ""}${path}/`}>{path}</Link></Breadcrumb.Item>
+                  <Breadcrumb.Item key={index}>{/* <Link href={`/${routeComponents[index-1]?.concat("/") || ""}${path}/`}> */}{path}{/* </Link> */}</Breadcrumb.Item>
                 )
               }
             })}
