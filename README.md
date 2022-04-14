@@ -68,9 +68,9 @@ Here are the currently implemented main use-cases:
 ### Built With
 
 Tool Selection Philosophy:
-* Finding a BALANCE between ba,le-tested and secure solu4ons (backend) and highly modern and efficient technologies (frontend) ⚖️
-* Implemen4ng technologies that permit FAST-PACED development and a great developer experience 🏎
-* Focus on highly available open-source technologies with a LARGE USER- BASE AND TALENT-POOL for easier recrui4ng down the road 🌍
+* Finding a BALANCE between battle-tested and secure solutons (backend) and highly modern and efficient technologies (frontend)
+* Implementng technologies that permit FAST-PACED development and a great developer experience
+* Focus on highly available open-source technologies with a LARGE USER-BASE AND TALENT-POOL for easier recruiting down the road
 
 Following technologies were chosen:
 
