@@ -1,0 +1,75 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* total width */
+::-webkit-scrollbar {
+  display: none;
+}
+
+.masked-overflow-vertical {
+  --scrollbar-width: 0px;
+  --mask-height: 45px;
+
+  /* Need to make sure container has bottom space,
+  otherwise content at the bottom is always faded out */
+  padding-bottom: var(--mask-height);
+
+  /* The content mask is a linear gradient from top to bottom */
+  --mask-image-content: linear-gradient(
+    to bottom,
+    black var(--mask-height),
+    black calc(100% - var(--mask-height)),
+    transparent
+  );
+
+  --mask-size-content: 100%;
+  mask-image: var(--mask-image-content);
+  mask-size: var(--mask-size-content);
+
+  /* Position the content gradient in the top left, and the 
+  scroll gradient in the top right */
+  mask-position: 0 0, 100% 0;
+
+  mask-repeat: no-repeat, no-repeat;
+}
+
+.masked-overflow-horizontal {
+  --scrollbar-width: 0px;
+  --mask-width: 60px;
+
+  /* Need to make sure container has right space,
+  otherwise content at the bottom is always faded out */
+  padding-right: var(--mask-width);
+
+  /* The content mask is a linear gradient from top to bottom */
+  --mask-image-content: linear-gradient(
+    to right,
+    black var(--mask-width),
+    black calc(100% - var(--mask-width)),
+    transparent
+  );
+  
+  --mask-size-content: 100%;
+  mask-image: var(--mask-image-content);
+  mask-size: var(--mask-size-content);
+
+  /* Position the content gradient in the top left, and the 
+  scroll gradient in the top right */
+  mask-position: 0 0, 100% 0;
+
+  mask-repeat: no-repeat, no-repeat;
+}
