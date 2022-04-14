@@ -67,6 +67,11 @@ Here are the currently implemented main use-cases:
 
 ### Built With
 
+Tool Selection Philosophy:
+⚖️ Finding a BALANCE between ba,le-tested and secure solu4ons (backend) and highly modern and efficient technologies (frontend)
+🏎 Implemen4ng technologies that permit FAST-PACED development and a great developer experience
+🌎 Focus on highly available open-source technologies with a LARGE USER- BASE AND TALENT-POOL for easier recrui4ng down the road
+
 This prototype application has been built by using following technologies:
 
 Front-End:
