@@ -82,7 +82,7 @@ Back-End:
 * [PostgreSQL](https://www.postgresql.org/)
 
 Usage-Tracker:
-* [Python](https://www.python.org/)
+* [Python](https://www.python.org/) (substantial parts by KalleHallden)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
