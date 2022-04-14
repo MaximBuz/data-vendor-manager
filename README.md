@@ -89,6 +89,8 @@ Back-End:
 Usage-Tracker:
 * [Python](https://www.python.org/) (substantial parts by KalleHallden)
 
+<img src="images/stack.png" alt="technology-stack">
+
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
