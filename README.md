@@ -23,8 +23,6 @@
     Username: public
     <br/>
     Password: JafRGAWGDq5up4G
-    <br/>
-    (please log-out afterwards, thanks!)
   </p>
 </div>
 
