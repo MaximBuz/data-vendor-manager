@@ -62,7 +62,7 @@ Here are the currently implemented main use-cases:
 
 
 
-### Built With
+### Technologies
 
 Tool Selection Philosophy:
 * Finding a BALANCE between battle-tested and secure solutons (backend) and highly modern and efficient technologies (frontend)
