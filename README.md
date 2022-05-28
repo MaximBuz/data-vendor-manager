@@ -51,8 +51,7 @@
 
 [![Product Name Screen Shot][product-screenshot]](https://vendor-manager.vercel.app/)
 
-The **MARKET-DATA-VENDOR MANAGER** is my most sophisticated project yet.
-It was created as a prototype corporate web-application constisting of three seperate projects: The front-end, the back-end and the usage-tracker.
+This app was created as a prototype for a corporate web-application constisting of three seperate projects: The front-end, the back-end and the usage-tracker.
 
 Here are the currently implemented main use-cases:
 * Collect, store and manage data on your company structure, your employees, your market data vendors (currently only Bloomberg) and geographies inside the **Master Data Manager** Module
