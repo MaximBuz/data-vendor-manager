@@ -98,6 +98,7 @@ Usage-Tracker:
 1. ```bash
    cd frontend/ && npm install
    ```
+3. Go into <code>./frontend/utils/http-common.js</code> and switch out the <code>endpoint</code> to <code>http://127.0.0.1:8000/</code>
 2. ```bash
    npm run dev
    ```
