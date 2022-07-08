@@ -94,10 +94,51 @@ Usage-Tracker:
 
 ### Installation
 
-1. ```sh
-   Coming Soon...
+## Frontend
+1. ```bash
+   cd frontend/ && npm install
    ```
-
+2. ```bash
+   npm run dev
+   ```
+## Backend
+1. Go to project root and run
+   ```bash
+   python3 -m venv env
+   source env/bin/activate
+   ```
+2. ```bash
+   python3 -m pip install -r requirements.txt
+   ```
+3. Inside <code>./backend_api/</code> create a .env file and add the following variables. Please use a PostgreSQL database and an SMTP email server.
+   ```bash
+   SECRET_KEY=
+   DEBUG=True
+   DB_NAME=
+   DB_USER=
+   DB_PASSWORD=
+   DB_HOST=
+   DB_PORT=
+   EMAIL_HOST=
+   EMAIL_HOST_USER=
+   EMAIL_HOST_PASSWORD=
+   EMAIL_PORT=
+   DEFAULT_FROM_EMAIL=
+   ```
+4. Setup the database tables
+   ```bash
+   python manage.py migrate
+   ```
+5. Setup a user
+   ```bash
+   python manage.py createsuperuser
+   ```
+6. To start the server run
+   ```bash
+   python manage.py runserver
+   ```
+   
+Now open the frontend on localhost:3000 and login with your superuser account.
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
